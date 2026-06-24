@@ -9,13 +9,18 @@ namespace Arcanist
         [SerializeField] private Light2D parryLight;
         [SerializeField] private ParticleSystem parryParticle;
 
+        [Header("Gauge FX")]
+        [SerializeField] private ParticleSystem parryGaugeFxPrefab;
+        [SerializeField] private Transform parryGaugeFxStart;
+        [SerializeField] private Transform parryGaugeFxTarget;
+        [SerializeField] private Transform parryGaugeFxParent;
+        [SerializeField] private float parryGaugeFxDestroyDelay = 0.6f;
+
         [SerializeField] private HitStopController hitStopController;
         [SerializeField] private CameraImpulseController cameraImpulseController;
         [SerializeField] private float cameraShakeDelay = 0.07f;
 
         [SerializeField] private float hitStopDuration = 0.05f;
-        [SerializeField] private float shakeDuration = 0.12f;
-        [SerializeField] private float shakeStrength = 0.08f;
 
         [Header("Default")]
         [SerializeField] private float defaultIntensity = 0.0f;
@@ -37,6 +42,8 @@ namespace Arcanist
             if (parryParticle != null)
                 parryParticle.Play();
 
+            PlayParryGaugeFx();
+
             if (hitStopController != null)
                 hitStopController.Play(hitStopDuration);
 
@@ -46,6 +53,23 @@ namespace Arcanist
             effectRoutine = StartCoroutine(PlayRoutine());
         }
 
+        private void PlayParryGaugeFx()
+        {
+            if (parryGaugeFxPrefab == null || parryGaugeFxStart == null)
+                return;
+
+            Transform parent = parryGaugeFxParent != null ? parryGaugeFxParent : parryGaugeFxStart.parent;
+            ParticleSystem gaugeFx = Instantiate(parryGaugeFxPrefab, parryGaugeFxStart.position, Quaternion.identity, parent);
+
+            Vector3 direction = parryGaugeFxTarget.position - parryGaugeFxStart.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            gaugeFx.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle - 20.0f);
+            gaugeFx.Play();
+
+            Destroy(gaugeFx.gameObject, parryGaugeFxDestroyDelay);
+        }
+        
         private IEnumerator PlayRoutine()
         {
             yield return LerpLight(defaultIntensity, burstIntensity, defaultRadius, burstRadius, burstInTime);

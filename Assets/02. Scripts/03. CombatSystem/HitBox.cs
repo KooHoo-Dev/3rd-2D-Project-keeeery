@@ -7,6 +7,8 @@ namespace Arcanist
     {
         [field: SerializeField] public AttackInfo AttackInfo { get; private set; }
         [SerializeField] private ParryLightEffect parryLightEffect;
+        [SerializeField] private ScreenEffectController screenEffectController;
+
         private CombatEntity Owner { get; set; }
 
         private HashSet<HurtBox> checkList = new HashSet<HurtBox>();
@@ -32,12 +34,12 @@ namespace Arcanist
             Debug.Log($"[HitBox] {name} collided with {collision.name}");
 
             HurtBox hurtBox = CombatSystem.Instance.GetHurtBoxOrNull(collision);
+            
             if (hurtBox == null)
             {
                 Debug.LogWarning($"[HitBox] {collision.name} is not registered as HurtBox");
                 return;
             }
-            
 
             CombatEntity sender = Owner;
             CombatEntity receiver = hurtBox.Owner;
@@ -53,6 +55,7 @@ namespace Arcanist
                     Debug.Log("[Parry] Success");
                     playerController.SuccessParry();
                     parryLightEffect.Play();
+                    screenEffectController.PlayParryGlow();
                     return;
                 }
             }

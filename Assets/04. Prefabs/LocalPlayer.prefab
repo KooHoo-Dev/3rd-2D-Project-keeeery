@@ -134,6 +134,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
+  screenEffectController: {fileID: 0}
 --- !u!61 &3516409619870467734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -489,7 +490,7 @@ MonoBehaviour:
   sprintEndFxPrefab: {fileID: 7247812812730061877, guid: f6630cea4a7414bcba6d3991d11f267c, type: 3}
   fxSpawnPoint: {fileID: 7130106607857816216}
   sprintFxSpawnPoint: {fileID: 2793759776769483979}
-  cardUseFXPivot: {fileID: 2951469183574969411}
+  screenEffectController: {fileID: 0}
 --- !u!114 &1753533218181533399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,12 +596,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.ParryLightEffect
   parryLight: {fileID: 8415005729970272177}
   parryParticle: {fileID: 789380171736896128}
+  parryGaugeFxPrefab: {fileID: 0}
+  parryGaugeFxStart: {fileID: 7130106607857816216}
+  parryGaugeFxTarget: {fileID: 0}
+  parryGaugeFxParent: {fileID: 0}
+  parryGaugeFxDestroyDelay: 0.9
   hitStopController: {fileID: 0}
   cameraImpulseController: {fileID: 0}
   cameraShakeDelay: 0.05
   hitStopDuration: 0.05
-  shakeDuration: 0.1
-  shakeStrength: 0.05
   defaultIntensity: 0
   defaultRadius: 2.5
   burstIntensity: 4
@@ -636,7 +640,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5757205371636086041}
   - {fileID: 1673344871793828727}
@@ -891,6 +895,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
+  screenEffectController: {fileID: 0}
 --- !u!61 &5943447859623294796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6231,6 +6236,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
+  screenEffectController: {fileID: 0}
 --- !u!61 &165717915923768831
 BoxCollider2D:
   m_ObjectHideFlags: 0

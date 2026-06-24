@@ -59,7 +59,7 @@ namespace Arcanist
         [SerializeField] private Transform fxSpawnPoint;
         [SerializeField] private Transform sprintFxSpawnPoint;
 
-        [SerializeField] private Transform cardUseFXPivot;
+        [SerializeField] private ScreenEffectController screenEffectController;
 
         private float nextDashTime;
         private float nextParryTime;
@@ -198,10 +198,6 @@ namespace Arcanist
             scale.x = Mathf.Abs(scale.x) * FacingDirection;
             Animator.transform.localScale = scale;
 
-            // Vector3 pivotScale = cardUseFXPivot.transform.localScale;
-            // pivotScale.x = Mathf.Abs(pivotScale.x) * FacingDirection;
-            // cardUseFXPivot.transform.localScale = pivotScale;
-
             UpdateSprintLoopFxDirection();
         }
 
@@ -266,6 +262,7 @@ namespace Arcanist
             IsParrying = false;
             CloseParryWindow();
             StopMovement();
+            screenEffectController.PlayDamageGlow();
             Animator.SetBool(IS_HURT, true);
         }
 
