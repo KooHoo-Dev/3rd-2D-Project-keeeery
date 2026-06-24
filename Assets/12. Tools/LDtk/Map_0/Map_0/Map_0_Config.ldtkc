@@ -1,0 +1,42 @@
+{
+    "PixelsPerUnit": 16,
+    "CustomLevelPrefab": {
+        "instanceID": 0
+    },
+    "IntGridValueColorsVisible": true,
+    "UseCompositeCollider": true,
+    "GeometryType": 0,
+    "CreateBackgroundColor": false,
+    "CreateLevelBoundsTrigger": false,
+    "UseParallax": true,
+    "ScaleEntities": true,
+    "IntGridValues": [
+        {
+            "_key": "Deco2_1",
+            "_asset": {
+                "instanceID": 0
+            }
+        },
+        {
+            "_key": "Decoration_1",
+            "_asset": {
+                "instanceID": 0
+            }
+        },
+        {
+            "_key": "Ground_1",
+            "_asset": {
+                "fileID": 11400000,
+                "guid": "f4cdbae92c8cf4050bb67fd7e20cc199",
+                "type": 2
+            }
+        },
+        {
+            "_key": "Ground_2",
+            "_asset": {
+                "instanceID": 0
+            }
+        }
+    ],
+    "Entities": []
+}

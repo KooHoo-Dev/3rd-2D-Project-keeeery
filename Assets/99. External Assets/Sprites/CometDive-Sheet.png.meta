@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: 2c31223b06e9a485291bbb63e0df920f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8978552995472540076
+    second: CometDive-Sheet_0
+  - first:
+      213: -4816125656787708521
+    second: CometDive-Sheet_1
+  - first:
+      213: 3093322677173132888
+    second: CometDive-Sheet_2
+  - first:
+      213: 2801462349585363706
+    second: CometDive-Sheet_3
+  - first:
+      213: -5803416197805218243
+    second: CometDive-Sheet_4
+  - first:
+      213: 9046029261471154070
+    second: CometDive-Sheet_5
+  - first:
+      213: 1121305906453319440
+    second: CometDive-Sheet_6
+  - first:
+      213: -4928099989985567184
+    second: CometDive-Sheet_7
+  - first:
+      213: 3793699125326276853
+    second: CometDive-Sheet_8
+  - first:
+      213: -2017023111952254762
+    second: CometDive-Sheet_9
+  - first:
+      213: -1421035667568672565
+    second: CometDive-Sheet_10
+  - first:
+      213: 2631853938660428261
+    second: CometDive-Sheet_11
+  - first:
+      213: -5814302110352350201
+    second: CometDive-Sheet_12
+  - first:
+      213: -6320773307380055223
+    second: CometDive-Sheet_13
+  - first:
+      213: 5731462314013212388
+    second: CometDive-Sheet_14
+  - first:
+      213: -7749749258776099976
+    second: CometDive-Sheet_15
+  - first:
+      213: -1725894854228586238
+    second: CometDive-Sheet_16
+  - first:
+      213: -2919384750034733120
+    second: CometDive-Sheet_17
+  - first:
+      213: 7845622871197602751
+    second: CometDive-Sheet_18
+  - first:
+      213: 1738696965349050557
+    second: CometDive-Sheet_19
+  - first:
+      213: -3257747474465829197
+    second: CometDive-Sheet_20
+  - first:
+      213: 7499318638410894666
+    second: CometDive-Sheet_21
+  - first:
+      213: -5770549966761598623
+    second: CometDive-Sheet_22
+  - first:
+      213: 1272973398118747400
+    second: CometDive-Sheet_23
+  - first:
+      213: -4236289480092179064
+    second: CometDive-Sheet_24
+  - first:
+      213: -3796037654781300322
+    second: CometDive-Sheet_25
+  - first:
+      213: -4833668788344906413
+    second: CometDive-Sheet_26
+  - first:
+      213: 5424625768897304990
+    second: CometDive-Sheet_27
+  - first:
+      213: 6785961560010214170
+    second: CometDive-Sheet_28
+  - first:
+      213: 1131825326642816723
+    second: CometDive-Sheet_29
+  - first:
+      213: 6525925460188965582
+    second: CometDive-Sheet_30
+  - first:
+      213: -2615639451283147998
+    second: CometDive-Sheet_31
+  - first:
+      213: -8729288134237093827
+    second: CometDive-Sheet_32
+  - first:
+      213: -5423785929714766927
+    second: CometDive-Sheet_33
+  - first:
+      213: 2152502582441264236
+    second: CometDive-Sheet_34
+  - first:
+      213: 1317840733871708472
+    second: CometDive-Sheet_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CometDive-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 252
+        width: 36
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ef6dbfe95c56380800000000000000
+      internalID: -8978552995472540076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 268
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79516896b3fa92db0800000000000000
+      internalID: -4816125656787708521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 259
+        width: 46
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85e9094f590bdea20800000000000000
+      internalID: 3093322677173132888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 260
+        width: 49
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af2baa60a2bc0e620800000000000000
+      internalID: 2801462349585363706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 259
+        width: 54
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d36621647bf167fa0800000000000000
+      internalID: -5803416197805218243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 260
+        width: 53
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69ff6c57fa3f98d70800000000000000
+      internalID: 9046029261471154070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 261
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01f82bee7cdaf8f00800000000000000
+      internalID: 1121305906453319440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 261
+        width: 48
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03edd475b2fdb9bb0800000000000000
+      internalID: -4928099989985567184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 260
+        width: 49
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f868cd214de5a430800000000000000
+      internalID: 3793699125326276853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 227
+        width: 46
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d835549a281204e0800000000000000
+      internalID: -2017023111952254762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 126
+        width: 46
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc0c86dd697774ce0800000000000000
+      internalID: -1421035667568672565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 126
+        width: 44
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e9419a8639368420800000000000000
+      internalID: 2631853938660428261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 126
+        width: 46
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 704e4af39037f4fa0800000000000000
+      internalID: -5814302110352350201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 9
+        width: 79
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94347d37a2a1848a0800000000000000
+      internalID: -6320773307380055223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 6
+        width: 100
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eebb46ab9e3a8f40800000000000000
+      internalID: 5731462314013212388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 6
+        width: 116
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 873cd4ceb1c537490800000000000000
+      internalID: -7749749258776099976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 4
+        width: 234
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 201d70636c36c08e0800000000000000
+      internalID: -1725894854228586238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 3
+        width: 83
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c7bc7399034c77d0800000000000000
+      internalID: -2919384750034733120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 18
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3d967fe6041ec60800000000000000
+      internalID: 7845622871197602751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 25
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db80eaf8da7112810800000000000000
+      internalID: 1738696965349050557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 18
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bec988aee72ac2d0800000000000000
+      internalID: -3257747474465829197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 26
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4d82fb819ee21860800000000000000
+      internalID: 7499318638410894666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 18
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16168800163eaefa0800000000000000
+      internalID: -5770549966761598623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 25
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80dc363af828aa110800000000000000
+      internalID: 1272973398118747400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 18
+        width: 30
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 885a165a92da535c0800000000000000
+      internalID: -4236289480092179064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 24
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e91f0c08dd3c15bc0800000000000000
+      internalID: -3796037654781300322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 19
+        width: 27
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35d1fccc8db5becb0800000000000000
+      internalID: -4833668788344906413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 1235
+        y: 28
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e99dd8a5564284b40800000000000000
+      internalID: 5424625768897304990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 1322
+        y: 25
+        width: 29
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1b4dd3d5149c2e50800000000000000
+      internalID: 6785961560010214170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 31
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d6e55e432d05bf00800000000000000
+      internalID: 1131825326642816723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 1436
+        y: 25
+        width: 31
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecaad3551aeb09a50800000000000000
+      internalID: 6525925460188965582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 1463
+        y: 35
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22335cdf6c163bbd0800000000000000
+      internalID: -2615639451283147998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 1541
+        y: 24
+        width: 41
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3004c011b65bd680800000000000000
+      internalID: -8729288134237093827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 1576
+        y: 38
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bbe691fe67dab4b0800000000000000
+      internalID: -5423785929714766927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 1657
+        y: 23
+        width: 41
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c64c58cb1b93fdd10800000000000000
+      internalID: 2152502582441264236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CometDive-Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 1691
+        y: 37
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83996fc4a29e94210800000000000000
+      internalID: 1317840733871708472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CometDive-Sheet_0: -8978552995472540076
+      CometDive-Sheet_1: -4816125656787708521
+      CometDive-Sheet_10: -1421035667568672565
+      CometDive-Sheet_11: 2631853938660428261
+      CometDive-Sheet_12: -5814302110352350201
+      CometDive-Sheet_13: -6320773307380055223
+      CometDive-Sheet_14: 5731462314013212388
+      CometDive-Sheet_15: -7749749258776099976
+      CometDive-Sheet_16: -1725894854228586238
+      CometDive-Sheet_17: -2919384750034733120
+      CometDive-Sheet_18: 7845622871197602751
+      CometDive-Sheet_19: 1738696965349050557
+      CometDive-Sheet_2: 3093322677173132888
+      CometDive-Sheet_20: -3257747474465829197
+      CometDive-Sheet_21: 7499318638410894666
+      CometDive-Sheet_22: -5770549966761598623
+      CometDive-Sheet_23: 1272973398118747400
+      CometDive-Sheet_24: -4236289480092179064
+      CometDive-Sheet_25: -3796037654781300322
+      CometDive-Sheet_26: -4833668788344906413
+      CometDive-Sheet_27: 5424625768897304990
+      CometDive-Sheet_28: 6785961560010214170
+      CometDive-Sheet_29: 1131825326642816723
+      CometDive-Sheet_3: 2801462349585363706
+      CometDive-Sheet_30: 6525925460188965582
+      CometDive-Sheet_31: -2615639451283147998
+      CometDive-Sheet_32: -8729288134237093827
+      CometDive-Sheet_33: -5423785929714766927
+      CometDive-Sheet_34: 2152502582441264236
+      CometDive-Sheet_35: 1317840733871708472
+      CometDive-Sheet_4: -5803416197805218243
+      CometDive-Sheet_5: 9046029261471154070
+      CometDive-Sheet_6: 1121305906453319440
+      CometDive-Sheet_7: -4928099989985567184
+      CometDive-Sheet_8: 3793699125326276853
+      CometDive-Sheet_9: -2017023111952254762
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
