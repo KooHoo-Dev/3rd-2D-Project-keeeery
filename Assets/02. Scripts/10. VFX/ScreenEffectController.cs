@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,11 +42,9 @@ namespace Arcanist
 
         private void PlayGlow(Color color, float maxAlpha, float fadeInDuration, float fadeOutDuration)
         {
-            if (vignetteImage == null)
-                return;
+            if (vignetteImage == null) return;
 
-            if (glowRoutine != null)
-                StopCoroutine(glowRoutine);
+            if (glowRoutine != null) StopCoroutine(glowRoutine);
 
             glowRoutine = StartCoroutine(GlowRoutine(color, maxAlpha, fadeInDuration, fadeOutDuration));
         }
@@ -66,6 +63,7 @@ namespace Arcanist
             }
 
             t = 0f;
+
             while (t < fadeOutDuration)
             {
                 t += Time.deltaTime;
@@ -86,8 +84,7 @@ namespace Arcanist
 
         private void SetVignetteAlpha(float alpha)
         {
-            if (vignetteImage == null)
-                return;
+            if (vignetteImage == null) return;
 
             Color color = vignetteImage.color;
             color.a = alpha;

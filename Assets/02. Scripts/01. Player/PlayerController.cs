@@ -61,6 +61,9 @@ namespace Arcanist
 
         [SerializeField] private ScreenEffectController screenEffectController;
 
+        [Header("UI")]
+        [SerializeField] private OverlayController overlayController;
+
         private float nextDashTime;
         private float nextParryTime;
         private float hurtEndTime;
@@ -74,9 +77,11 @@ namespace Arcanist
 
         public bool IsParrying { get; set; } = false;
         public bool IsParryWindowOpen { get; private set; } = false;
+        public static float FacingDirecton { get; internal set; }
 
         private PlayerAnimStateBase defaultState;
         private PlayerAnimStateBase currentState;
+
 
         private void Awake()
         {
@@ -197,8 +202,6 @@ namespace Arcanist
             Vector3 scale = Animator.transform.localScale;
             scale.x = Mathf.Abs(scale.x) * FacingDirection;
             Animator.transform.localScale = scale;
-
-            UpdateSprintLoopFxDirection();
         }
 
         private void ApplyMoveInput(float horizontal, bool canSprint)
@@ -281,8 +284,16 @@ namespace Arcanist
             IsParrying = false;
             CloseParryWindow();
             StopMovement();
+            screenEffectController.PlayDamageGlow();
             Animator.SetBool(IS_HURT, false);
             Animator.SetTrigger(DEATH);
+
+            overlayController.StartDeathOverlay();
+        }
+
+        public void ShowDeathWindow()
+        {
+            overlayController.ShowDeathWindow();
         }
 
         private void UpdateJumpInput()
@@ -359,15 +370,6 @@ namespace Arcanist
             Player.LocalPlayer.RecoverStamina(staminaRecoveryPerSec * Time.deltaTime);
         }
 
-        private void UpdateSprintLoopFxDirection()
-        {
-            if (sprintLoopFx == null) return;
-
-            Vector3 scale = sprintLoopFx.transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * FacingDirection;
-            sprintLoopFx.transform.localScale = scale;
-        }
-
         private void SetSprintState(bool value, bool playEndFx = true)
         {
             if (isSprint == value)
@@ -398,7 +400,6 @@ namespace Arcanist
 
             Transform spawnPoint = sprintFxSpawnPoint != null ? sprintFxSpawnPoint : transform;
             sprintLoopFx = Instantiate(sprintLoopFxPrefab, spawnPoint.position, Quaternion.identity, spawnPoint);
-            UpdateSprintLoopFxDirection();
         }
 
         private void StopSprintLoopFx()

@@ -11,7 +11,9 @@ namespace Utilities
     // 아래처럼 작업하는 디자인 패턴을 Wrapper 패턴이라고 부름. "Wrapping 한다" 라고 표현함. 
     public static class SimpleInput // 어디서든 호출 가능하도록 static으로 선언
     {
-        #region 키보드 입략
+        #region 키보드 입력
+        public static bool IsKeyBoardInputBlocked { get; set; }
+
         public static bool GetKeyDown(Key key)
         {
             return Keyboard.current[key].wasPressedThisFrame;
@@ -101,6 +103,8 @@ namespace Utilities
         /// <returns>수평 축 원시 입력값을 반환 (-1, 0, 1)</returns>
         public static float GetAxisHorizontalRaw()
         {
+            if (IsKeyBoardInputBlocked) return 0.0f;
+
             float axis = 0.0f;
 
             if (Keyboard.current.rightArrowKey.isPressed)
@@ -118,6 +122,8 @@ namespace Utilities
         /// <returns>수직 축 원시 입력값을 반환 (-1, 0, 1)</returns>
         public static float GetAxisVerticalRaw()
         {
+            if (IsKeyBoardInputBlocked) return 0.0f;
+            
             float axis = 0.0f;
 
             if (Keyboard.current.upArrowKey.isPressed)
