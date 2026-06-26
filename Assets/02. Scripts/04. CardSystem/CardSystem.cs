@@ -17,8 +17,13 @@ namespace Arcanist
         private readonly List<CardData> hand = new();
         private readonly List<CardData> discardPile = new();
 
+        [Header("Skill Motion")]
+        [SerializeField] private Animator playerAnimator;
+        [SerializeField] private string fallbackCardSkillTrigger = "CardSkill";
+
         private CardGaugeController cardGaugeController;
         private CardHandUI cardHandUI;
+        private CardData pendingSkillCard;
         private bool isGaugeFull;
         private bool isDeckInitialized;
 
@@ -216,12 +221,44 @@ namespace Arcanist
             if (usedCard == null)
                 return;
 
+            pendingSkillCard = usedCard;
+            PlayCardSkillMotion(usedCard);
+
             cardHandUI.UseCard(slotIndex);
             hand.Remove(usedCard);
             discardPile.Add(usedCard);
 
             Debug.Log($"CardSystem ::: Discard Card = {usedCard.CardName}");
             TryDrawIfReady();
+        }
+
+        private void PlayCardSkillMotion(CardData card)
+        {
+            if (card == null)
+                return;
+
+            Debug.Log($"CardSystem ::: Use Skill Card = {card.CardName}");
+
+            if (playerAnimator == null)
+                return;
+
+            string triggerName = string.IsNullOrEmpty(card.AnimationTrigger)
+                ? fallbackCardSkillTrigger
+                : card.AnimationTrigger;
+
+            if (string.IsNullOrEmpty(triggerName))
+                return;
+
+            playerAnimator.ResetTrigger(triggerName);
+            playerAnimator.SetTrigger(triggerName);
+        }
+
+        public void ExecutePendingCardSkill()
+        {
+            if (pendingSkillCard == null) return;
+
+            Debug.Log($"CardSystem ::: Execute Skill Effect = {pendingSkillCard.CardName}");
+            pendingSkillCard = null;
         }
 
         private void Shuffle(List<CardData> cards)

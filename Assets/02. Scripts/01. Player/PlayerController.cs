@@ -77,7 +77,6 @@ namespace Arcanist
 
         public bool IsParrying { get; set; } = false;
         public bool IsParryWindowOpen { get; private set; } = false;
-        public static float FacingDirecton { get; internal set; }
 
         private PlayerAnimStateBase defaultState;
         private PlayerAnimStateBase currentState;

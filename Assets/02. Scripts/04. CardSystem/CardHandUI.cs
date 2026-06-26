@@ -82,8 +82,6 @@ namespace Arcanist
                 return;
 
             CardView cardView = cardSlots[slotIndex].GetComponentInChildren<CardView>();
-            if (cardView != null)
-                cardView.DebugUse();
 
             RectTransform card = cardView != null
                 ? cardView.GetComponent<RectTransform>()

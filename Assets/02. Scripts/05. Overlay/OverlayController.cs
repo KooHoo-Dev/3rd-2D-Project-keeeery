@@ -28,6 +28,7 @@ namespace Arcanist
 
         [Header("DeathWindow")]
         [SerializeField] private Transform promptTargetPivot;
+        [SerializeField] private PlayerController playerController;
         
         private RectTransform reviveInputPrompt;
 
@@ -43,8 +44,11 @@ namespace Arcanist
         private void Awake()
         {
             CurrentState = OverlayState.None;
-            reviveInputPrompt = 
-                deathWindow.transform.Find("ReviveInputPrompt").GetComponent<RectTransform>();
+
+            if (playerController == null)
+                playerController = FindFirstObjectByType<PlayerController>();
+
+            reviveInputPrompt = deathWindow.transform.Find("ReviveInputPrompt").GetComponent<RectTransform>();
 
             InitializePauseButtons();
             HideAllWindows();
@@ -71,7 +75,7 @@ namespace Arcanist
         public void ShowDeathWindow()
         {
             Vector3 promptPosition = promptTargetPivot.position;
-            promptPosition.x -= 0.1f * PlayerController.FacingDirecton;
+            promptPosition.x += 0.05f * playerController.FacingDirection;
             reviveInputPrompt.position = promptPosition;
             deathWindow.SetActive(true);
         }

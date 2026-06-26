@@ -19,14 +19,18 @@ namespace Arcanist
         [SerializeField] private Sprite icon;
         [SerializeField] private CardType cardType;
 
-        [Header("Debug")]
-        [SerializeField] private string debugMessage;
+        [Header("Player Motion")]
+        [SerializeField] private string animationTrigger;
+
+        // [Header("Debug")]
+        // [SerializeField] private string debugMessage;
 
         public string CardId => cardId;
         public string CardName => cardName;
         public Sprite Icon => icon;
         public CardType CardType => cardType;
-        public string DebugMessage => debugMessage;
+        public string AnimationTrigger => animationTrigger;
+        // public string DebugMessage => debugMessage;
     }
 }
 

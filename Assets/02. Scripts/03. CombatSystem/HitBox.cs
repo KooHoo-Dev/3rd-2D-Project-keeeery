@@ -8,6 +8,9 @@ namespace Arcanist
         [field: SerializeField] public AttackInfo AttackInfo { get; private set; }
         [SerializeField] private ParryLightEffect parryLightEffect;
         [SerializeField] private ScreenEffectController screenEffectController;
+        [SerializeField] private GameObject hitFxPrefab;
+        [SerializeField] private bool playHitFxOnlyByPlayer = true;
+        [SerializeField] private float hitFxLocalYOffset = 0.0f;
 
         private CombatEntity Owner { get; set; }
 
@@ -72,6 +75,23 @@ namespace Arcanist
             @event.Position = collision.ClosestPoint(sender.transform.position);
 
             CombatSystem.Instance.To(sender, receiver, @event);
+            PlayHitFx(sender, @event.Position);
+        }
+
+        private void PlayHitFx(CombatEntity sender, Vector3 position)
+        {
+            if (hitFxPrefab == null) return;
+
+            bool isPlayerAttack = sender.GetComponent<PlayerController>() != null;
+
+            if (playHitFxOnlyByPlayer && !isPlayerAttack) return;
+
+            Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
+            Vector3 offset = new Vector3(0.0f, hitFxLocalYOffset, 0.0f);
+            GameObject fx = Instantiate(hitFxPrefab, position + offset, rotation);
+
+            float direction = sender.transform.lossyScale.x >= 0.0f ? 1.0f : -1.0f;
+            fx.transform.localScale = new Vector3(direction, 1.0f, 1.0f);
         }
     }
 }

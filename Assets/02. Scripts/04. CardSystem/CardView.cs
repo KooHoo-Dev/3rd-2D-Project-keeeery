@@ -61,20 +61,5 @@ namespace Arcanist
                 iconImage.color = color;
             }
         }
-
-        public void DebugUse()
-        {
-            if (CardData == null)
-            {
-                Debug.Log("CardView ::: CardData is null");
-                return;
-            }
-
-            string message = string.IsNullOrEmpty(CardData.DebugMessage)
-                ? $"{CardData.CardName} Used"
-                : CardData.DebugMessage;
-
-            Debug.Log(message);
-        }
     }
 }

@@ -6,9 +6,19 @@ namespace Arcanist
     {
         [SerializeField] private PlayerController playerController;
 
+        [Header("Card")]
+        [SerializeField] private CardSystem cardSystem;
+
         public void ShowDeathWindow()
         {
             playerController.ShowDeathWindow();
+        }
+
+        public void ExecutePendingCardSkill()
+        {
+            if (cardSystem == null) return;
+
+            cardSystem.ExecutePendingCardSkill();
         }
     }
 }
