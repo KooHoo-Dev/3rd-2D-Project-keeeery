@@ -22,6 +22,11 @@ namespace Arcanist
         [Header("Player Motion")]
         [SerializeField] private string animationTrigger;
 
+        [Header("Effect")]
+        [SerializeField] private CardEffect effect;
+
+        public CardEffect Effect => effect;
+
         // [Header("Debug")]
         // [SerializeField] private string debugMessage;
 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6053784147961823679}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HeadUpPivot
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2870976477559899801}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PatrolPoint
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 5809425701408224954}
   - component: {fileID: 5993753250153684236}
   - component: {fileID: 1292777937788745370}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyNormal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 8710229684538076155}
   - component: {fileID: 4960596537566220320}
   - component: {fileID: 9079749165920263019}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 5920850760607831719}
   - component: {fileID: 3277125856441771003}
   - component: {fileID: 8639885469304045307}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,6 +495,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
+  screenEffectController: {fileID: 0}
+  hitFxPrefab: {fileID: 0}
+  playHitFxOnlyByPlayer: 1
+  hitFxLocalYOffset: 0
 --- !u!61 &8639885469304045307
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -30,10 +30,16 @@ namespace Arcanist
         [Header("Patrol")]
         [SerializeField] private Transform patrolPoint;
 
+        [Header("Targeting")]
+        [SerializeField] private EnemyGrade grade = EnemyGrade.Normal;
+        [SerializeField] private Transform targetPoint;
+
         [field: SerializeField] public Transform Target { get; private set; }
 
         public Animator Animator { get; private set; }
         public Enemy Enemy { get; private set; }
+        public EnemyGrade Grade => grade;
+        public Transform TargetPoint => targetPoint != null ? targetPoint : transform;
 
         public float MoveSpeed => moveSpeed;
         public float TraceRange => traceRange;
@@ -80,6 +86,12 @@ namespace Arcanist
         private void OnEnable()
         {
             currentState = null;
+            EnemyManager.Register(this);
+        }
+
+        private void OnDisable()
+        {
+            EnemyManager.Unregister(this);
         }
 
         private void Update()

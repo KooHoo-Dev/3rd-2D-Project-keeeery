@@ -64,6 +64,9 @@ namespace Arcanist
         [Header("UI")]
         [SerializeField] private OverlayController overlayController;
 
+        [Header("Card")]
+        [SerializeField] private CardSystem cardSystem;
+
         private float nextDashTime;
         private float nextParryTime;
         private float hurtEndTime;
@@ -293,6 +296,14 @@ namespace Arcanist
         public void ShowDeathWindow()
         {
             overlayController.ShowDeathWindow();
+        }
+
+        public void ExecutePendingCardSkill()
+        {
+            if (cardSystem == null)
+                return;
+
+            cardSystem.ExecutePendingCardSkill();
         }
 
         private void UpdateJumpInput()

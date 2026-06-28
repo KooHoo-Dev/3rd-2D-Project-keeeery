@@ -21,6 +21,13 @@ namespace Arcanist
         [SerializeField] private Animator playerAnimator;
         [SerializeField] private string fallbackCardSkillTrigger = "CardSkill";
 
+        [Header("Skill Effect")]
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private Transform cardCastPoint;
+
+        [Header("Targeting")]
+        [SerializeField] private EnemyManager enemyManager;
+
         private CardGaugeController cardGaugeController;
         private CardHandUI cardHandUI;
         private CardData pendingSkillCard;
@@ -37,6 +44,9 @@ namespace Arcanist
         {
             cardGaugeController = GetComponent<CardGaugeController>();
             cardHandUI = GetComponent<CardHandUI>();
+
+            if (playerController == null && playerAnimator != null)
+                playerController = playerAnimator.GetComponentInParent<PlayerController>();
         }
 
         private void Update()
@@ -63,14 +73,10 @@ namespace Arcanist
         {
             ownedCards.Clear();
 
-            if (cards == null)
-                return;
+            if (cards == null) return;
 
             foreach (CardData card in cards)
-            {
-                if (card != null)
-                    ownedCards.Add(card);
-            }
+                if (card != null) ownedCards.Add(card);
         }
 
         public void SetPlayerDeck(IEnumerable<CardData> cards)
@@ -80,10 +86,7 @@ namespace Arcanist
             if (cards != null)
             {
                 foreach (CardData card in cards)
-                {
-                    if (card != null)
-                        playerDeck.Add(card);
-                }
+                    if (card != null) playerDeck.Add(card);
             }
 
             InitializeDrawPileFromPlayerDeck();
@@ -91,16 +94,14 @@ namespace Arcanist
 
         public void AddOwnedCard(CardData card)
         {
-            if (card == null)
-                return;
+            if (card == null) return;
 
             ownedCards.Add(card);
         }
 
         public bool AddCardToPlayerDeck(CardData card)
         {
-            if (card == null)
-                return false;
+            if (card == null) return false;
 
             if (ownedCards.Contains(card) == false)
             {
@@ -115,13 +116,11 @@ namespace Arcanist
 
         public bool RemoveCardFromPlayerDeck(CardData card)
         {
-            if (card == null)
-                return false;
+            if (card == null) return false;
 
             bool removed = playerDeck.Remove(card);
 
-            if (removed)
-                InitializeDrawPileFromPlayerDeck();
+            if (removed) InitializeDrawPileFromPlayerDeck();
 
             return removed;
         }
@@ -135,28 +134,20 @@ namespace Arcanist
             isDeckInitialized = playerDeck.Count > 0;
 
             foreach (CardData card in playerDeck)
-            {
-                if (card != null)
-                    drawPile.Add(card);
-            }
+                if (card != null) drawPile.Add(card);
 
             Shuffle(drawPile);
-            Debug.Log($"CardSystem ::: Deck initialized. DrawPile Count = {drawPile.Count}");
         }
 
         private void TryDrawIfReady()
         {
-            if (isDeckInitialized == false)
-                return;
+            if (isDeckInitialized == false) return;
 
-            if (isGaugeFull == false)
-                return;
+            if (isGaugeFull == false) return;
 
-            if (cardHandUI == null || cardHandUI.IsDrawing)
-                return;
+            if (cardHandUI == null || cardHandUI.IsDrawing) return;
 
-            if (cardHandUI.HasEmptySlot == false)
-                return;
+            if (cardHandUI.HasEmptySlot == false) return;
 
             CardData drawnCard = DrawCardFromDeck();
 
@@ -174,32 +165,22 @@ namespace Arcanist
 
         private CardData DrawCardFromDeck()
         {
-            if (drawPile.Count <= 0)
-                RefillDrawPileFromDiscardPile();
+            if (drawPile.Count <= 0) RefillDrawPileFromDiscardPile();
 
-            if (drawPile.Count <= 0)
-            {
-                Debug.LogWarning("CardSystem ::: Cannot draw. DrawPile and DiscardPile are empty.");
-                return null;
-            }
+            if (drawPile.Count <= 0) return null;
 
             CardData drawnCard = drawPile[0];
             drawPile.RemoveAt(0);
-
-            Debug.Log($"CardSystem ::: Draw Card = {drawnCard.CardName}");
             return drawnCard;
         }
 
         private void RefillDrawPileFromDiscardPile()
         {
-            if (discardPile.Count <= 0)
-                return;
+            if (discardPile.Count <= 0) return;
 
             drawPile.AddRange(discardPile);
             discardPile.Clear();
             Shuffle(drawPile);
-
-            Debug.Log($"CardSystem ::: DrawPile refilled from DiscardPile. DrawPile Count = {drawPile.Count}");
         }
 
         private void OnCardDrawCompleted()
@@ -210,16 +191,13 @@ namespace Arcanist
 
         private void UseCard(int slotIndex)
         {
-            if (cardHandUI == null)
-                return;
+            if (cardHandUI == null) return;
 
-            if (cardHandUI.IsDrawing)
-                return;
+            if (cardHandUI.IsDrawing) return;
 
             CardData usedCard = cardHandUI.GetCard(slotIndex);
 
-            if (usedCard == null)
-                return;
+            if (usedCard == null) return;
 
             pendingSkillCard = usedCard;
             PlayCardSkillMotion(usedCard);
@@ -228,26 +206,20 @@ namespace Arcanist
             hand.Remove(usedCard);
             discardPile.Add(usedCard);
 
-            Debug.Log($"CardSystem ::: Discard Card = {usedCard.CardName}");
             TryDrawIfReady();
         }
 
         private void PlayCardSkillMotion(CardData card)
         {
-            if (card == null)
-                return;
+            if (card == null) return;
 
-            Debug.Log($"CardSystem ::: Use Skill Card = {card.CardName}");
-
-            if (playerAnimator == null)
-                return;
+            if (playerAnimator == null) return;
 
             string triggerName = string.IsNullOrEmpty(card.AnimationTrigger)
                 ? fallbackCardSkillTrigger
                 : card.AnimationTrigger;
 
-            if (string.IsNullOrEmpty(triggerName))
-                return;
+            if (string.IsNullOrEmpty(triggerName)) return;
 
             playerAnimator.ResetTrigger(triggerName);
             playerAnimator.SetTrigger(triggerName);
@@ -257,15 +229,24 @@ namespace Arcanist
         {
             if (pendingSkillCard == null) return;
 
-            Debug.Log($"CardSystem ::: Execute Skill Effect = {pendingSkillCard.CardName}");
+            CardData card = pendingSkillCard;
             pendingSkillCard = null;
+
+            if (card.Effect == null) return;
+
+            Transform castPoint = cardCastPoint != null ? cardCastPoint : playerController != null ? playerController.transform : transform;
+            int facingDirection = playerController != null ? playerController.FacingDirection : 1;
+            Transform target = enemyManager != null ? enemyManager.FindBestTarget(castPoint.position) : null;
+            CardEffectContext context = new(card, playerController, castPoint, facingDirection, target);
+
+            card.Effect.Execute(context);
         }
 
         private void Shuffle(List<CardData> cards)
         {
             for (int i = cards.Count - 1; i > 0; i--)
             {
-                int randomIndex = Random.Range(0, i + 1);
+                int randomIndex = UnityEngine.Random.Range(0, i + 1);
                 (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
             }
         }
