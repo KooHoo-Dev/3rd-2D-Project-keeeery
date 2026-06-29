@@ -44,5 +44,8 @@ TagManager:
   - name: FX
     uniqueID: 2966356901
     locked: 0
+  - name: Tooltip
+    uniqueID: 2869071823
+    locked: 0
   m_RenderingLayers:
   - Default

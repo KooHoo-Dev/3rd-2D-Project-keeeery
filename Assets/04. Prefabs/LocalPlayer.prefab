@@ -135,6 +135,9 @@ MonoBehaviour:
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
   screenEffectController: {fileID: 0}
+  hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
+  playHitFxOnlyByPlayer: 1
+  hitFxLocalYOffset: 0.5
 --- !u!61 &3516409619870467734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -320,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 2310535005857261350}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 0.75, z: 0}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -343,6 +346,7 @@ GameObject:
   - component: {fileID: 107812643175150398}
   - component: {fileID: 8373384800210950506}
   - component: {fileID: 4350949043046959774}
+  - component: {fileID: 3390226323550568021}
   m_Layer: 0
   m_Name: LocalPlayer
   m_TagString: Untagged
@@ -491,6 +495,8 @@ MonoBehaviour:
   fxSpawnPoint: {fileID: 7130106607857816216}
   sprintFxSpawnPoint: {fileID: 2793759776769483979}
   screenEffectController: {fileID: 0}
+  overlayController: {fileID: 0}
+  cardSystem: {fileID: 0}
 --- !u!114 &1753533218181533399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Study_ActionPlatformer.Player
   <HeadUpPivot>k__BackingField: {fileID: 1511040938191158499}
   <Stat>k__BackingField:
-    <MaxHp>k__BackingField: 5000
+    <MaxHp>k__BackingField: 1000
   hpBar: {fileID: 0}
   hpDelayBar: {fileID: 0}
   maxHpBarScaleX: 2.5
@@ -611,6 +617,29 @@ MonoBehaviour:
   burstRadius: 9
   burstInTime: 0.015
   burstOutTime: 0.25
+--- !u!114 &3390226323550568021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968401417501518829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313c9c5d037da459191e91a976eaafef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Arcanist.PlayerInventory
+  ownedCards:
+  - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
+  - {fileID: 11400000, guid: f851349177d0446d7bee78b7b202ec01, type: 2}
+  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
+  - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
+  deckCards:
+  - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
+  - {fileID: 11400000, guid: f851349177d0446d7bee78b7b202ec01, type: 2}
+  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
+  maxDeckCardCount: 25
+  allowDuplicateCards: 0
 --- !u!1 &3191532438956212976
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +651,7 @@ GameObject:
   - component: {fileID: 8692363909361041154}
   - component: {fileID: 1990378829057538046}
   - component: {fileID: 1291406621599861162}
+  - component: {fileID: 8996568688173906432}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -730,6 +760,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8996568688173906432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3191532438956212976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d5ff03ce0a242a8906beb5694b8d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAnimationReceiver
+  playerController: {fileID: 6044175225541664902}
+  cardSystem: {fileID: 0}
 --- !u!1 &3250110276363422527
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,6 +940,9 @@ MonoBehaviour:
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
   screenEffectController: {fileID: 0}
+  hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
+  playHitFxOnlyByPlayer: 1
+  hitFxLocalYOffset: 0.5
 --- !u!61 &5943447859623294796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6237,6 +6284,9 @@ MonoBehaviour:
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
   screenEffectController: {fileID: 0}
+  hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
+  playHitFxOnlyByPlayer: 1
+  hitFxLocalYOffset: 0.5
 --- !u!61 &165717915923768831
 BoxCollider2D:
   m_ObjectHideFlags: 0

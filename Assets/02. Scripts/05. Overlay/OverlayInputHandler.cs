@@ -24,6 +24,12 @@ namespace Arcanist
                 return;
             }
 
+            if (SimpleInput.GetKeyDown(Key.I))
+            {
+                ToggleInventory();
+                return;
+            }
+
             if (SimpleInput.GetKeyDown(Key.Escape) == false) return;
 
             TogglePause();
@@ -42,10 +48,28 @@ namespace Arcanist
                     break;
 
                 case OverlayController.OverlayState.Option:
-                    overlayController.ShowOption();
+                    overlayController.ShowPause();
+                    break;
+
+                case OverlayController.OverlayState.Inventory:
+                    overlayController.Hide();
                     break;
 
                 case OverlayController.OverlayState.Death:
+                    break;
+            }
+        }
+
+        private void ToggleInventory()
+        {
+            switch (overlayController.CurrentState)
+            {
+                case OverlayController.OverlayState.None:
+                    overlayController.ShowInventory();
+                    break;
+
+                case OverlayController.OverlayState.Inventory:
+                    overlayController.Hide();
                     break;
             }
         }

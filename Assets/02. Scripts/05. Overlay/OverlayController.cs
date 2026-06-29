@@ -14,6 +14,7 @@ namespace Arcanist
         [Header("Windows")]
         [SerializeField] private GameObject pauseWindow;
         [SerializeField] private GameObject optionWindow;
+        [SerializeField] private GameObject inventoryWindow;
         [SerializeField] private GameObject deathWindow;
 
         [Header("Light")]
@@ -34,7 +35,11 @@ namespace Arcanist
 
         public enum OverlayState
         {
-            None, Pause, Option, Death
+            None,
+            Pause,
+            Option,
+            Inventory,
+            Death
         }
 
         public OverlayState CurrentState { get; private set; }
@@ -70,6 +75,14 @@ namespace Arcanist
             CurrentState = OverlayState.Option;
             SimpleInput.IsKeyBoardInputBlocked = true;
             ShowWindow(optionWindow, menuLightIntensity, menuFadeDuration);
+        }
+
+        public void ShowInventory()
+        {
+            CurrentState = OverlayState.Inventory;
+            SimpleInput.IsKeyBoardInputBlocked = true;
+            Time.timeScale = 0.0f;
+            ShowWindow(inventoryWindow, menuLightIntensity, menuFadeDuration);
         }
 
         public void ShowDeathWindow()
@@ -176,6 +189,7 @@ namespace Arcanist
         {
             pauseWindow.SetActive(false);
             optionWindow.SetActive(false);
+            inventoryWindow.SetActive(false);
             deathWindow.SetActive(false);
         }
 
