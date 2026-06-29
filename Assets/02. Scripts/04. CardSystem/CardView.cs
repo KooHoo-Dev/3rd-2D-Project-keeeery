@@ -7,11 +7,16 @@ namespace Arcanist
     public class CardView : MonoBehaviour
     {
         [Header("UI References")]
-        [SerializeField] private TMP_Text cardNameText;
-        [SerializeField] private TMP_Text cardTypeText;
         [SerializeField] private Image iconImage;
+        [SerializeField] private TooltipTrigger tooltipTrigger;
 
         public CardData CardData { get; private set; }
+
+        private void Awake()
+        {
+            if (tooltipTrigger == null)
+                tooltipTrigger = GetComponent<TooltipTrigger>();
+        }
 
         public void Setup(CardData cardData)
         {
@@ -23,43 +28,44 @@ namespace Arcanist
                 return;
             }
 
-            if (cardNameText != null)
-                cardNameText.SetText(CardData.CardName);
-
-            if (cardTypeText != null)
-                cardTypeText.SetText(CardData.CardType.ToString());
-
-            if (iconImage != null)
-            {
-                iconImage.sprite = CardData.Icon;
-                iconImage.enabled = CardData.Icon != null;
-                iconImage.raycastTarget = false;
-
-                Color color = iconImage.color;
-                color.a = CardData.Icon != null ? 1f : 0f;
-                iconImage.color = color;
-            }
+            SetIcon(CardData.Icon);
+            SetTooltip(CardData);
         }
 
         public void Clear()
         {
             CardData = null;
 
-            if (cardNameText != null)
-                cardNameText.SetText(string.Empty);
+            // SetText(cardNameText, string.Empty);
+            // SetText(cardTypeText, string.Empty);
+            SetIcon(null);
+            SetTooltip(null);
+        }
 
-            if (cardTypeText != null)
-                cardTypeText.SetText(string.Empty);
+        private void SetText(TMP_Text targetText, string value)
+        {
+            if (targetText == null) return;
 
-            if (iconImage != null)
-            {
-                iconImage.sprite = null;
-                iconImage.enabled = false;
+            targetText.SetText(value);
+        }
 
-                Color color = iconImage.color;
-                color.a = 0f;
-                iconImage.color = color;
-            }
+        private void SetIcon(Sprite icon)
+        {
+            if (iconImage == null) return;
+
+            iconImage.sprite = icon;
+            iconImage.enabled = icon != null;
+
+            Color color = iconImage.color;
+            color.a = icon != null ? 1.0f : 0.0f;
+            iconImage.color = color;
+        }
+
+        private void SetTooltip(CardData cardData)
+        {
+            if (tooltipTrigger == null) return;
+
+            tooltipTrigger.SetCardData(cardData);
         }
     }
 }
