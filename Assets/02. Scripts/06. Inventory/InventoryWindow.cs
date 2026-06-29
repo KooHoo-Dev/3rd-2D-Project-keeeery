@@ -104,7 +104,11 @@ namespace Arcanist
             if (slot.SlotArea == InventoryCardSlotArea.Collection)
             {
                 if (!slot.IsOwned)
+                {
+                    ClearSelection();
+                    RefreshButtonState();
                     return;
+                }
 
                 if (selectedCollectionSlot != null)
                     selectedCollectionSlot.SetSelected(false);
@@ -149,6 +153,11 @@ namespace Arcanist
 
             if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
                 playerInventory.RemoveFromDeckAt(selectedDeckSlot.DeckIndex);
+        }
+
+        public void ShowUnownedCardMessage()
+        {
+            ShowGuideMessage("아직 획득하지 못한 카드는 덱에 추가할 수 없습니다.");
         }
 
         public void HandleCardDropped(InventoryCardSlot sourceSlot, PointerEventData eventData)
@@ -406,5 +415,3 @@ namespace Arcanist
         }
     }
 }
-
-        

@@ -18,6 +18,7 @@ namespace Arcanist
         [SerializeField] private Image cardIcon;
         [SerializeField] private GameObject newBadge;
         [SerializeField] private GameObject lockIcon;
+        [SerializeField] private TooltipTrigger tooltipTrigger;
 
         [Header("Tint")]
         [SerializeField] private Color normalColor = Color.white;
@@ -43,6 +44,9 @@ namespace Arcanist
         {
             if (slotFrame != null)
                 defaultFrameColor = slotFrame.color;
+            
+            if (tooltipTrigger == null)
+                tooltipTrigger = GetComponent<TooltipTrigger>();
         }
 
         public void Setup(InventoryWindow owner, CardData cardData, InventoryCardSlotArea slotArea, bool isOwned, bool isNew, int deckIndex = -1)
@@ -70,6 +74,14 @@ namespace Arcanist
         {
             if (cardData == null)
                 return;
+
+            if (!isOwned)
+            {
+                if (eventData.clickCount >= 2)
+                    owner.ShowUnownedCardMessage();
+
+                return;
+            }
 
             owner.SelectSlot(this);
 
@@ -118,10 +130,16 @@ namespace Arcanist
 
         private void SendTooltipData()
         {
-            TooltipTrigger tooltipTrigger = GetComponent<TooltipTrigger>();
+            if (tooltipTrigger == null)
+                return;
 
-            if (tooltipTrigger != null)
-                tooltipTrigger.SetCardData(cardData);
+            if (cardData == null)
+            {
+                tooltipTrigger.Clear();
+                return;
+            }
+
+            tooltipTrigger.SetCard(cardData, isOwned);
         }
 
         private Sprite GetCardIcon(CardData data)

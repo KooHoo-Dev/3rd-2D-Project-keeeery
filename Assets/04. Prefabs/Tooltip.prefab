@@ -187,9 +187,17 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -3730459807984926114, guid: 25cd56fd196ab4f2ea76e84fb43d79c3, type: 2}
+    - target: {fileID: 363945935886903865, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 419116796102971296, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -43
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542557555457011182, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3269161939125189625, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
       propertyPath: m_Name
@@ -207,6 +215,14 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2208381932484465806, guid: 7f2fce25629c74621b7f0a5118795e68, type: 2}
+    - target: {fileID: 4028187536835006010, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4520765847367048633, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -43
+      objectReference: {fileID: 0}
     - target: {fileID: 5414859976348649000, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
       propertyPath: m_Alpha
       value: 0
@@ -315,6 +331,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7578324576031112325, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7728097028852353607, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.55
@@ -402,8 +422,14 @@ MonoBehaviour:
   nameText: {fileID: 3078261744093855889}
   typeText: {fileID: 4241427355563968326}
   descriptionText: {fileID: 1752515299769001106}
+  notObtainedObject: {fileID: 7109685825153165570}
   cursorOffset: {x: 0, y: 0}
   screenPadding: {x: 24, y: 24}
+--- !u!1 &7109685825153165570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5557017320103969706, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+  m_PrefabInstance: {fileID: 3437601499341908648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!225 &7246751585833987200 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 5414859976348649000, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}

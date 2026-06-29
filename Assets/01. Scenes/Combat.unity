@@ -668,9 +668,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1896650096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 164.28572, y: -27.5}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &177347779
@@ -2267,9 +2267,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1896650096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 32.857147, y: -27.5}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &429771490
@@ -2842,15 +2842,15 @@ MonoBehaviour:
   cardSlotPrefab: {fileID: 1438146419294665382, guid: f280dd5becbbe41938e2634768b6fbb9, type: 3}
   allCardContent: {fileID: 237288317}
   deckContent: {fileID: 1470204468}
-  collectionDropArea: {fileID: 0}
-  deckDropArea: {fileID: 0}
+  collectionDropArea: {fileID: 1381240841}
+  deckDropArea: {fileID: 2142159787}
   deckEditActionText: {fileID: 1845091147}
   actionActiveColor: {r: 1, g: 1, b: 1, a: 1}
   actionInactiveColor: {r: 1, g: 1, b: 1, a: 0.35}
   actionPressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
   actionHoverScale: 1.05
   guideMessageText: {fileID: 1580894651}
-  guideMessageDuration: 1.5
+  guideMessageDuration: 2
   guideMessageFadeOutDuration: 0.3
   canEditDeck: 1
 --- !u!1 &530039593
@@ -2992,9 +2992,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1896650096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 295.7143, y: -27.5}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &585874785
@@ -3845,7 +3845,7 @@ RectTransform:
   m_Father: {fileID: 1898972988}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4498,9 +4498,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1896650096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 361.4286, y: -27.5}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &759708329
@@ -4626,7 +4626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &788923065
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45877,9 +45877,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1896650096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 98.57143, y: -27.5}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1717797432
@@ -45995,9 +45995,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1896650096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 230, y: -27.5}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1729232139
@@ -46596,7 +46596,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90, y: 70}
+  m_SizeDelta: {x: 90, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1845091146
 CanvasGroup:
@@ -46630,7 +46630,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCD94\uAC00 >>\n<< \uC81C\uAC70"
+  m_text: "\uCD94\uAC00 >>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224ea17b36e764441862e83d074c5f67, type: 2}
   m_sharedMaterial: {fileID: -5929796703650294384, guid: 224ea17b36e764441862e83d074c5f67, type: 2}
@@ -47702,9 +47702,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1896650096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 427.14288, y: -27.5}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2008243131
@@ -48531,7 +48531,7 @@ MonoBehaviour:
   m_Intensity: 0.35
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000a503cfb0
+  m_ApplyToSortingLayers: 00000000a503cfb0cf8f02ab
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -49043,6 +49043,10 @@ PrefabInstance:
     - target: {fileID: 7027809790728123604, guid: d327c3efebc874f8680a8c9f241a8d26, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109685825153165570, guid: d327c3efebc874f8680a8c9f241a8d26, type: 3}
+      propertyPath: m_Name
+      value: Obtain (TMP)
       objectReference: {fileID: 0}
     - target: {fileID: 7935936840654506082, guid: d327c3efebc874f8680a8c9f241a8d26, type: 3}
       propertyPath: rootCanvas

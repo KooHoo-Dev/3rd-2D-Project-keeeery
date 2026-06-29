@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,18 +34,8 @@ namespace Arcanist
         public void Clear()
         {
             CardData = null;
-
-            // SetText(cardNameText, string.Empty);
-            // SetText(cardTypeText, string.Empty);
             SetIcon(null);
             SetTooltip(null);
-        }
-
-        private void SetText(TMP_Text targetText, string value)
-        {
-            if (targetText == null) return;
-
-            targetText.SetText(value);
         }
 
         private void SetIcon(Sprite icon)
@@ -65,7 +54,13 @@ namespace Arcanist
         {
             if (tooltipTrigger == null) return;
 
-            tooltipTrigger.SetCardData(cardData);
+            if (cardData == null)
+            {
+                tooltipTrigger.Clear();
+                return;
+            }
+
+            tooltipTrigger.SetCard(cardData, true);
         }
     }
 }

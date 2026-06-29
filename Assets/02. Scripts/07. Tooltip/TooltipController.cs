@@ -18,6 +18,7 @@ namespace Arcanist
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text typeText;
         [SerializeField] private TMP_Text descriptionText;
+        [SerializeField] private GameObject notObtainedObject;
 
         [Header("Position")]
         [SerializeField] private Vector2 cursorOffset = new Vector2(24.0f, 24.0f);
@@ -63,13 +64,16 @@ namespace Arcanist
             if (isVisible) FollowCursor();
         }
 
-        public void Show(CardData cardData)
+        public void Show(CardData cardData, bool isObtained = true)
         {
             if (cardData == null)
             {
                 Hide();
                 return;
             }
+
+            if (notObtainedObject != null)
+                notObtainedObject.SetActive(!isObtained);
 
             Show(cardData.Icon, cardData.CardName, cardData.TypeText, cardData.Description);
         }
@@ -82,7 +86,9 @@ namespace Arcanist
             if (iconImage != null)
             {
                 iconImage.sprite = icon;
+                iconImage.color = Color.white;
                 iconImage.enabled = icon != null;
+                iconImage.preserveAspect = true;
             }
 
             if (nameText != null)
@@ -112,6 +118,9 @@ namespace Arcanist
             canvasGroup.alpha = 0.0f;
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
+
+            if (notObtainedObject != null)
+                notObtainedObject.SetActive(false);
         }
 
         private void FollowCursor()

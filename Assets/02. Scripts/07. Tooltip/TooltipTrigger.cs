@@ -5,12 +5,22 @@ namespace Arcanist
 {
     public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        
         private CardData cardData;
+        private bool isObtained = true;
 
-        public void SetCardData(CardData newCardData)
+        public void SetCard(CardData newCardData, bool obtained = true)
         {
             cardData = newCardData;
+            isObtained = obtained;
+        }
+
+        public void Clear()
+        {
+            cardData = null;
+            isObtained = true;
+
+            if (TooltipController.Instance != null)
+                TooltipController.Instance.Hide();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -18,7 +28,7 @@ namespace Arcanist
             if (TooltipController.Instance == null || cardData == null)
                 return;
 
-            TooltipController.Instance.Show(cardData);
+            TooltipController.Instance.Show(cardData, isObtained);
         }
 
         public void OnPointerExit(PointerEventData eventData)

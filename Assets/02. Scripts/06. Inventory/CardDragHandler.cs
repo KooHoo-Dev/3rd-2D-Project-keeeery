@@ -31,7 +31,7 @@ namespace Arcanist
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (cardSlot.CardData == null || rootCanvas == null || rootCanvasRect == null)
+            if (cardSlot.CardData == null || !cardSlot.IsOwned || rootCanvas == null || rootCanvasRect == null)
                 return;
 
             canvasGroup.blocksRaycasts = false;
