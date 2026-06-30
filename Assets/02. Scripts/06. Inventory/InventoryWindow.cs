@@ -9,9 +9,15 @@ namespace Arcanist
 {
     public class InventoryWindow : MonoBehaviour
     {
-        [Header("Data")]
+        [Header("Debug References")]
         [SerializeField] private CardDatabase cardDatabase;
         [SerializeField] private PlayerInventory playerInventory;
+
+        [Header("Debug Counts")]
+        [SerializeField] private int allCardCount;
+        [SerializeField] private int ownedCardCount;
+        [SerializeField] private int deckCardCount;
+        [SerializeField] private int maxDeckCardCount;
 
         [Header("Slot")]
         [SerializeField] private InventoryCardSlot cardSlotPrefab;
@@ -40,48 +46,87 @@ namespace Arcanist
         [SerializeField] private float guideMessageDuration = 1.2f;
         [SerializeField] private float guideMessageFadeOutDuration = 0.3f;
 
+        [Header("Blocked Close Feedback")]
+        [SerializeField] private float blockedCloseShakeDistance = 8.0f;
+        [SerializeField] private float blockedCloseShakeDuration = 0.18f;
+
         [Header("Rules")]
         [SerializeField] private bool canEditDeck = true;
+
+        [ContextMenu("Debug Refresh References")]
+        private void DebugRefreshReferences()
+        {
+            cardDatabase = CardDatabase.Instance != null ? CardDatabase.Instance : FindFirstObjectByType<CardDatabase>();
+            playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
+            Refresh();
+        }
 
         private readonly List<InventoryCardSlot> allCardSlots = new List<InventoryCardSlot>();
         private readonly List<InventoryCardSlot> deckSlots = new List<InventoryCardSlot>();
         private InventoryCardSlot selectedCollectionSlot;
         private InventoryCardSlot selectedDeckSlot;
+        private const int MIN_DECK_CARD_COUNT = 5;
+        private const string MINIMUM_DECK_WARNING_MESSAGE = "카드 덱에는 최소 5장의 카드가 존재해야 합니다.";
+
         private Vector3 actionDefaultScale = Vector3.one;
-        private bool canUseDeckEditAction;
+        private bool canUseDeckEdit;
+        private RectTransform guideMessageRect;
+        private Vector2 guideMessageDefaultPosition;
         private CanvasGroup guideMessageGroup;
         private Coroutine guideMessageRoutine;
+        private Coroutine guideMessageShakeRoutine;
+        private bool isMinimumDeckWarningVisible;
 
+        public CardDatabase CardDatabase => cardDatabase;
         public PlayerInventory PlayerInventory => playerInventory;
         public bool CanEditDeck => canEditDeck;
 
         private void Awake()
         {
             ResolveReferences();
+            CacheGuideMessageComponents();
 
             if (deckEditActionText != null)
                 actionDefaultScale = deckEditActionText.rectTransform.localScale;
-
-            if (guideMessageText != null)
-            {
-                guideMessageGroup = guideMessageText.GetComponent<CanvasGroup>();
-
-                if (guideMessageGroup == null)
-                    guideMessageGroup = guideMessageText.gameObject.AddComponent<CanvasGroup>();
-
-                guideMessageGroup.alpha = 0.0f;
-                guideMessageText.gameObject.SetActive(false);
-            }
         }
 
         private void OnEnable()
         {
             ResolveReferences();
+            CacheGuideMessageComponents();
 
             if (playerInventory != null)
                 playerInventory.OnInventoryChanged += Refresh;
 
             Refresh();
+        }
+
+        public void PlayMinimumDeckWarningFeedback()
+        {
+            ShowMinimumDeckWarning(true);
+            ShakeGuideMessage();
+        }
+
+        public bool HasMinimumDeckCards()
+        {
+            RefreshDebugCounts();
+            return deckCardCount >= MIN_DECK_CARD_COUNT;
+        }
+
+        private void CacheGuideMessageComponents()
+        {
+            if (guideMessageText == null)
+                return;
+
+            guideMessageRect = guideMessageText.rectTransform;
+            guideMessageDefaultPosition = guideMessageRect.anchoredPosition;
+            guideMessageGroup = guideMessageText.GetComponent<CanvasGroup>();
+
+            if (guideMessageGroup == null)
+                guideMessageGroup = guideMessageText.gameObject.AddComponent<CanvasGroup>();
+
+            guideMessageGroup.alpha = 0.0f;
+            guideMessageText.gameObject.SetActive(false);
         }
 
         private void OnDisable()
@@ -97,6 +142,8 @@ namespace Arcanist
 
             if (playerInventory == null)
                 playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
+
+            RefreshDebugCounts();
         }
 
         public void SetDeckEditMode(bool canEdit)
@@ -177,7 +224,7 @@ namespace Arcanist
 
         public void ShowUnownedCardMessage()
         {
-            ShowGuideMessage("아직 획득하지 못한 카드는 덱에 추가할 수 없습니다.");
+            ShowGuideMessage("아직 획득하지 못한 카드는 카드 덱에 추가할 수 없습니다.");
         }
 
         public void HandleCardDropped(InventoryCardSlot sourceSlot, PointerEventData eventData)
@@ -200,10 +247,9 @@ namespace Arcanist
                 playerInventory.RemoveFromDeckAt(sourceSlot.DeckIndex);
         }
 
-
         public void OnDeckEditActionPointerEnter()
         {
-            if (deckEditActionText == null || !canUseDeckEditAction)
+            if (deckEditActionText == null || !canUseDeckEdit)
                 return;
 
             deckEditActionText.rectTransform.localScale = actionDefaultScale * actionHoverScale;
@@ -220,7 +266,7 @@ namespace Arcanist
 
         public void OnDeckEditActionPointerDown()
         {
-            if (deckEditActionText == null || !canUseDeckEditAction)
+            if (deckEditActionText == null || !canUseDeckEdit)
                 return;
 
             deckEditActionText.color = actionPressedColor;
@@ -248,13 +294,13 @@ namespace Arcanist
 
             if (playerInventory.IsInDeck(cardData))
             {
-                ShowGuideMessage("해당 카드가 덱에 이미 존재합니다.");
+                ShowGuideMessage("해당 카드가 카드 덱에 이미 존재합니다.");
                 return;
             }
 
             if (playerInventory.IsDeckFull())
             {
-                ShowGuideMessage("덱이 가득 찼습니다.");
+                ShowGuideMessage("카드 덱이 가득 찼습니다.");
                 return;
             }
 
@@ -271,7 +317,6 @@ namespace Arcanist
                 eventData.position,
                 eventData.pressEventCamera);
         }
-
 
         public void RemoveCardFromDeck(CardData cardData)
         {
@@ -294,7 +339,9 @@ namespace Arcanist
             if (playerInventory == null || cardSlotPrefab == null || allCardContent == null)
                 return;
 
-            foreach (CardData cardData in GetAllCards())
+            List<CardData> sortedCards = GetSortedAllCards();
+
+            foreach (CardData cardData in sortedCards)
             {
                 InventoryCardSlot slot = Instantiate(cardSlotPrefab, allCardContent);
                 bool owned = playerInventory.HasCard(cardData);
@@ -322,6 +369,26 @@ namespace Arcanist
                 slot.Setup(this, cardData, InventoryCardSlotArea.Deck, cardData != null, false, i);
                 deckSlots.Add(slot);
             }
+        }
+
+        private List<CardData> GetSortedAllCards()
+        {
+            List<CardData> ownedCards = new List<CardData>();
+            List<CardData> unownedCards = new List<CardData>();
+
+            foreach (CardData cardData in GetAllCards())
+            {
+                if (cardData == null)
+                    continue;
+
+                if (playerInventory.HasCard(cardData))
+                    ownedCards.Add(cardData);
+                else
+                    unownedCards.Add(cardData);
+            }
+
+            ownedCards.AddRange(unownedCards);
+            return ownedCards;
         }
 
         private IEnumerable<CardData> GetAllCards()
@@ -357,19 +424,108 @@ namespace Arcanist
             }
         }
 
+        private void RefreshDebugCounts()
+        {
+            allCardCount = GetAllCardsCount();
+            ownedCardCount = playerInventory != null ? playerInventory.OwnedCards.Count : 0;
+            deckCardCount = playerInventory != null ? playerInventory.DeckCards.Count : 0;
+            maxDeckCardCount = playerInventory != null ? playerInventory.MaxDeckCardCount : 0;
+        }
+
         private void RefreshCountText()
         {
-            if (playerInventory == null)
-                return;
-
-            int ownedCardCount = playerInventory.OwnedCards.Count;
-            int allCardCount = GetAllCardsCount();
+            RefreshDebugCounts();
 
             if (allCardCountText != null)
                 allCardCountText.text = $"{ownedCardCount} / {allCardCount}";
 
             if (deckCardCountText != null)
-                deckCardCountText.text = $"{playerInventory.DeckCards.Count} / {playerInventory.MaxDeckCardCount}";
+            {
+                deckCardCountText.text = $"{deckCardCount} / {maxDeckCardCount}";
+                deckCardCountText.color = deckCardCount < 5 ? Color.red : Color.white;
+            }
+
+            RefreshMinimumDeckWarning();
+        }
+
+        private void RefreshMinimumDeckWarning()
+        {
+            RefreshDebugCounts();
+
+            if (deckCardCount < MIN_DECK_CARD_COUNT)
+            {
+                ShowMinimumDeckWarning(false);
+                return;
+            }
+
+            FadeOutMinimumDeckWarningIfNeeded();
+        }
+
+        private void ShowMinimumDeckWarning(bool forceRestart)
+        {
+            if (guideMessageText == null)
+                return;
+
+            StopGuideMessageRoutine();
+
+            guideMessageText.text = MINIMUM_DECK_WARNING_MESSAGE;
+            guideMessageText.gameObject.SetActive(true);
+
+            if (guideMessageGroup != null)
+                guideMessageGroup.alpha = 1.0f;
+
+            isMinimumDeckWarningVisible = true;
+        }
+
+        private void FadeOutMinimumDeckWarningIfNeeded()
+        {
+            if (!isMinimumDeckWarningVisible)
+                return;
+
+            isMinimumDeckWarningVisible = false;
+            StopGuideMessageRoutine();
+            guideMessageRoutine = StartCoroutine(FadeOutGuideMessageRoutine());
+        }
+
+        private void ShakeGuideMessage()
+        {
+            if (guideMessageRect == null)
+                return;
+
+            if (guideMessageShakeRoutine != null)
+                StopCoroutine(guideMessageShakeRoutine);
+
+            guideMessageShakeRoutine = StartCoroutine(GuideMessageShakeRoutine());
+        }
+
+        private IEnumerator GuideMessageShakeRoutine()
+        {
+            float elapsedTime = 0.0f;
+            float duration = Mathf.Max(0.01f, blockedCloseShakeDuration);
+            float distance = Mathf.Max(0.0f, blockedCloseShakeDistance);
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.unscaledDeltaTime;
+
+                float progress = Mathf.Clamp01(elapsedTime / duration);
+                float strength = 1.0f - progress;
+                float offsetX = Mathf.Sin(progress * Mathf.PI * 8.0f) * distance * strength;
+
+                guideMessageRect.anchoredPosition = guideMessageDefaultPosition + new Vector2(offsetX, 0.0f);
+                yield return null;
+            }
+
+            guideMessageRect.anchoredPosition = guideMessageDefaultPosition;
+            guideMessageShakeRoutine = null;
+        }
+        private void StopGuideMessageRoutine()
+        {
+            if (guideMessageRoutine == null)
+                return;
+
+            StopCoroutine(guideMessageRoutine);
+            guideMessageRoutine = null;
         }
 
         private int GetAllCardsCount()
@@ -384,10 +540,9 @@ namespace Arcanist
         
         private void RefreshButtonState()
         {
-            if (deckEditActionText == null)
-                return;
+            if (deckEditActionText == null) return;
 
-            canUseDeckEditAction = false;
+            canUseDeckEdit = false;
             string actionText = string.Empty;
 
             if (!canEditDeck)
@@ -396,17 +551,17 @@ namespace Arcanist
             }
             else if (selectedCollectionSlot != null)
             {
-                actionText = playerInventory.IsDeckFull() ? "덱 가득 참" : "추가 >>";
-                canUseDeckEditAction = !playerInventory.IsDeckFull();
+                actionText = "추가 >>";
+                canUseDeckEdit = !playerInventory.IsDeckFull();
             }
             else if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
             {
                 actionText = "<< 제거";
-                canUseDeckEditAction = true;
+                canUseDeckEdit = true;
             }
 
             deckEditActionText.text = actionText;
-            deckEditActionText.color = canUseDeckEditAction ? actionActiveColor : actionInactiveColor;
+            deckEditActionText.color = canUseDeckEdit ? actionActiveColor : actionInactiveColor;
         }
 
         private void ClearSelection()
@@ -429,8 +584,9 @@ namespace Arcanist
             if (guideMessageText == null)
                 return;
 
-            if (guideMessageRoutine != null)
-                StopCoroutine(guideMessageRoutine);
+            isMinimumDeckWarningVisible = false;
+
+            StopGuideMessageRoutine();
 
             guideMessageRoutine = StartCoroutine(ShowGuideMessageRoutine(message));
         }
@@ -445,6 +601,12 @@ namespace Arcanist
 
             yield return new WaitForSecondsRealtime(guideMessageDuration);
 
+            yield return FadeOutGuideMessageRoutine();
+        }
+
+        private IEnumerator FadeOutGuideMessageRoutine()
+        {
+            float startAlpha = guideMessageGroup != null ? guideMessageGroup.alpha : 1.0f;
             float elapsedTime = 0.0f;
             float duration = Mathf.Max(0.01f, guideMessageFadeOutDuration);
 
@@ -453,7 +615,7 @@ namespace Arcanist
                 elapsedTime += Time.unscaledDeltaTime;
 
                 if (guideMessageGroup != null)
-                    guideMessageGroup.alpha = Mathf.Lerp(1.0f, 0.0f, elapsedTime / duration);
+                    guideMessageGroup.alpha = Mathf.Lerp(startAlpha, 0.0f, elapsedTime / duration);
 
                 yield return null;
             }
@@ -461,7 +623,9 @@ namespace Arcanist
             if (guideMessageGroup != null)
                 guideMessageGroup.alpha = 0.0f;
 
-            guideMessageText.gameObject.SetActive(false);
+            if (!isMinimumDeckWarningVisible)
+                guideMessageText.gameObject.SetActive(false);
+
             guideMessageRoutine = null;
         }
     }

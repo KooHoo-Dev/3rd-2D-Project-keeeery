@@ -296,11 +296,12 @@ MonoBehaviour:
   slotFrame: {fileID: 4233114028607793751}
   cardIcon: {fileID: 467744320448135544}
   newBadge: {fileID: 5133450296160454521}
+  lockIcon: {fileID: 4507128024887764360}
+  tooltipTrigger: {fileID: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
-  lockedColor: {r: 0.35, g: 0.35, b: 0.35, a: 0.75}
+  lockedColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.78431374}
   emptyColor: {r: 1, g: 1, b: 1, a: 0}
   selectedFrameColor: {r: 1, g: 0.86, b: 0.35, a: 1}
-  lockIcon: {fileID: 4507128024887764360}
 --- !u!114 &-2577191286786704326
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2883,6 +2883,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.InventoryWindow
   cardDatabase: {fileID: 1403432634}
   playerInventory: {fileID: 1403432632}
+  allCardCount: 0
+  ownedCardCount: 0
+  deckCardCount: 0
+  maxDeckCardCount: 0
   cardSlotPrefab: {fileID: 1438146419294665382, guid: f280dd5becbbe41938e2634768b6fbb9, type: 3}
   allCardContent: {fileID: 237288317}
   deckContent: {fileID: 1470204468}
@@ -2898,6 +2902,8 @@ MonoBehaviour:
   guideMessageText: {fileID: 1580894651}
   guideMessageDuration: 2
   guideMessageFadeOutDuration: 0.3
+  blockedCloseShakeDistance: 6
+  blockedCloseShakeDuration: 0.2
   canEditDeck: 1
 --- !u!1 &530039593
 GameObject:
@@ -4298,7 +4304,7 @@ GameObject:
   - component: {fileID: 751522421}
   - component: {fileID: 751522420}
   m_Layer: 5
-  m_Name: "\uD50C\uB808\uC774\uC5B4 \uB371 (TMP)"
+  m_Name: "\uD50C\uB808\uC774\uC5B4 \uCE74\uB4DC \uB371 (TMP)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4355,7 +4361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD50C\uB808\uC774\uC5B4 \uB371"
+  m_text: "\uD50C\uB808\uC774\uC5B4 \uCE74\uB4DC \uB371"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224ea17b36e764441862e83d074c5f67, type: 2}
   m_sharedMaterial: {fileID: -5929796703650294384, guid: 224ea17b36e764441862e83d074c5f67, type: 2}
@@ -6624,13 +6630,18 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   ownedCards:
   - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
-  - {fileID: 11400000, guid: f851349177d0446d7bee78b7b202ec01, type: 2}
-  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
+  - {fileID: 11400000, guid: 97eef108c855a4939b35970b9be30788, type: 2}
+  - {fileID: 11400000, guid: d9fa59388c5ea46188ad7a62500f6dc4, type: 2}
   - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
+  - {fileID: 11400000, guid: 66113365799a94dddaee187630f8ea28, type: 2}
+  - {fileID: 11400000, guid: 530e5dadfba644da2a3dab7bea8d7534, type: 2}
+  - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
   deckCards:
   - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
-  - {fileID: 11400000, guid: f851349177d0446d7bee78b7b202ec01, type: 2}
-  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
+  - {fileID: 11400000, guid: 97eef108c855a4939b35970b9be30788, type: 2}
+  - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
+  - {fileID: 11400000, guid: 66113365799a94dddaee187630f8ea28, type: 2}
+  - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
   maxDeckCardCount: 20
   allowDuplicateCards: 0
 --- !u!4 &1403432633
@@ -7059,7 +7070,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD574\uB2F9 \uCE74\uB4DC\uAC00 \uB371\uC774 \uC774\uBBF8 \uC874\uC7AC\uD569\uB2C8\uB2E4."
+  m_text: "\uAC00\uC774\uB4DC \uBA54\uC138\uC9C0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224ea17b36e764441862e83d074c5f67, type: 2}
   m_sharedMaterial: {fileID: -5929796703650294384, guid: 224ea17b36e764441862e83d074c5f67, type: 2}
@@ -49228,10 +49239,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2004398621}
     - target: {fileID: 6044175225541664902, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
-      propertyPath: parryGaugeCellReward
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6044175225541664902, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
       propertyPath: screenEffectController
       value: 
       objectReference: {fileID: 82030804}
@@ -49279,8 +49286,7 @@ PrefabInstance:
       propertyPath: cardSystem
       value: 
       objectReference: {fileID: 2004398620}
-    m_RemovedComponents:
-    - {fileID: 3390226323550568021, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -135,9 +135,6 @@ MonoBehaviour:
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
   screenEffectController: {fileID: 0}
-  hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
-  playHitFxOnlyByPlayer: 1
-  hitFxLocalYOffset: 0.5
 --- !u!61 &3516409619870467734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -346,7 +343,6 @@ GameObject:
   - component: {fileID: 107812643175150398}
   - component: {fileID: 8373384800210950506}
   - component: {fileID: 4350949043046959774}
-  - component: {fileID: 3390226323550568021}
   m_Layer: 0
   m_Name: LocalPlayer
   m_TagString: Untagged
@@ -497,6 +493,8 @@ MonoBehaviour:
   screenEffectController: {fileID: 0}
   overlayController: {fileID: 0}
   cardSystem: {fileID: 0}
+  cardGaugeController: {fileID: 0}
+  parryGaugeCellReward: 3
 --- !u!114 &1753533218181533399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,6 +586,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.HurtBox
   <Owner>k__BackingField: {fileID: 1753533218181533399}
+  hitFxPrefab: {fileID: 0}
+  hitFxLocalYOffset: 0
+  playHitFx: 1
 --- !u!114 &4350949043046959774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,29 +618,6 @@ MonoBehaviour:
   burstRadius: 9
   burstInTime: 0.015
   burstOutTime: 0.25
---- !u!114 &3390226323550568021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2968401417501518829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313c9c5d037da459191e91a976eaafef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Arcanist.PlayerInventory
-  ownedCards:
-  - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
-  - {fileID: 11400000, guid: f851349177d0446d7bee78b7b202ec01, type: 2}
-  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
-  - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
-  deckCards:
-  - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
-  - {fileID: 11400000, guid: f851349177d0446d7bee78b7b202ec01, type: 2}
-  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
-  maxDeckCardCount: 25
-  allowDuplicateCards: 0
 --- !u!1 &3191532438956212976
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,9 +918,6 @@ MonoBehaviour:
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
   screenEffectController: {fileID: 0}
-  hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
-  playHitFxOnlyByPlayer: 1
-  hitFxLocalYOffset: 0.5
 --- !u!61 &5943447859623294796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6284,9 +6259,6 @@ MonoBehaviour:
       m_RotationOrder: 4
   parryLightEffect: {fileID: 0}
   screenEffectController: {fileID: 0}
-  hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
-  playHitFxOnlyByPlayer: 1
-  hitFxLocalYOffset: 0.5
 --- !u!61 &165717915923768831
 BoxCollider2D:
   m_ObjectHideFlags: 0
