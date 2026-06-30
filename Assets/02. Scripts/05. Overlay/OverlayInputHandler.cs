@@ -13,6 +13,9 @@ namespace Arcanist
         private PlayerInventory playerInventory;
         private InventoryWindow inventoryWindow;
 
+        [Header("Reward Test")]
+        [SerializeField] private RectTransform rewardContainer;
+
         public PlayerInventory PlayerInventory => playerInventory;
         public InventoryWindow InventoryWindow => inventoryWindow;
 
@@ -35,6 +38,13 @@ namespace Arcanist
                 if (SimpleInput.GetKeyDown(Key.UpArrow))
                     SceneManager.LoadScene("Combat");
 
+                return;
+            }
+
+            // 보상 화면 테스트용 - 나중에 삭제
+            if (SimpleInput.GetKeyDown(Key.R))
+            {
+                ToggleReward();
                 return;
             }
 
@@ -67,6 +77,9 @@ namespace Arcanist
                 case OverlayController.OverlayState.Inventory:
                     ToggleInventory();
                     break;
+
+                case OverlayController.OverlayState.Reward:
+                    break;
             }
         }
 
@@ -74,13 +87,43 @@ namespace Arcanist
         {
             ResolveReferences();
 
-            if (overlayController.CurrentState == OverlayController.OverlayState.None)
-                overlayController.ShowInventory();
-                
             if (IsInventoryOpen)
             {
                 TryCloseInventory();
                 return;
+            }
+
+            if (overlayController.CurrentState == OverlayController.OverlayState.None)
+                overlayController.ShowInventory();
+        }
+
+        // 보상 화면 테스트용 - 나중에 수정
+        public void ToggleReward()
+        {
+            if (overlayController.CurrentState == OverlayController.OverlayState.None)
+            {
+                ClearRewardContainer();
+                overlayController.ShowReward();
+            }
+        }
+
+        // 보상 화면 테스트용 - 나중에 수정
+        private void ClearRewardContainer()
+        {
+            if (rewardContainer == null)
+                return;
+
+            for (int i = rewardContainer.childCount - 1; i >= 0; i--)
+            {
+                Transform child = rewardContainer.GetChild(i);
+
+                if (child == null)
+                    continue;
+
+                GameObject childObject = child.gameObject;
+                child.SetParent(null, false);
+                childObject.SetActive(false);
+                Destroy(childObject);
             }
         }
 

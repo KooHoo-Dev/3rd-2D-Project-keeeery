@@ -14,11 +14,19 @@ namespace Arcanist
         [SerializeField] private Canvas rootCanvas;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private RectTransform tooltipRect;
+        [SerializeField] private Image frameImage;
         [SerializeField] private Image iconImage;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text typeText;
+        [SerializeField] private TMP_Text gradeText;
         [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private GameObject notObtainedObject;
+
+        [Header("Grade Colors")]
+        [SerializeField] private Color commonColor = Color.white;
+        [SerializeField] private Color rareColor = new Color(0.30f, 0.64f, 1.0f);
+        [SerializeField] private Color epicColor = new Color(0.62f, 0.31f, 0.93f);
+        [SerializeField] private Color legendaryColor = new Color(1.0f, 0.82f, 0.40f);
 
         [Header("Position")]
         [SerializeField] private Vector2 cursorOffset = new Vector2(24.0f, 24.0f);
@@ -76,6 +84,7 @@ namespace Arcanist
                 notObtainedObject.SetActive(!isObtained);
 
             Show(cardData.Icon, cardData.CardName, cardData.TypeText, cardData.Description);
+            ApplyGrade(cardData.Grade, cardData.GradeText);
         }
 
         public void Show(Sprite icon, string itemName, string itemType, string description)
@@ -96,6 +105,8 @@ namespace Arcanist
 
             if (typeText != null)
                 typeText.text = itemType;
+
+            ApplyGrade(CardGrade.Common, string.Empty);
 
             if (descriptionText != null)
                 descriptionText.text = description;
@@ -121,6 +132,38 @@ namespace Arcanist
 
             if (notObtainedObject != null)
                 notObtainedObject.SetActive(false);
+        }
+
+        private void ApplyGrade(CardGrade grade, string gradeName)
+        {
+            Color gradeColor = GetGradeColor(grade);
+
+            if (frameImage != null)
+                frameImage.color = gradeColor;
+
+            if (gradeText != null)
+            {
+                gradeText.text = gradeName;
+                gradeText.color = gradeColor;
+                gradeText.gameObject.SetActive(!string.IsNullOrEmpty(gradeName));
+            }
+        }
+
+        private Color GetGradeColor(CardGrade grade)
+        {
+            switch (grade)
+            {
+                case CardGrade.Common:
+                    return commonColor;
+                case CardGrade.Rare:
+                    return rareColor;
+                case CardGrade.Epic:
+                    return epicColor;
+                case CardGrade.Legendary:
+                    return legendaryColor;
+                default:
+                    return commonColor;
+            }
         }
 
         private void FollowCursor()

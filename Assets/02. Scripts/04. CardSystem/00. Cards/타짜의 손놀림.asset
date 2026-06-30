@@ -16,6 +16,7 @@ MonoBehaviour:
   cardName: "\uD0C0\uC9DC\uC758 \uC190\uB180\uB9BC"
   icon: {fileID: 21300000, guid: 95b8b9bc361f08b458ce5159b5fca5bd, type: 3}
   cardType: 2
+  grade: 2
   description: 
   animationTrigger: 
   effect: {fileID: 0}

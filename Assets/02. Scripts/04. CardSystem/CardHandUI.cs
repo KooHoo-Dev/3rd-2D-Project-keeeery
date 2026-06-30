@@ -344,15 +344,26 @@ namespace Arcanist
 
             card.gameObject.SetActive(true);
 
-            Vector2 endPos = Vector2.zero;
-            Vector2 startPos = endPos + Vector2.down * cardRiseDistance;
-            Vector2 overshootPos = endPos + Vector2.up * overshootY;
+            yield return PlayDrawMotion(card);
 
             if (IsDestroyed(card))
             {
                 EndDrawingWithoutCallback();
                 yield break;
             }
+
+            isDrawing = false;
+            onCompleted?.Invoke();
+        }
+
+        public IEnumerator PlayDrawMotion(RectTransform card)
+        {
+            Vector2 endPos = Vector2.zero;
+            Vector2 startPos = endPos + Vector2.down * cardRiseDistance;
+            Vector2 overshootPos = endPos + Vector2.up * overshootY;
+
+            if (IsDestroyed(card))
+                yield break;
 
             SetAnchoredPosition(card, startPos);
             card.localScale = Vector3.one * 0.8f;
@@ -363,10 +374,7 @@ namespace Arcanist
             while (t < drawDuration)
             {
                 if (IsDestroyed(card))
-                {
-                    EndDrawingWithoutCallback();
                     yield break;
-                }
 
                 t += Time.deltaTime;
 
@@ -385,10 +393,7 @@ namespace Arcanist
                 }
 
                 if (IsDestroyed(card))
-                {
-                    EndDrawingWithoutCallback();
                     yield break;
-                }
 
                 float yRotation = Mathf.Lerp(startYRotation + extraYSpin, 0f, eased);
                 float zRotation = Mathf.Lerp(startZRotation, 0f, eased);
@@ -402,17 +407,11 @@ namespace Arcanist
             }
 
             if (IsDestroyed(card))
-            {
-                EndDrawingWithoutCallback();
                 yield break;
-            }
 
             SetAnchoredPosition(card, endPos);
             card.localScale = Vector3.one;
             card.localRotation = Quaternion.identity;
-
-            isDrawing = false;
-            onCompleted?.Invoke();
         }
 
         private void EndDrawingWithoutCallback()

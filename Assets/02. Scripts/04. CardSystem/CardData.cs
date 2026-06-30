@@ -9,6 +9,14 @@ namespace Arcanist
         Utility
     }
 
+    public enum CardGrade
+    {
+        Common,
+        Rare,
+        Epic,
+        Legendary
+    }
+
     [CreateAssetMenu(fileName = "CardData", menuName = "Arcanist/Card")]
     public class CardData : ScriptableObject
     {
@@ -17,6 +25,7 @@ namespace Arcanist
         [SerializeField] private string cardName;
         [SerializeField] private Sprite icon;
         [SerializeField] private CardType cardType;
+        [SerializeField] private CardGrade grade = CardGrade.Common;
         [SerializeField, TextArea] private string description;
 
         [Header("Player Motion")]
@@ -29,6 +38,7 @@ namespace Arcanist
         public string CardName => cardName;
         public Sprite Icon => icon;
         public CardType CardType => cardType;
+        public CardGrade Grade => grade;
         public string Description => description;
         public string AnimationTrigger => animationTrigger;
         public CardEffect Effect => effect;
@@ -47,6 +57,26 @@ namespace Arcanist
                         return "특수 카드";
                     default:
                         return "카드";
+                }
+            }
+        }
+
+        public string GradeText
+        {
+            get
+            {
+                switch (grade)
+                {
+                    case CardGrade.Common:
+                        return "일반";
+                    case CardGrade.Rare:
+                        return "희귀";
+                    case CardGrade.Epic:
+                        return "영웅";
+                    case CardGrade.Legendary:
+                        return "전설";
+                    default:
+                        return "등급 없음";
                 }
             }
         }

@@ -15,6 +15,7 @@ namespace Arcanist
         [SerializeField] private GameObject pauseWindow;
         [SerializeField] private GameObject optionWindow;
         [SerializeField] private GameObject inventoryWindow;
+        [SerializeField] private GameObject rewardWindow;
         [SerializeField] private GameObject deathWindow;
 
         [Header("Light")]
@@ -30,6 +31,9 @@ namespace Arcanist
         [Header("DeathWindow")]
         [SerializeField] private Transform promptTargetPivot;
         [SerializeField] private PlayerController playerController;
+
+        [Header("Reward")]
+        [SerializeField] private RewardController rewardController;
         
         private RectTransform reviveInputPrompt;
 
@@ -39,6 +43,7 @@ namespace Arcanist
             Pause,
             Option,
             Inventory,
+            Reward,
             Death
         }
 
@@ -52,6 +57,9 @@ namespace Arcanist
 
             if (playerController == null)
                 playerController = FindFirstObjectByType<PlayerController>();
+
+            if (rewardController == null)
+                rewardController = FindFirstObjectByType<RewardController>(FindObjectsInactive.Include);
 
             reviveInputPrompt = deathWindow.transform.Find("ReviveInputPrompt").GetComponent<RectTransform>();
 
@@ -83,6 +91,18 @@ namespace Arcanist
             SimpleInput.IsKeyBoardInputBlocked = true;
             Time.timeScale = 0.0f;
             ShowWindow(inventoryWindow, menuLightIntensity, menuFadeDuration);
+        }
+
+        public void ShowReward()
+        {
+            CurrentState = OverlayState.Reward;
+            SimpleInput.IsKeyBoardInputBlocked = true;
+            Time.timeScale = 0.0f;
+
+            ShowWindow(rewardWindow, menuLightIntensity, menuFadeDuration);
+
+            if (rewardController != null)
+                rewardController.OpenReward();
         }
 
         public void ShowDeathWindow()
@@ -190,6 +210,7 @@ namespace Arcanist
             pauseWindow.SetActive(false);
             optionWindow.SetActive(false);
             inventoryWindow.SetActive(false);
+            rewardWindow.SetActive(false);
             deathWindow.SetActive(false);
         }
 
