@@ -31,6 +31,10 @@ namespace Arcanist
         [SerializeField] private Color actionPressedColor = new Color(0.55f, 0.55f, 0.55f, 1.0f);
         [SerializeField] private float actionHoverScale = 1.08f;
 
+        [Header("Count Text")]
+        [SerializeField] private TMP_Text allCardCountText;
+        [SerializeField] private TMP_Text deckCardCountText;
+
         [Header("Guide Message")]
         [SerializeField] private TMP_Text guideMessageText;
         [SerializeField] private float guideMessageDuration = 1.2f;
@@ -47,8 +51,14 @@ namespace Arcanist
         private bool canUseDeckEditAction;
         private CanvasGroup guideMessageGroup;
         private Coroutine guideMessageRoutine;
+
+        public PlayerInventory PlayerInventory => playerInventory;
+        public bool CanEditDeck => canEditDeck;
+
         private void Awake()
         {
+            ResolveReferences();
+
             if (deckEditActionText != null)
                 actionDefaultScale = deckEditActionText.rectTransform.localScale;
 
@@ -64,12 +74,10 @@ namespace Arcanist
             }
         }
 
-
-        public PlayerInventory PlayerInventory => playerInventory;
-        public bool CanEditDeck => canEditDeck;
-
         private void OnEnable()
         {
+            ResolveReferences();
+
             if (playerInventory != null)
                 playerInventory.OnInventoryChanged += Refresh;
 
@@ -82,6 +90,15 @@ namespace Arcanist
                 playerInventory.OnInventoryChanged -= Refresh;
         }
 
+        private void ResolveReferences()
+        {
+            if (cardDatabase == null)
+                cardDatabase = CardDatabase.Instance != null ? CardDatabase.Instance : FindFirstObjectByType<CardDatabase>();
+
+            if (playerInventory == null)
+                playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
+        }
+
         public void SetDeckEditMode(bool canEdit)
         {
             canEditDeck = canEdit;
@@ -90,9 +107,12 @@ namespace Arcanist
 
         public void Refresh()
         {
+            ResolveReferences();
+
             ClearSelection();
             RefreshAllCards();
             RefreshDeckCards();
+            RefreshCountText();
             RefreshButtonState();
         }
 
@@ -271,6 +291,9 @@ namespace Arcanist
             ClearChildren(allCardContent);
             allCardSlots.Clear();
 
+            if (playerInventory == null || cardSlotPrefab == null || allCardContent == null)
+                return;
+
             foreach (CardData cardData in GetAllCards())
             {
                 InventoryCardSlot slot = Instantiate(cardSlotPrefab, allCardContent);
@@ -285,6 +308,9 @@ namespace Arcanist
         {
             ClearChildren(deckContent);
             deckSlots.Clear();
+
+            if (playerInventory == null || cardSlotPrefab == null || deckContent == null)
+                return;
 
             IReadOnlyList<CardData> deckCards = playerInventory.DeckCards;
             int slotCount = Mathf.Max(playerInventory.MaxDeckCardCount, deckCards.Count);
@@ -331,6 +357,31 @@ namespace Arcanist
             }
         }
 
+        private void RefreshCountText()
+        {
+            if (playerInventory == null)
+                return;
+
+            int ownedCardCount = playerInventory.OwnedCards.Count;
+            int allCardCount = GetAllCardsCount();
+
+            if (allCardCountText != null)
+                allCardCountText.text = $"{ownedCardCount} / {allCardCount}";
+
+            if (deckCardCountText != null)
+                deckCardCountText.text = $"{playerInventory.DeckCards.Count} / {playerInventory.MaxDeckCardCount}";
+        }
+
+        private int GetAllCardsCount()
+        {
+            int count = 0;
+
+            foreach (CardData cardData in GetAllCards())
+                count++;
+
+            return count;
+        }
+        
         private void RefreshButtonState()
         {
             if (deckEditActionText == null)

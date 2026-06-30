@@ -9,13 +9,15 @@ namespace Arcanist
     [RequireComponent(typeof(CardHandUI))]
     public class CardSystem : MonoBehaviour
     {
-        // 덱 빌딩을 고려해서 플레이어 덱은 Inspector에서 직접 관리하지 않는다.
-        // 나중에 SaveData, RunData, DeckBuilder, RewardSystem 같은 외부 시스템이 아래 메서드로 주입한다.
         private readonly List<CardData> ownedCards = new();
         private readonly List<CardData> playerDeck = new();
         private readonly List<CardData> drawPile = new();
         private readonly List<CardData> hand = new();
         private readonly List<CardData> discardPile = new();
+
+        [Header("Runtime Inventory")]
+        [SerializeField] private PlayerInventory playerInventory;
+        [SerializeField] private bool syncFromPlayerInventory = true;
 
         [Header("Skill Motion")]
         [SerializeField] private Animator playerAnimator;
@@ -45,8 +47,40 @@ namespace Arcanist
             cardGaugeController = GetComponent<CardGaugeController>();
             cardHandUI = GetComponent<CardHandUI>();
 
+            if (playerInventory == null) 
+                playerInventory = PlayerInventory.Instance != null 
+                ? PlayerInventory.Instance
+                : FindFirstObjectByType<PlayerInventory>();
+
             if (playerController == null && playerAnimator != null)
                 playerController = playerAnimator.GetComponentInParent<PlayerController>();
+        }
+
+        private void OnEnable()
+        {
+            if (playerInventory == null)
+                playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
+
+            if (syncFromPlayerInventory && playerInventory != null)
+            {
+                playerInventory.OnInventoryChanged += SyncFromPlayerInventory;
+                SyncFromPlayerInventory();
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (playerInventory != null)
+                playerInventory.OnInventoryChanged -= SyncFromPlayerInventory;
+        }
+
+        private void SyncFromPlayerInventory()
+        {
+            if (!syncFromPlayerInventory || playerInventory == null)
+                return;
+
+            SetOwnedCards(playerInventory.OwnedCards);
+            SyncPlayerDeckRuntime(playerInventory.DeckCards);
         }
 
         private void Update()
@@ -92,9 +126,56 @@ namespace Arcanist
             InitializeDrawPileFromPlayerDeck();
         }
 
+        private void SyncPlayerDeckRuntime(IEnumerable<CardData> cards)
+        {
+            playerDeck.Clear();
+
+            if (cards != null)
+            {
+                foreach (CardData card in cards)
+                {
+                    if (card != null)
+                        playerDeck.Add(card);
+                }
+            }
+
+            isDeckInitialized = playerDeck.Count > 0;
+
+            for (int i = drawPile.Count - 1; i >= 0; i--)
+            {
+                if (!IsCardInPlayerDeck(drawPile[i]))
+                    drawPile.RemoveAt(i);
+            }
+
+            for (int i = discardPile.Count - 1; i >= 0; i--)
+            {
+                if (!IsCardInPlayerDeck(discardPile[i]))
+                    discardPile.RemoveAt(i);
+            }
+
+            foreach (CardData card in playerDeck)
+            {
+                if (card == null)
+                    continue;
+
+                if (drawPile.Contains(card) || discardPile.Contains(card) || hand.Contains(card))
+                    continue;
+
+                drawPile.Add(card);
+            }
+
+            Shuffle(drawPile);
+        }
+
         public void AddOwnedCard(CardData card)
         {
             if (card == null) return;
+
+            if (syncFromPlayerInventory && playerInventory != null)
+            {
+                playerInventory.AddCard(card, false);
+                return;
+            }
 
             ownedCards.Add(card);
         }
@@ -102,6 +183,9 @@ namespace Arcanist
         public bool AddCardToPlayerDeck(CardData card)
         {
             if (card == null) return false;
+
+            if (syncFromPlayerInventory && playerInventory != null)
+                return playerInventory.AddToDeck(card);
 
             if (ownedCards.Contains(card) == false)
             {
@@ -117,6 +201,9 @@ namespace Arcanist
         public bool RemoveCardFromPlayerDeck(CardData card)
         {
             if (card == null) return false;
+
+            if (syncFromPlayerInventory && playerInventory != null)
+                return playerInventory.RemoveFromDeck(card);
 
             bool removed = playerDeck.Remove(card);
 
@@ -165,17 +252,32 @@ namespace Arcanist
 
         private CardData DrawCardFromDeck()
         {
-            if (drawPile.Count <= 0) RefillDrawPileFromDiscardPile();
+            while (true)
+            {
+                if (drawPile.Count <= 0)
+                    RefillDrawPileFromDiscardPile();
 
-            if (drawPile.Count <= 0) return null;
+                if (drawPile.Count <= 0)
+                    return null;
 
-            CardData drawnCard = drawPile[0];
-            drawPile.RemoveAt(0);
-            return drawnCard;
+                CardData drawnCard = drawPile[0];
+                drawPile.RemoveAt(0);
+
+                if (IsCardInPlayerDeck(drawnCard))
+                    return drawnCard;
+            }
         }
 
         private void RefillDrawPileFromDiscardPile()
         {
+            if (discardPile.Count <= 0) return;
+
+            for (int i = discardPile.Count - 1; i >= 0; i--)
+            {
+                if (IsCardInPlayerDeck(discardPile[i]) == false)
+                    discardPile.RemoveAt(i);
+            }
+
             if (discardPile.Count <= 0) return;
 
             drawPile.AddRange(discardPile);
@@ -204,7 +306,9 @@ namespace Arcanist
 
             cardHandUI.UseCard(slotIndex);
             hand.Remove(usedCard);
-            discardPile.Add(usedCard);
+
+            if (IsCardInPlayerDeck(usedCard))
+                discardPile.Add(usedCard);
 
             TryDrawIfReady();
         }
@@ -240,6 +344,11 @@ namespace Arcanist
             CardEffectContext context = new(card, playerController, castPoint, facingDirection, target);
 
             card.Effect.Execute(context);
+        }
+
+        private bool IsCardInPlayerDeck(CardData card)
+        {
+            return card != null && playerDeck.Contains(card);
         }
 
         private void Shuffle(List<CardData> cards)

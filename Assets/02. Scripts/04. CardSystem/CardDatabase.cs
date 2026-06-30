@@ -5,13 +5,36 @@ namespace Arcanist
 {
     public class CardDatabase : MonoBehaviour
     {
+        private static CardDatabase instance;
+
+        public static CardDatabase Instance => instance;
+
+        [SerializeField] private bool dontDestroyOnLoad = true;
+
         [Header("All Cards")]
         [SerializeField] private List<CardData> allCards = new();
 
         private Dictionary<string, CardData> cardLookup;
 
+        private void OnDestroy()
+        {
+            if (instance == this)
+                instance = null;
+        }
+
         private void Awake()
         {
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+
+            if (dontDestroyOnLoad)
+                DontDestroyOnLoad(transform.root.gameObject);
+
             BuildLookup();
         }
 

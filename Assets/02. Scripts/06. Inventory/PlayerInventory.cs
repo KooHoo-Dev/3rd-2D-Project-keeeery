@@ -6,7 +6,14 @@ namespace Arcanist
 {
     public class PlayerInventory : MonoBehaviour
     {
-        [Header("Cards")]
+        private static PlayerInventory instance;
+
+        public static PlayerInventory Instance => instance;
+
+        [Header("Persistence")]
+        [SerializeField] private bool dontDestroyOnLoad = true;
+
+        [Header("Initial Cards")]
         [SerializeField] private List<CardData> ownedCards = new List<CardData>();
         [SerializeField] private List<CardData> deckCards = new List<CardData>();
 
@@ -21,6 +28,24 @@ namespace Arcanist
         public IReadOnlyList<CardData> OwnedCards => ownedCards;
         public IReadOnlyList<CardData> DeckCards => deckCards;
         public int MaxDeckCardCount => maxDeckCardCount;
+
+        private void Awake()
+        {
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+
+            if (dontDestroyOnLoad) DontDestroyOnLoad(transform.root.gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (instance == this) instance = null;
+        }
 
         public bool HasCard(CardData cardData)
         {
@@ -107,5 +132,13 @@ namespace Arcanist
         {
             return cardData.name;
         }
+    }
+
+    [Serializable]
+    public class CardInventorySaveData
+    {
+        public List<string> ownedCardIds = new List<string>();
+        public List<string> deckCardIds = new List<string>();
+        public List<string> newCardIds = new List<string>();
     }
 }
