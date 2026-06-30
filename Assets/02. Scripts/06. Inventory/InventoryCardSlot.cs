@@ -18,6 +18,7 @@ namespace Arcanist
         [SerializeField] private Image cardIcon;
         [SerializeField] private GameObject newBadge;
         [SerializeField] private GameObject lockIcon;
+        [SerializeField] private GameObject isInDeckOutline;
         [SerializeField] private TooltipTrigger tooltipTrigger;
 
         [Header("Tint")]
@@ -125,6 +126,18 @@ namespace Arcanist
             {
                 bool showLock = slotArea == InventoryCardSlotArea.Collection && cardData != null && !isOwned;
                 lockIcon.SetActive(showLock);
+            }
+
+            if (isInDeckOutline != null)
+            {
+                bool showOutline = slotArea == InventoryCardSlotArea.Collection &&
+                                   cardData != null &&
+                                   isOwned &&
+                                   owner != null &&
+                                   owner.PlayerInventory != null &&
+                                   owner.PlayerInventory.IsInDeck(cardData);
+
+                isInDeckOutline.SetActive(showOutline);
             }
         }
 

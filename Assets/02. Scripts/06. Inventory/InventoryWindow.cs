@@ -373,7 +373,8 @@ namespace Arcanist
 
         private List<CardData> GetSortedAllCards()
         {
-            List<CardData> ownedCards = new List<CardData>();
+            List<CardData> ownedNotInDeckCards = new List<CardData>();
+            List<CardData> ownedInDeckCards = new List<CardData>();
             List<CardData> unownedCards = new List<CardData>();
 
             foreach (CardData cardData in GetAllCards())
@@ -381,14 +382,23 @@ namespace Arcanist
                 if (cardData == null)
                     continue;
 
-                if (playerInventory.HasCard(cardData))
-                    ownedCards.Add(cardData);
-                else
+                bool owned = playerInventory.HasCard(cardData);
+
+                if (!owned)
+                {
                     unownedCards.Add(cardData);
+                    continue;
+                }
+
+                if (playerInventory.IsInDeck(cardData))
+                    ownedInDeckCards.Add(cardData);
+                else
+                    ownedNotInDeckCards.Add(cardData);
             }
 
-            ownedCards.AddRange(unownedCards);
-            return ownedCards;
+            ownedNotInDeckCards.AddRange(ownedInDeckCards);
+            ownedNotInDeckCards.AddRange(unownedCards);
+            return ownedNotInDeckCards;
         }
 
         private IEnumerable<CardData> GetAllCards()
