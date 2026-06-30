@@ -56,11 +56,11 @@ namespace Arcanist
         private float nextAttackTime;
         private float hurtEndTime;
         private bool isHurt;
-        private bool isDead;
-
         private EnemyStateBase currentState;
         private EnemyStateBase defaultState;
         private Dictionary<int, EnemyStateBase> stateDic;
+
+        public bool isDead;
 
         private void Awake()
         {

@@ -82,5 +82,47 @@ namespace Arcanist
                     cell.SetActive(false);
             }
         }
+
+        public void AddCells(int amount)
+        {
+            if (amount <= 0 || isGaugeFull) return;
+
+            currentCell = Mathf.Min(currentCell + amount, gaugeCells.Length);
+            RefreshGaugeCells();
+
+            if (currentCell >= gaugeCells.Length)
+            {
+                CompleteGauge();
+                return;
+            }
+
+            StartCharging();
+        }
+
+        private void RefreshGaugeCells()
+        {
+            for (int i = 0; i < gaugeCells.Length; i++)
+            {
+                if (gaugeCells[i] != null)
+                    gaugeCells[i].SetActive(i < currentCell);
+            }
+        }
+
+        private void CompleteGauge()
+        {
+            if (chargeCoroutine != null)
+            {
+                StopCoroutine(chargeCoroutine);
+                chargeCoroutine = null;
+            }
+
+            currentCell = gaugeCells.Length;
+            RefreshGaugeCells();
+
+            isCharging = false;
+            isGaugeFull = true;
+
+            cardSystem.OnGaugeFull();
+        }
     }
 }

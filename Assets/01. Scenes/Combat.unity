@@ -702,7 +702,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!222 &177347780
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2301,7 +2301,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!222 &429771491
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3026,7 +3026,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!222 &585874786
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4532,7 +4532,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!222 &759708330
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4960,6 +4960,14 @@ PrefabInstance:
     - target: {fileID: 7338943625707693230, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710229684538076155, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
+      propertyPath: hitFxPrefab
+      value: 
+      objectReference: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
+    - target: {fileID: 8710229684538076155, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
+      propertyPath: hitFxLocalYOffset
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 8788783158109436103, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
       propertyPath: m_IsActive
@@ -45911,7 +45919,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!222 &1717797433
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -46029,7 +46037,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!222 &1729232140
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -47568,7 +47576,7 @@ MonoBehaviour:
   - {fileID: 605271981}
   - {fileID: 397804128}
   - {fileID: 2050365579}
-  secondsPerCell: 0.2
+  secondsPerCell: 2
 --- !u!114 &2004398622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47736,7 +47744,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!222 &2008243132
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48831,6 +48839,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 530039595}
     - target: {fileID: 6044175225541664902, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
+      propertyPath: cardGaugeController
+      value: 
+      objectReference: {fileID: 2004398621}
+    - target: {fileID: 6044175225541664902, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
+      propertyPath: parryGaugeCellReward
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044175225541664902, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
       propertyPath: screenEffectController
       value: 
       objectReference: {fileID: 82030804}
@@ -48947,6 +48963,14 @@ PrefabInstance:
       propertyPath: <Target>k__BackingField
       value: 
       objectReference: {fileID: 1719134164}
+    - target: {fileID: 8710229684538076155, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
+      propertyPath: hitFxPrefab
+      value: 
+      objectReference: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
+    - target: {fileID: 8710229684538076155, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
+      propertyPath: hitFxLocalYOffset
+      value: 0.45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

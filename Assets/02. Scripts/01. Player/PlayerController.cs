@@ -66,6 +66,8 @@ namespace Arcanist
 
         [Header("Card")]
         [SerializeField] private CardSystem cardSystem;
+        [SerializeField] private CardGaugeController cardGaugeController;
+        [SerializeField] private int parryGaugeCellReward = 3;
 
         private float nextDashTime;
         private float nextParryTime;
@@ -253,6 +255,8 @@ namespace Arcanist
         {
             IsParrying = false;
             CloseParryWindow();
+
+            cardGaugeController?.AddCells(parryGaugeCellReward);
 
             Animator.ResetTrigger(PARRY);
             Animator.SetTrigger(PARRY_SUCCESS);
