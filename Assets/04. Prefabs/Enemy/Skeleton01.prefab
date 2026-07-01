@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 5993753250153684236}
   - component: {fileID: 1292777937788745370}
   m_Layer: 6
-  m_Name: EnemyNormal
+  m_Name: Skeleton01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,7 +118,10 @@ MonoBehaviour:
   attackCooldown: 2
   hurtDuration: 0.2
   patrolPoint: {fileID: 2870976477559899801}
+  grade: 0
+  targetPoint: {fileID: 0}
   <Target>k__BackingField: {fileID: 0}
+  isDead: 0
 --- !u!114 &1292777937788745370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +152,6 @@ GameObject:
   - component: {fileID: 7338943625707693230}
   - component: {fileID: 8710229684538076155}
   - component: {fileID: 4960596537566220320}
-  - component: {fileID: 9079749165920263019}
   m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
@@ -313,6 +315,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.HurtBox
   <Owner>k__BackingField: {fileID: 1292777937788745370}
+  hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
+  hitFxLocalYOffset: 0.45
+  playHitFx: 1
 --- !u!50 &4960596537566220320
 Rigidbody2D:
   serializedVersion: 5
@@ -321,7 +326,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8675951228584960273}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -339,28 +344,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &9079749165920263019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8675951228584960273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 205071fd63c6845028441b6239317f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Utilities.CharacterController2D
-  speed: 2
-  gravity: -9.81
-  jumpPower: 8
-  maxJumpCount: 2
-  groundCheckDistance: 0.5
-  skinWidth: 0.02
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  m_Constraints: 4
 --- !u!1 &8788783158109436103
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +357,7 @@ GameObject:
   - component: {fileID: 5920850760607831719}
   - component: {fileID: 3277125856441771003}
   - component: {fileID: 8639885469304045307}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,11 +478,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  parryLightEffect: {fileID: 0}
-  screenEffectController: {fileID: 0}
-  hitFxPrefab: {fileID: 0}
-  playHitFxOnlyByPlayer: 1
-  hitFxLocalYOffset: 0
 --- !u!61 &8639885469304045307
 BoxCollider2D:
   m_ObjectHideFlags: 0

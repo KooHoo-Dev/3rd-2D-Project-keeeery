@@ -6,8 +6,6 @@ namespace Arcanist
     public class HitBox : MonoBehaviour
     {
         [field: SerializeField] public AttackInfo AttackInfo { get; private set; }
-        [SerializeField] private ParryLightEffect parryLightEffect;
-        [SerializeField] private ScreenEffectController screenEffectController;
 
         private CombatEntity Owner { get; set; }
 
@@ -54,8 +52,6 @@ namespace Arcanist
                 {
                     Debug.Log("[Parry] Success");
                     playerController.SuccessParry();
-                    parryLightEffect.Play();
-                    screenEffectController.PlayParryGlow();
                     return;
                 }
             }

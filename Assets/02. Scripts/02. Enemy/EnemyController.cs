@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Utilities;
 
 namespace Arcanist
 {
@@ -38,8 +37,10 @@ namespace Arcanist
 
         public Animator Animator { get; private set; }
         public Enemy Enemy { get; private set; }
+        public Rigidbody2D Rigidbody { get; private set; }
         public EnemyGrade Grade => grade;
         public Transform TargetPoint => targetPoint != null ? targetPoint : transform;
+        private Vector3 CurrentPosition => Rigidbody != null ? Rigidbody.transform.position : transform.position;
 
         public float MoveSpeed => moveSpeed;
         public float TraceRange => traceRange;
@@ -66,12 +67,13 @@ namespace Arcanist
         {
             Animator = GetComponentInChildren<Animator>();
             Enemy = GetComponentInChildren<Enemy>();
+            Rigidbody = GetComponentInChildren<Rigidbody2D>();
             originalScale = transform.localScale;
 
-            PointA = transform.position;
+            PointA = CurrentPosition;
 
-            Vector3 pointB = patrolPoint != null ? patrolPoint.position : transform.position;
-            pointB.y = transform.position.y;
+            Vector3 pointB = patrolPoint != null ? patrolPoint.position : CurrentPosition;
+            pointB.y = CurrentPosition.y;
             PointB = pointB;
 
             GoalPoint = PointB;
@@ -129,7 +131,7 @@ namespace Arcanist
 
         public bool HasTargetInTraceRange()
         {
-            return Target != null && transform.IsInRange(Target.position, traceRange);
+            return Target != null && IsInRange(CurrentPosition, Target.position, traceRange);
         }
 
         public bool HasTargetOnSameFloor()
@@ -137,7 +139,7 @@ namespace Arcanist
             if (Target == null)
                 return false;
 
-            return CompareFloor(transform.position, Target.position) == 0;
+            return CompareFloor(CurrentPosition, Target.position) == 0;
         }
 
         public bool HasTargetInAttackRange()
@@ -145,16 +147,18 @@ namespace Arcanist
             if (Target == null)
                 return false;
 
+            Vector3 currentPosition = CurrentPosition;
             Vector3 adjustTargetPosition = Target.position;
-            adjustTargetPosition.y = transform.position.y;
-            return transform.IsInRange(adjustTargetPosition, attackRange);
+            adjustTargetPosition.y = currentPosition.y;
+            return IsInRange(currentPosition, adjustTargetPosition, attackRange);
         }
 
         public bool IsNearGoal(Vector3 goalPosition)
         {
-            Vector3 adjustGoalPoint = transform.position;
+            Vector3 currentPosition = CurrentPosition;
+            Vector3 adjustGoalPoint = currentPosition;
             adjustGoalPoint.x = goalPosition.x;
-            return transform.IsInRange(adjustGoalPoint, stoppingDistance);
+            return IsInRange(currentPosition, adjustGoalPoint, stoppingDistance);
         }
 
         public bool CanAttack()
@@ -172,12 +176,24 @@ namespace Arcanist
             Animator.SetBool(IS_MOVE, true);
 
             float moveDirection = UpdateDirection(goalPosition);
+
+            if (Rigidbody != null)
+            {
+                Rigidbody.linearVelocity = new Vector2(moveDirection * moveSpeed, Rigidbody.linearVelocity.y);
+                return;
+            }
+
             transform.Translate(new Vector3(moveDirection, 0.0f, 0.0f) * (moveSpeed * Time.deltaTime));
         }
 
         public void StopMove()
         {
             Animator.SetBool(IS_MOVE, false);
+
+            if (Rigidbody != null)
+            {
+                Rigidbody.linearVelocity = new Vector2(0.0f, Rigidbody.linearVelocity.y);
+            }
         }
 
         public void LookAt(Vector3 targetPosition)
@@ -210,7 +226,7 @@ namespace Arcanist
 
         private float UpdateDirection(Vector3 goalPosition)
         {
-            float dirToGoal = goalPosition.x - transform.position.x;
+            float dirToGoal = goalPosition.x - CurrentPosition.x;
             float moveDirection = Mathf.Sign(dirToGoal);
 
             if (Mathf.Approximately(dirToGoal, 0.0f))
@@ -222,6 +238,11 @@ namespace Arcanist
                 originalScale.z);
 
             return moveDirection;
+        }
+
+        private bool IsInRange(Vector3 from, Vector3 to, float range)
+        {
+            return Vector3.Distance(from, to) <= range;
         }
 
         private int CompareFloor(Vector3 a, Vector3 b)
@@ -248,6 +269,11 @@ namespace Arcanist
         public void DestroySelf()
         {
             Destroy(gameObject);
+        }
+
+        public void SetTarget(Transform target)
+        {
+            Target = target;
         }
     }
 }

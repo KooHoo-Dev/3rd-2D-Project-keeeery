@@ -40,6 +40,7 @@ namespace Arcanist
 
         [Header("Parry")]
         [SerializeField] private float parryCooldown = 1.2f;
+        [SerializeField] private ParryLightEffect parryLightEffect;
 
         [Header("Sprint")]
         [SerializeField] private float sprintMultiplier = 1.5f;
@@ -257,9 +258,23 @@ namespace Arcanist
             CloseParryWindow();
 
             cardGaugeController?.AddCells(parryGaugeCellReward);
+            PlayParrySuccessEffects();
 
             Animator.ResetTrigger(PARRY);
             Animator.SetTrigger(PARRY_SUCCESS);
+        }
+
+        private void PlayParrySuccessEffects()
+        {
+            if (parryLightEffect != null)
+            {
+                parryLightEffect.Play();
+            }
+
+            if (screenEffectController != null)
+            {
+                screenEffectController.PlayParryGlow();
+            }
         }
 
         public void Hurt()

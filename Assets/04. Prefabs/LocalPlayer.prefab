@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9199750140091498371}
   - component: {fileID: 2606979580356974102}
   - component: {fileID: 3516409619870467734}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Attack03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,8 +133,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  parryLightEffect: {fileID: 0}
-  screenEffectController: {fileID: 0}
 --- !u!61 &3516409619870467734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -192,7 +190,7 @@ GameObject:
   - component: {fileID: 6241427466554049302}
   - component: {fileID: 7007448621730572237}
   - component: {fileID: 6826364443014593593}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1511040938191158499}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HeadUpPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +318,7 @@ Transform:
   m_GameObject: {fileID: 2310535005857261350}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -343,9 +341,9 @@ GameObject:
   - component: {fileID: 107812643175150398}
   - component: {fileID: 8373384800210950506}
   - component: {fileID: 4350949043046959774}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LocalPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -478,6 +476,7 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 0.8
   parryCooldown: 2.5
+  parryLightEffect: {fileID: 4350949043046959774}
   sprintMultiplier: 1.5
   staminaCostPerSec: 20
   staminaRecoveryPerSec: 10
@@ -630,7 +629,7 @@ GameObject:
   - component: {fileID: 1990378829057538046}
   - component: {fileID: 1291406621599861162}
   - component: {fileID: 8996568688173906432}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -761,7 +760,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2793759776769483979}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SprintFXPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +794,7 @@ GameObject:
   - component: {fileID: 5832469262797529492}
   - component: {fileID: 7960103691488143048}
   - component: {fileID: 5943447859623294796}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Attack01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,8 +915,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  parryLightEffect: {fileID: 0}
-  screenEffectController: {fileID: 0}
 --- !u!61 &5943447859623294796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -975,7 +972,7 @@ GameObject:
   - component: {fileID: 1025762003223642066}
   - component: {fileID: 789380171736896128}
   - component: {fileID: 1596082264694969124}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ParryFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5867,7 +5864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2951469183574969411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CardUseFXPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5899,7 +5896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6899511761142688044}
   - component: {fileID: 8415005729970272177}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ParryLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5983,7 +5980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5351048711082613938}
   - component: {fileID: 5453752779720698676}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spot Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6066,7 +6063,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4204026643135060411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6100,7 +6097,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 14219919456813249}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LightRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6136,7 +6133,7 @@ GameObject:
   - component: {fileID: 9002623766747235881}
   - component: {fileID: 9209750455789746731}
   - component: {fileID: 165717915923768831}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Attack02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6257,8 +6254,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  parryLightEffect: {fileID: 0}
-  screenEffectController: {fileID: 0}
 --- !u!61 &165717915923768831
 BoxCollider2D:
   m_ObjectHideFlags: 0
