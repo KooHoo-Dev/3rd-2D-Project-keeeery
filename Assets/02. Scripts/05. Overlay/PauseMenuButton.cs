@@ -14,7 +14,7 @@ namespace Arcanist
     {
         public enum ButtonType
         {
-            Resume, ReturnToCheckPoint, Option, MainMenu
+            Resume, Inventory, ReturnToCheckPoint, Option, MainMenu
         }
 
         [SerializeField] private ButtonType buttonType;
@@ -70,6 +70,10 @@ namespace Arcanist
                     overlayController.Hide();
                     break;
 
+                case ButtonType.Inventory:
+                    overlayController.ShowInventory();
+                    break;
+                    
                 case ButtonType.ReturnToCheckPoint:
                     // TODO: 체크포인트 부활 구현
                     break;

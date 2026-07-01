@@ -52,6 +52,7 @@ namespace Arcanist
         public void OpenReward()
         {
             ResolveReferences();
+            ResetTexts();
             OpenReward(CreateRewards());
         }
 
@@ -395,14 +396,13 @@ namespace Arcanist
         {
             ResolveReferences();
 
-            if (overlayController != null)
-                overlayController.Hide();
-            else
-                CloseReward();
-
             ClearRewardCards();
             ResetRewardState();
-            ResetTexts();
+            
+            if (overlayController != null)
+                overlayController.Hide();
+            else if (rewardWindow != null)
+                rewardWindow.SetActive(false);
         }
 
         private void ResolveReferences()
