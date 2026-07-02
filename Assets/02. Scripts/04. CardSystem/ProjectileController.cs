@@ -70,6 +70,12 @@ namespace Arcanist
 
             direction = moveDirection.normalized;
             transform.right = direction;
+
+            lifeTimer = 0f;
+            isExploding = false;
+
+            if (hitCollider != null)
+                hitCollider.enabled = true;
         }
 
         public void StartMove()
@@ -113,14 +119,6 @@ namespace Arcanist
                 rigidBody.MovePosition(rigidBody.position + movement);
             else
                 transform.position += (Vector3)movement;
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (isExploding)
-                return;
-
-            Explode();
         }
     }
 }

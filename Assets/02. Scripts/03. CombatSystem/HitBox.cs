@@ -6,24 +6,35 @@ namespace Arcanist
     public class HitBox : MonoBehaviour
     {
         [field: SerializeField] public AttackInfo AttackInfo { get; private set; }
+        [SerializeField] private bool explodeProjectileOnHit;
+        [SerializeField] private ProjectileController projectileController;
 
         private CombatEntity Owner { get; set; }
 
-        private HashSet<HurtBox> checkList = new HashSet<HurtBox>();
+        private readonly HashSet<HurtBox> checkList = new HashSet<HurtBox>();
 
         private void Awake()
         {
             Owner = GetComponentInParent<CombatEntity>();
-            
-            if(Owner == null)
+
+            if (projectileController == null)
+                projectileController = GetComponentInParent<ProjectileController>();
+
+            if (Owner == null && projectileController == null)
             {
-                Debug.LogError($"{name} : 부모 계층에서 CombatEntity를 찾지 못했습니다. 오브젝트를 삭제합니다");
+                Debug.LogError($"{name} : 부모 계층에서 CombatEntity 또는 ProjectileController를 찾지 못했습니다. 오브젝트를 삭제합니다");
                 Destroy(gameObject);
             }
         }
 
         private void OnEnable()
         {
+            checkList.Clear();
+        }
+
+        public void Initialize(CombatEntity owner)
+        {
+            Owner = owner;
             checkList.Clear();
         }
 
@@ -41,6 +52,11 @@ namespace Arcanist
 
             CombatEntity sender = Owner;
             CombatEntity receiver = hurtBox.Owner;
+
+            if (sender == null || receiver == null)
+                return;
+            if (sender == receiver)
+                return;
 
             PlayerController playerController = receiver.GetComponent<PlayerController>();
 
@@ -69,6 +85,9 @@ namespace Arcanist
 
             CombatSystem.Instance.To(sender, receiver, @event);
             hurtBox.PlayHitFx(@event.Position);
+
+            if (explodeProjectileOnHit && projectileController != null)
+                projectileController.Explode();
         }
     }
 }

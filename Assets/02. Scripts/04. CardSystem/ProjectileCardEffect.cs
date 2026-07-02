@@ -40,7 +40,11 @@ namespace Arcanist
             Vector2 direction = ResolveDirection(context, spawnPosition);
             Quaternion rotation = ResolveRotation(direction);
 
-            Object.Instantiate(projectilePrefab, spawnPosition, rotation);
+            GameObject projectile = Object.Instantiate(projectilePrefab, spawnPosition, rotation);
+            ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
+
+            if (projectileController != null)
+                projectileController.Initialize(direction);
         }
 
         private Vector3 ResolveSpawnPosition(CardEffectContext context)

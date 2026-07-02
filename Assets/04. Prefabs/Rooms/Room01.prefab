@@ -439,6 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.RoomController
   enemyRoomController: {fileID: 2226052826503223037}
   roomExitController: {fileID: 743364329521759637}
+  overlayController: {fileID: 0}
   onRoomStarted:
     m_PersistentCalls:
       m_Calls: []
