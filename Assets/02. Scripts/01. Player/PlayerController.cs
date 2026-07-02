@@ -141,6 +141,13 @@ namespace Arcanist
 
         public void HandleMovement()
         {
+            if (isCastingSkill)
+            {
+                StopMovement();
+                Animator.SetFloat(MOVEMENT, 0.0f);
+                return;
+            }
+
             if (isHurt || isDead)
             {
                 StopMovement();
@@ -165,6 +172,12 @@ namespace Arcanist
 
         public void HandleMovementWithoutAnimation(float moveScale = 0.75f)
         {
+            if (isCastingSkill)
+            {
+                StopMovement();
+                return;
+            }
+
             if (isHurt || isDead)
             {
                 StopMovement();
@@ -345,7 +358,7 @@ namespace Arcanist
 
         private void UpdateJumpInput()
         {
-            if (IsParrying || isHurt || isDead) return;
+            if (IsParrying || isHurt || isDead || isCastingSkill) return;
 
             if (SimpleInput.GetKeyDown(Key.Space) == false) return;
 
@@ -361,7 +374,7 @@ namespace Arcanist
 
         private void UpdateDashInput()
         {
-            if (IsParrying || isHurt || isDead) return;
+            if (IsParrying || isHurt || isDead || isCastingSkill) return;
 
             if (SimpleInput.GetKeyDown(Key.A) == false) return;
 

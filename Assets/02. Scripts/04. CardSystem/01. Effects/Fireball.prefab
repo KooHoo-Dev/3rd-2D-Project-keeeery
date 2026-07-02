@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3388f89c5fe894c53919169375143ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.ProjectileController
-  speed: 50
+  speed: 75
   lifeTime: 5
   moveAfterStartAnimation: 1
   animator: {fileID: 6148674577154043498}

@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8428a9727c6b847b79e38d168e637d33, type: 3}
-  m_Name: LightningBolt
+  m_Name: "\uB099\uB8B0"
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardData
   cardId: 
-  cardName: "\uB77C\uC774\uD2B8\uB2DD \uBCFC\uD2B8"
+  cardName: "\uB099\uB8B0"
   icon: {fileID: 21300000, guid: c1537c3a9b9bfea47adc1a3f38c16aa8, type: 3}
   cardType: 0
   grade: 0
-  description: 
-  animationTrigger: ThunderBolt
-  effect: {fileID: 11400000, guid: 1210cd8dfa168447ea9fc20b4939a3bf, type: 2}
+  description: "\uBC94\uC704 \uB0B4\uC758 \uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uC801
+    \uC704\uCE58\uC5D0 \uB099\uB8B0\uB97C \uB5A8\uC5B4\uB728\uB824 n\uC758 \uD53C\uD574\uB97C
+    \uC90D\uB2C8\uB2E4."
+  animationTrigger: UpCast
+  effect: {fileID: 11400000, guid: 4358dddaca1154eefa3782f7d1f34b39, type: 2}

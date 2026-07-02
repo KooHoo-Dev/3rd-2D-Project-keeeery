@@ -45,7 +45,7 @@ namespace Arcanist
             {
                 EnemyController candidate = activeEnemies[i];
 
-                if (candidate == null || candidate.isActiveAndEnabled == false)
+                if (candidate == null || candidate.isActiveAndEnabled == false || candidate.IsDead)
                     continue;
 
                 Transform targetPoint = candidate.TargetPoint;

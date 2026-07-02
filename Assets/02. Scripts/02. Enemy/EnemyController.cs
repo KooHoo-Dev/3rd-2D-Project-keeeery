@@ -48,6 +48,8 @@ namespace Arcanist
         public Enemy Enemy { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
         public EnemyGrade Grade => grade;
+        public bool isDead;
+        public bool IsDead => isDead;
         public Transform TargetPoint => targetPoint != null ? targetPoint : ActorTransform;
 
         public float MoveSpeed => moveSpeed;
@@ -71,8 +73,6 @@ namespace Arcanist
         private bool isHurt;
         private bool isMovingToPointB = true;
 
-        public bool isDead;
-
         private void Awake()
         {
             Animator = GetComponentInChildren<Animator>();
@@ -85,6 +85,7 @@ namespace Arcanist
 
         private void OnEnable()
         {
+            isDead = false;
             ChangeState(EnemyState.Idle);
             EnemyManager.Register(this);
         }
@@ -336,6 +337,7 @@ namespace Arcanist
             if (isDead) return;
 
             isDead = true;
+            EnemyManager.Unregister(this);
             isHurt = false;
             StopMove();
             Animator.SetBool(IS_HURT, false);

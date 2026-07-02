@@ -107,8 +107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.Hitbox
   <AttackInfo>k__BackingField:
     Key: 0
-    MinDamage: 500
-    MaxDamage: 550
+    MinDamage: 50
+    MaxDamage: 60
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -135,6 +135,8 @@ MonoBehaviour:
       m_RotationOrder: 4
   explodeProjectileOnHit: 0
   projectileController: {fileID: 0}
+  allowMultiHit: 1
+  multiHitInterval: 0.1
 --- !u!61 &632514934067832742
 BoxCollider2D:
   m_ObjectHideFlags: 0
