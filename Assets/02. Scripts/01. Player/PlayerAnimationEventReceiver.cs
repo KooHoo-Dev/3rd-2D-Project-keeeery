@@ -20,5 +20,13 @@ namespace Arcanist
 
             cardSystem.ExecutePendingCardSkill();
         }
+
+        public void EndCardSkill()
+        {
+            if (playerController == null)
+                return;
+
+            playerController.EndCardSkill();
+        }
     }
 }

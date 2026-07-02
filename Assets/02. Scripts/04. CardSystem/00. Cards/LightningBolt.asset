@@ -16,6 +16,7 @@ MonoBehaviour:
   cardName: "\uB77C\uC774\uD2B8\uB2DD \uBCFC\uD2B8"
   icon: {fileID: 21300000, guid: c1537c3a9b9bfea47adc1a3f38c16aa8, type: 3}
   cardType: 0
+  grade: 0
   description: 
-  animationTrigger: 
-  effect: {fileID: 0}
+  animationTrigger: ThunderBolt
+  effect: {fileID: 11400000, guid: 1210cd8dfa168447ea9fc20b4939a3bf, type: 2}

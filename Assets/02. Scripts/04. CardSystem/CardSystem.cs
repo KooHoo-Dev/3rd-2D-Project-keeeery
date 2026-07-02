@@ -319,6 +319,8 @@ namespace Arcanist
 
             if (playerAnimator == null) return;
 
+            playerController?.BeginCardSkill();
+
             string triggerName = string.IsNullOrEmpty(card.AnimationTrigger)
                 ? fallbackCardSkillTrigger
                 : card.AnimationTrigger;

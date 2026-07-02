@@ -25,6 +25,7 @@ namespace Arcanist
         public static readonly int PARRY = Animator.StringToHash("Parry");
         public static readonly int PARRY_SUCCESS = Animator.StringToHash("ParrySuccess");
         public static readonly int IS_HURT = Animator.StringToHash("IsHurt");
+        public static readonly int IS_CASTING_SKILL = Animator.StringToHash("IsCastingSkill");
         public static readonly int DEATH = Animator.StringToHash("Death");
 
 
@@ -78,6 +79,7 @@ namespace Arcanist
         private bool isSprint;
         private GameObject sprintLoopFx;
         private bool isHurt;
+        private bool isCastingSkill;
         private bool isDead;
         private Dictionary<int, PlayerAnimStateBase> StateDic { get; set; } = new();
 
@@ -281,12 +283,16 @@ namespace Arcanist
         {
             if (isDead) return;
 
+            screenEffectController.PlayDamageGlow();
+
+            if (isCastingSkill)
+                return;
+
             isHurt = true;
             hurtEndTime = Time.time + hurtDuration;
             IsParrying = false;
             CloseParryWindow();
             StopMovement();
-            screenEffectController.PlayDamageGlow();
             Animator.SetBool(IS_HURT, true);
         }
 
@@ -323,6 +329,18 @@ namespace Arcanist
                 return;
 
             cardSystem.ExecutePendingCardSkill();
+        }
+
+        public void BeginCardSkill()
+        {
+            isCastingSkill = true;
+            Animator.SetBool(IS_CASTING_SKILL, true);
+        }
+
+        public void EndCardSkill()
+        {
+            isCastingSkill = false;
+            Animator.SetBool(IS_CASTING_SKILL, false);
         }
 
         private void UpdateJumpInput()
