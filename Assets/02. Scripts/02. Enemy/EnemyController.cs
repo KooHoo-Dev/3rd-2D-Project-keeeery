@@ -31,6 +31,7 @@ namespace Arcanist
 
         [Header("Hurt")]
         [SerializeField] private float hurtDuration = 0.15f;
+        [SerializeField] private float hurtKnockbackSpeed = 1.5f;
 
         [Header("Patrol")]
         [SerializeField] private Transform patrolPoint;
@@ -323,12 +324,29 @@ namespace Arcanist
             isHurt = true;
             hurtEndTime = Time.time + hurtDuration;
             StopMove();
+            ApplyHurtKnockback();
             Animator.SetBool(IS_HURT, true);
+        }
+
+        private void ApplyHurtKnockback()
+        {
+            if (Rigidbody == null || hurtKnockbackSpeed <= 0.0f)
+                return;
+
+            float direction = Target != null
+                ? Mathf.Sign(CurrentPosition.x - Target.position.x)
+                : -Mathf.Sign(ActorTransform.localScale.x);
+
+            if (Mathf.Approximately(direction, 0.0f))
+                direction = -Mathf.Sign(ActorTransform.localScale.x);
+
+            Rigidbody.linearVelocity = new Vector2(direction * hurtKnockbackSpeed, Rigidbody.linearVelocity.y);
         }
 
         private void EndHurt()
         {
             isHurt = false;
+            StopMove();
             Animator.SetBool(IS_HURT, false);
         }
 

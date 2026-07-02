@@ -117,6 +117,7 @@ MonoBehaviour:
   idleWaitTime: 3
   attackCooldown: 2
   hurtDuration: 0.2
+  hurtKnockbackSpeed: 1
   patrolPoint: {fileID: 2870976477559899801}
   isFacingRight: 1
   grade: 0
@@ -478,6 +479,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  explodeProjectileOnHit: 0
+  projectileController: {fileID: 0}
+  allowMultiHit: 0
+  multiHitInterval: 0.25
 --- !u!61 &8639885469304045307
 BoxCollider2D:
   m_ObjectHideFlags: 0
