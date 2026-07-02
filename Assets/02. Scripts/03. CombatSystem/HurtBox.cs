@@ -8,7 +8,7 @@ namespace Arcanist
         [field: SerializeField] public CombatEntity Owner { get; private set; }
         [SerializeField] private GameObject hitFxPrefab;
         [SerializeField] private float hitFxLocalYOffset = 0.0f;
-        [SerializeField] private bool playHitFx = true;
+        // [SerializeField] private bool playHitFx = true;
 
         private EnemyController enemyController;
         private Collider2D col2D;

@@ -10881,10 +10881,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LocalPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 2968401417501518829, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 4350949043046959774, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
       propertyPath: hitStopController
       value: 
@@ -10980,11 +10976,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2335321923469207406, guid: 7406a6d68b6cd4b42b641192e3aa72a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2335321923469207406, guid: 7406a6d68b6cd4b42b641192e3aa72a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2335321923469207406, guid: 7406a6d68b6cd4b42b641192e3aa72a0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11025,10 +11021,6 @@ PrefabInstance:
     - target: {fileID: 3462294024928774373, guid: 7406a6d68b6cd4b42b641192e3aa72a0, type: 3}
       propertyPath: m_Name
       value: Skeleton02
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462294024928774373, guid: 7406a6d68b6cd4b42b641192e3aa72a0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11940,17 +11932,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton01
       objectReference: {fileID: 0}
-    - target: {fileID: 4682346260193089841, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 5809425701408224954, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5809425701408224954, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5809425701408224954, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 5809425701408224954, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
       propertyPath: m_LocalPosition.z

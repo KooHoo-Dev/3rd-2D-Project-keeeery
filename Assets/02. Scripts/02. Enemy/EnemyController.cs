@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Arcanist
@@ -11,7 +10,12 @@ namespace Arcanist
         public static readonly int IS_HURT = Animator.StringToHash("IsHurt");
         public static readonly int DIE = Animator.StringToHash("Die");
 
-        private const string ANIM_TAG_ATTACK = "Attack";
+        private enum EnemyState
+        {
+            Idle,
+            Patrol,
+            Attack
+        }
 
         [Header("Movement")]
         [SerializeField] private float moveSpeed = 1.0f;
@@ -19,8 +23,10 @@ namespace Arcanist
         [SerializeField] private float attackRange = 3.0f;
         [SerializeField] private float stoppingDistance = 0.1f;
 
+        [Header("State")]
+        [SerializeField] private float idleWaitTime = 3.0f;
+
         [Header("Attack")]
-        [SerializeField] private float attackHitDelay = 0.5f;
         [SerializeField] private float attackCooldown = 2.0f;
 
         [Header("Hurt")]
@@ -28,6 +34,9 @@ namespace Arcanist
 
         [Header("Patrol")]
         [SerializeField] private Transform patrolPoint;
+
+        [Header("Facing")]
+        [SerializeField] private bool isFacingRight = true;
 
         [Header("Targeting")]
         [SerializeField] private EnemyGrade grade = EnemyGrade.Normal;
@@ -39,27 +48,28 @@ namespace Arcanist
         public Enemy Enemy { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
         public EnemyGrade Grade => grade;
-        public Transform TargetPoint => targetPoint != null ? targetPoint : transform;
-        private Vector3 CurrentPosition => Rigidbody != null ? Rigidbody.transform.position : transform.position;
+        public Transform TargetPoint => targetPoint != null ? targetPoint : ActorTransform;
 
         public float MoveSpeed => moveSpeed;
         public float TraceRange => traceRange;
         public float AttackRange => attackRange;
         public float StoppingDistance => stoppingDistance;
-        public float AttackHitDelay => attackHitDelay;
         public float AttackCooldown => attackCooldown;
 
         public Vector3 PointA { get; private set; }
         public Vector3 PointB { get; private set; }
-        public Vector3 GoalPoint { get; set; }
+        public Vector3 GoalPoint { get; private set; }
 
+        private Transform ActorTransform => Rigidbody != null ? Rigidbody.transform : transform;
+        private Vector3 CurrentPosition => Rigidbody != null ? (Vector3)Rigidbody.position : transform.position;
+
+        private EnemyState currentState = EnemyState.Idle;
         private Vector3 originalScale;
         private float nextAttackTime;
         private float hurtEndTime;
+        private float stateElapsedTime;
         private bool isHurt;
-        private EnemyStateBase currentState;
-        private EnemyStateBase defaultState;
-        private Dictionary<int, EnemyStateBase> stateDic;
+        private bool isMovingToPointB = true;
 
         public bool isDead;
 
@@ -68,26 +78,14 @@ namespace Arcanist
             Animator = GetComponentInChildren<Animator>();
             Enemy = GetComponentInChildren<Enemy>();
             Rigidbody = GetComponentInChildren<Rigidbody2D>();
-            originalScale = transform.localScale;
+            originalScale = ActorTransform.localScale;
 
-            PointA = CurrentPosition;
-
-            Vector3 pointB = patrolPoint != null ? patrolPoint.position : CurrentPosition;
-            pointB.y = CurrentPosition.y;
-            PointB = pointB;
-
-            GoalPoint = PointB;
-
-            defaultState = new EnemyPatrolState(this);
-            stateDic = new Dictionary<int, EnemyStateBase>
-            {
-                { Animator.StringToHash(ANIM_TAG_ATTACK), new EnemyAttackState(this) }
-            };
+            InitializePatrolPoints();
         }
 
         private void OnEnable()
         {
-            currentState = null;
+            ChangeState(EnemyState.Idle);
             EnemyManager.Register(this);
         }
 
@@ -98,35 +96,118 @@ namespace Arcanist
 
         private void Update()
         {
-            if (isDead)
-                return;
+            if (isDead) return;
 
             if (isHurt)
             {
-                if (Time.time >= hurtEndTime)
-                    EndHurt();
-                else
-                    return;
+                UpdateHurtState();
+                return;
             }
 
-            UpdateAnimState();
+            stateElapsedTime += Time.deltaTime;
+            UpdateState();
         }
 
-        private void UpdateAnimState()
+        private void InitializePatrolPoints()
         {
-            AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+            PointA = CurrentPosition;
 
-            if (stateDic.TryGetValue(stateInfo.tagHash, out EnemyStateBase nextState) == false)
-                nextState = defaultState;
+            Vector3 pointB = patrolPoint != null ? patrolPoint.position : CurrentPosition;
+            pointB.y = CurrentPosition.y;
+            PointB = pointB;
 
-            if (currentState != nextState)
+            GoalPoint = PointB;
+            isMovingToPointB = true;
+        }
+
+        private void UpdateState()
+        {
+            switch (currentState)
             {
-                currentState?.Exit();
-                currentState = nextState;
-                currentState.Enter();
+                case EnemyState.Idle:
+                    UpdateIdleState();
+                    break;
+
+                case EnemyState.Patrol:
+                    UpdatePatrolState();
+                    break;
+
+                case EnemyState.Attack:
+                    UpdateAttackState();
+                    break;
+            }
+        }
+
+        private void UpdateIdleState()
+        {
+            StopMove();
+
+            if (CanTraceTarget())
+            {
+                ChangeState(EnemyState.Attack);
+                return;
             }
 
-            currentState.UpdateState(stateInfo);
+            if (stateElapsedTime >= idleWaitTime)
+                ChangeState(EnemyState.Patrol);
+        }
+
+        private void UpdatePatrolState()
+        {
+            if (CanTraceTarget())
+            {
+                ChangeState(EnemyState.Attack);
+                return;
+            }
+
+            if (IsNearGoal(GoalPoint))
+            {
+                SwitchPatrolGoal();
+                ChangeState(EnemyState.Idle);
+                return;
+            }
+
+            MoveTo(GoalPoint);
+        }
+
+        private void UpdateAttackState()
+        {
+            if (!CanTraceTarget())
+            {
+                ChangeState(EnemyState.Idle);
+                return;
+            }
+
+            if (HasTargetInAttackRange())
+            {
+                StopMove();
+                LookAt(Target.position);
+                TryAttack();
+                return;
+            }
+
+            MoveTo(Target.position);
+        }
+
+        private void UpdateHurtState()
+        {
+            if (Time.time < hurtEndTime) return;
+
+            EndHurt();
+        }
+
+        private void ChangeState(EnemyState nextState)
+        {
+            if (currentState == nextState) return;
+
+            currentState = nextState;
+            stateElapsedTime = 0.0f;
+            StopMove();
+        }
+
+        private bool CanTraceTarget()
+        {
+            return HasTargetInTraceRange() && HasTargetOnSameFloor();
         }
 
         public bool HasTargetInTraceRange()
@@ -136,46 +217,58 @@ namespace Arcanist
 
         public bool HasTargetOnSameFloor()
         {
-            if (Target == null)
-                return false;
+            if (Target == null) return false;
 
             return CompareFloor(CurrentPosition, Target.position) == 0;
         }
 
         public bool HasTargetInAttackRange()
         {
-            if (Target == null)
-                return false;
+            if (Target == null) return false;
 
             Vector3 currentPosition = CurrentPosition;
-            Vector3 adjustTargetPosition = Target.position;
-            adjustTargetPosition.y = currentPosition.y;
-            return IsInRange(currentPosition, adjustTargetPosition, attackRange);
+            Vector3 adjustedTargetPosition = Target.position;
+            adjustedTargetPosition.y = currentPosition.y;
+
+            return IsInRange(currentPosition, adjustedTargetPosition, attackRange);
         }
 
         public bool IsNearGoal(Vector3 goalPosition)
         {
-            Vector3 currentPosition = CurrentPosition;
-            Vector3 adjustGoalPoint = currentPosition;
-            adjustGoalPoint.x = goalPosition.x;
-            return IsInRange(currentPosition, adjustGoalPoint, stoppingDistance);
+            return Mathf.Abs(goalPosition.x - CurrentPosition.x) <= stoppingDistance;
         }
 
-        public bool CanAttack()
+        private void SwitchPatrolGoal()
         {
-            return Time.time >= nextAttackTime;
+            isMovingToPointB = !isMovingToPointB;
+            GoalPoint = isMovingToPointB ? PointB : PointA;
         }
 
-        public void MarkAttackUsed()
+        private void TryAttack()
         {
+            if (Time.time < nextAttackTime) return;
+
             nextAttackTime = Time.time + attackCooldown;
+            TriggerAttackAnimation();
         }
 
         public void MoveTo(Vector3 goalPosition)
         {
-            Animator.SetBool(IS_MOVE, true);
+            if (IsNearGoal(goalPosition))
+            {
+                StopMove();
+                return;
+            }
 
             float moveDirection = UpdateDirection(goalPosition);
+
+            if (Mathf.Approximately(moveDirection, 0.0f))
+            {
+                StopMove();
+                return;
+            }
+
+            Animator.SetBool(IS_MOVE, true);
 
             if (Rigidbody != null)
             {
@@ -191,9 +284,7 @@ namespace Arcanist
             Animator.SetBool(IS_MOVE, false);
 
             if (Rigidbody != null)
-            {
                 Rigidbody.linearVelocity = new Vector2(0.0f, Rigidbody.linearVelocity.y);
-            }
         }
 
         public void LookAt(Vector3 targetPosition)
@@ -201,7 +292,24 @@ namespace Arcanist
             UpdateDirection(targetPosition);
         }
 
-        public void TriggerAttackAnimation()
+        private float UpdateDirection(Vector3 goalPosition)
+        {
+            float xDistance = goalPosition.x - CurrentPosition.x;
+
+            if (Mathf.Abs(xDistance) <= stoppingDistance) return 0.0f;
+
+            float moveDirection = Mathf.Sign(xDistance);
+            float baseScaleX = Mathf.Abs(originalScale.x) * (isFacingRight ? 1.0f : -1.0f);
+
+            ActorTransform.localScale = new Vector3(
+                moveDirection * baseScaleX,
+                originalScale.y,
+                originalScale.z);
+
+            return moveDirection;
+        }
+
+        private void TriggerAttackAnimation()
         {
             Animator.SetInteger(ATTACK_INDEX, Random.Range(0, 2));
             Animator.SetTrigger(ATTACK);
@@ -209,8 +317,7 @@ namespace Arcanist
 
         public void Hurt()
         {
-            if (isDead)
-                return;
+            if (isDead) return;
 
             isHurt = true;
             hurtEndTime = Time.time + hurtDuration;
@@ -222,37 +329,6 @@ namespace Arcanist
         {
             isHurt = false;
             Animator.SetBool(IS_HURT, false);
-        }
-
-        private float UpdateDirection(Vector3 goalPosition)
-        {
-            float dirToGoal = goalPosition.x - CurrentPosition.x;
-            float moveDirection = Mathf.Sign(dirToGoal);
-
-            if (Mathf.Approximately(dirToGoal, 0.0f))
-                moveDirection = transform.localScale.x >= 0.0f ? 1.0f : -1.0f;
-
-            transform.localScale = new Vector3(
-                moveDirection * Mathf.Abs(originalScale.x),
-                originalScale.y,
-                originalScale.z);
-
-            return moveDirection;
-        }
-
-        private bool IsInRange(Vector3 from, Vector3 to, float range)
-        {
-            return Vector3.Distance(from, to) <= range;
-        }
-
-        private int CompareFloor(Vector3 a, Vector3 b)
-        {
-            const float EPSILON = 1.0f;
-            float yDistance = a.y - b.y;
-
-            if (Mathf.Abs(yDistance) <= EPSILON) return 0;
-            if (yDistance > 0.0f) return 1;
-            return -1;
         }
 
         public void Dead()
@@ -274,6 +350,21 @@ namespace Arcanist
         public void SetTarget(Transform target)
         {
             Target = target;
+        }
+
+        private bool IsInRange(Vector3 from, Vector3 to, float range)
+        {
+            return Vector3.Distance(from, to) <= range;
+        }
+
+        private int CompareFloor(Vector3 a, Vector3 b)
+        {
+            const float EPSILON = 1.0f;
+            float yDistance = a.y - b.y;
+
+            if (Mathf.Abs(yDistance) <= EPSILON) return 0;
+
+            return yDistance > 0.0f ? 1 : -1;
         }
     }
 }

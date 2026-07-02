@@ -114,10 +114,11 @@ MonoBehaviour:
   traceRange: 2
   attackRange: 1
   stoppingDistance: 0.1
-  attackHitDelay: 0.5
+  idleWaitTime: 3
   attackCooldown: 2
   hurtDuration: 0.2
   patrolPoint: {fileID: 2870976477559899801}
+  isFacingRight: 1
   grade: 0
   targetPoint: {fileID: 0}
   <Target>k__BackingField: {fileID: 0}
@@ -168,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 8675951228584960273}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.18, y: -0.154, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -317,7 +318,6 @@ MonoBehaviour:
   <Owner>k__BackingField: {fileID: 1292777937788745370}
   hitFxPrefab: {fileID: 6928607757573213748, guid: 72fcb078f424c48c9b7e8007f434fde5, type: 3}
   hitFxLocalYOffset: 0.45
-  playHitFx: 1
 --- !u!50 &4960596537566220320
 Rigidbody2D:
   serializedVersion: 5

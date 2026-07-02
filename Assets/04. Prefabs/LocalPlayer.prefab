@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 107812643175150398}
   - component: {fileID: 8373384800210950506}
   - component: {fileID: 4350949043046959774}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: LocalPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -587,7 +587,6 @@ MonoBehaviour:
   <Owner>k__BackingField: {fileID: 1753533218181533399}
   hitFxPrefab: {fileID: 0}
   hitFxLocalYOffset: 0
-  playHitFx: 1
 --- !u!114 &4350949043046959774
 MonoBehaviour:
   m_ObjectHideFlags: 0
