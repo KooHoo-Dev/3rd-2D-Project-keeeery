@@ -45,6 +45,20 @@ namespace Arcanist
 
             if (projectileController != null)
                 projectileController.Initialize(direction);
+
+            CombatEntity owner = context.Player != null
+                ? context.Player.GetComponent<CombatEntity>()
+                : null;
+
+            HitBox[] hitBoxes = projectile.GetComponentsInChildren<HitBox>(true);
+
+            for (int i = 0; i < hitBoxes.Length; i++)
+            {
+                if (hitBoxes[i] == null)
+                    continue;
+
+                hitBoxes[i].Initialize(owner);
+            }
         }
 
         private Vector3 ResolveSpawnPosition(CardEffectContext context)
