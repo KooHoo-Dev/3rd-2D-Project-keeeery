@@ -508,7 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Study_ActionPlatformer.Player
   <HeadUpPivot>k__BackingField: {fileID: 1511040938191158499}
   <Stat>k__BackingField:
-    <MaxHp>k__BackingField: 1000
+    <MaxHp>k__BackingField: 1000000
   hpBar: {fileID: 0}
   hpDelayBar: {fileID: 0}
   maxHpBarScaleX: 2.5

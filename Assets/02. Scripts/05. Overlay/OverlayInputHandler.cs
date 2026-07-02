@@ -13,8 +13,8 @@ namespace Arcanist
         private PlayerInventory playerInventory;
         private InventoryWindow inventoryWindow;
 
-        [Header("Reward Test")]
-        [SerializeField] private RectTransform rewardContainer;
+        // [Header("Reward Test")]
+        // [SerializeField] private RectTransform rewardContainer;
 
         public PlayerInventory PlayerInventory => playerInventory;
         public InventoryWindow InventoryWindow => inventoryWindow;
@@ -41,12 +41,12 @@ namespace Arcanist
                 return;
             }
 
-            // 보상 화면 테스트용 - 나중에 삭제
-            if (SimpleInput.GetKeyDown(Key.R))
-            {
-                ToggleReward();
-                return;
-            }
+            // 보상 화면 테스트용 - 실제 보상 흐름은 RoomExitController -> RoomController.TryExitRoom()에서 처리
+            // if (SimpleInput.GetKeyDown(Key.R))
+            // {
+            //     ToggleReward();
+            //     return;
+            // }
 
             if (SimpleInput.GetKeyDown(Key.I))
             {
@@ -97,35 +97,35 @@ namespace Arcanist
                 overlayController.ShowInventory();
         }
 
-        // 보상 화면 테스트용 - 나중에 수정
-        public void ToggleReward()
-        {
-            if (overlayController.CurrentState == OverlayController.OverlayState.None)
-            {
-                ClearRewardContainer();
-                overlayController.ShowReward();
-            }
-        }
+        // 보상 화면 테스트용 - 실제 보상 흐름에서는 사용하지 않음
+        // public void ToggleReward()
+        // {
+        //     if (overlayController.CurrentState == OverlayController.OverlayState.None)
+        //     {
+        //         ClearRewardContainer();
+        //         overlayController.ShowReward();
+        //     }
+        // }
 
-        // 보상 화면 테스트용 - 나중에 수정
-        private void ClearRewardContainer()
-        {
-            if (rewardContainer == null)
-                return;
-
-            for (int i = rewardContainer.childCount - 1; i >= 0; i--)
-            {
-                Transform child = rewardContainer.GetChild(i);
-
-                if (child == null)
-                    continue;
-
-                GameObject childObject = child.gameObject;
-                child.SetParent(null, false);
-                childObject.SetActive(false);
-                Destroy(childObject);
-            }
-        }
+        // 보상 화면 테스트용 - 실제 보상 흐름에서는 사용하지 않음
+        // private void ClearRewardContainer()
+        // {
+        //     if (rewardContainer == null)
+        //         return;
+        //
+        //     for (int i = rewardContainer.childCount - 1; i >= 0; i--)
+        //     {
+        //         Transform child = rewardContainer.GetChild(i);
+        //
+        //         if (child == null)
+        //             continue;
+        //
+        //         GameObject childObject = child.gameObject;
+        //         child.SetParent(null, false);
+        //         childObject.SetActive(false);
+        //         Destroy(childObject);
+        //     }
+        // }
 
         private void TryCloseInventory()
         {

@@ -29,10 +29,7 @@ namespace Arcanist
             ClearSpawnedEnemies();
             isCleared = false;
 
-            if (enemyRoot == null)
-            {
-                enemyRoot = transform;
-            }
+            if (enemyRoot == null) enemyRoot = transform;
 
             SpawnNormalEnemies();
             CheckRoomClear();
@@ -41,9 +38,7 @@ namespace Arcanist
         private void SpawnNormalEnemies()
         {
             if (normalEnemyPrefabs.Count == 0 || normalSpawnPoints.Count == 0)
-            {
                 return;
-            }
 
             int spawnCount = Mathf.Min(normalEnemyCount, normalSpawnPoints.Count);
             List<Transform> availableSpawnPoints = new List<Transform>(normalSpawnPoints);
@@ -53,10 +48,7 @@ namespace Arcanist
                 GameObject enemyPrefab = GetRandomNormalEnemyPrefab();
                 Transform spawnPoint = GetRandomSpawnPoint(availableSpawnPoints);
 
-                if (enemyPrefab == null || spawnPoint == null)
-                {
-                    continue;
-                }
+                if (enemyPrefab == null || spawnPoint == null) continue;
 
                 GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation, enemyRoot);
                 InitializeSpawnedEnemy(enemy);
@@ -66,10 +58,7 @@ namespace Arcanist
 
         private void InitializeSpawnedEnemy(GameObject enemy)
         {
-            if (enemy == null)
-            {
-                return;
-            }
+            if (enemy == null) return;
 
             AssignTarget(enemy);
             EnablePhysics(enemy);
@@ -90,17 +79,11 @@ namespace Arcanist
 
         private Transform GetTarget()
         {
-            if (target != null)
-            {
-                return target;
-            }
+            if (target != null) return target;
 
             GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
 
-            if (targetObject == null)
-            {
-                return null;
-            }
+            if (targetObject == null) return null;
 
             target = targetObject.transform;
             return target;
@@ -121,9 +104,7 @@ namespace Arcanist
             Collider2D[] colliders = enemy.GetComponentsInChildren<Collider2D>(true);
 
             for (int i = 0; i < colliders.Length; i++)
-            {
                 colliders[i].enabled = true;
-            }
         }
 
         private GameObject GetRandomNormalEnemyPrefab()
@@ -134,10 +115,7 @@ namespace Arcanist
 
         private Transform GetRandomSpawnPoint(List<Transform> availableSpawnPoints)
         {
-            if (availableSpawnPoints.Count == 0)
-            {
-                return null;
-            }
+            if (availableSpawnPoints.Count == 0) return null;
 
             int randomIndex = Random.Range(0, availableSpawnPoints.Count);
             Transform spawnPoint = availableSpawnPoints[randomIndex];
@@ -147,27 +125,29 @@ namespace Arcanist
 
         private void Update()
         {
-            if (isCleared)
-            {
-                return;
-            }
+            if (isCleared) return;
 
             CheckRoomClear();
         }
 
         private void CheckRoomClear()
         {
-            for (int i = spawnedEnemies.Count - 1; i >= 0; i--)
+            if (spawnedEnemies.Count == 0)
             {
-                if (spawnedEnemies[i] == null)
-                {
-                    spawnedEnemies.RemoveAt(i);
-                }
+                isCleared = true;
+                roomController?.OnAllEnemiesDefeated();
+                return;
             }
 
-            if (spawnedEnemies.Count > 0)
+            for (int i = 0; i < spawnedEnemies.Count; i++)
             {
-                return;
+                GameObject enemyObject = spawnedEnemies[i];
+
+                if (enemyObject == null) continue;
+
+                EnemyController enemy = enemyObject.GetComponent<EnemyController>();
+
+                if (enemy == null || !enemy.isDead) return;
             }
 
             isCleared = true;
@@ -177,12 +157,8 @@ namespace Arcanist
         private void ClearSpawnedEnemies()
         {
             for (int i = spawnedEnemies.Count - 1; i >= 0; i--)
-            {
                 if (spawnedEnemies[i] != null)
-                {
                     Destroy(spawnedEnemies[i]);
-                }
-            }
 
             spawnedEnemies.Clear();
         }

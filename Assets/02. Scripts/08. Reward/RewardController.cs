@@ -40,6 +40,7 @@ namespace Arcanist
         private readonly List<RewardCardView> rewardCardViews = new List<RewardCardView>();
 
         private OverlayController overlayController;
+        private RoomController roomController;
         private Coroutine spawnCoroutine;
         private RewardCardView selectedRewardCardView;
         private bool isSelectingReward;
@@ -398,11 +399,14 @@ namespace Arcanist
 
             ClearRewardCards();
             ResetRewardState();
-            
+
             if (overlayController != null)
                 overlayController.Hide();
             else if (rewardWindow != null)
                 rewardWindow.SetActive(false);
+
+            if (roomController != null)
+                roomController.CompleteReward();
         }
 
         private void ResolveReferences()
@@ -415,6 +419,9 @@ namespace Arcanist
 
             if (overlayController == null)
                 overlayController = FindFirstObjectByType<OverlayController>(FindObjectsInactive.Include);
+
+            if (roomController == null)
+                roomController = FindFirstObjectByType<RoomController>();
         }
 
         private void ResetRewardState()

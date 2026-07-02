@@ -16,6 +16,7 @@ namespace Arcanist
         [Header("References")]
         [SerializeField] private EnemyRoomController enemyRoomController;
         [SerializeField] private RoomExitController roomExitController;
+        [SerializeField] private OverlayController overlayController;
 
         [Header("Events")]
         [SerializeField] private UnityEvent onRoomStarted;
@@ -26,6 +27,7 @@ namespace Arcanist
         private RoomState currentState = RoomState.Ready;
 
         public bool CanExit => currentState == RoomState.Cleared;
+        public bool CanOpenReward => currentState == RoomState.Reward;
 
         public void Initialize(RoomManager manager)
         {
@@ -35,19 +37,16 @@ namespace Arcanist
         private void Awake()
         {
             if (enemyRoomController == null)
-            {
                 enemyRoomController = GetComponentInChildren<EnemyRoomController>();
-            }
 
             if (roomExitController == null)
-            {
                 roomExitController = GetComponentInChildren<RoomExitController>();
-            }
+
+            if (overlayController == null)
+                overlayController = FindFirstObjectByType<OverlayController>();
 
             if (enemyRoomController != null)
-            {
                 enemyRoomController.Initialize(this);
-            }
 
             if (roomExitController != null)
             {
@@ -66,50 +65,50 @@ namespace Arcanist
             currentState = RoomState.Combat;
 
             if (roomExitController != null)
-            {
                 roomExitController.SetLocked(true);
-            }
 
             if (enemyRoomController != null)
-            {
                 enemyRoomController.SpawnEnemies();
-            }
 
             onRoomStarted?.Invoke();
         }
 
         public void OnAllEnemiesDefeated()
         {
-            if (currentState != RoomState.Combat)
-            {
-                return;
-            }
+            Debug.Log("[Room] OnAllEnemiesDefeated");
+            if (currentState != RoomState.Combat) return;
 
             currentState = RoomState.Reward;
-            onRoomCleared?.Invoke();
+
+            if (roomExitController != null)
+                roomExitController.SetLocked(false);
         }
 
         public void CompleteReward()
         {
-            if (currentState != RoomState.Reward)
-            {
-                return;
-            }
+            if (currentState != RoomState.Reward) return;
 
             currentState = RoomState.Cleared;
 
             if (roomExitController != null)
-            {
                 roomExitController.SetLocked(false);
-            }
         }
 
         public void TryExitRoom()
         {
-            if (!CanExit)
+            if (CanOpenReward)
             {
+                if (overlayController == null)
+                    overlayController = FindFirstObjectByType<OverlayController>();
+                
+                if (overlayController == null) return;
+
+                overlayController.ShowReward();
+                onRoomCleared?.Invoke();
                 return;
             }
+
+            if (!CanExit) return;
 
             onExitRequested?.Invoke();
             roomManager?.LoadNextRoom();

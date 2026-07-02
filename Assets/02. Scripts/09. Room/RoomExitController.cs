@@ -6,9 +6,6 @@ namespace Arcanist
 {
     public class RoomExitController : MonoBehaviour
     {
-        [Header("Input")]
-        [SerializeField] private Key interactKey = Key.UpArrow;
-
         [Header("State")]
         [SerializeField] private GameObject lockedVisual;
         [SerializeField] private GameObject unlockedVisual;
@@ -19,11 +16,13 @@ namespace Arcanist
 
         public void Initialize(RoomController controller)
         {
+            Debug.Log($"[Exit] Initialize -> {controller.name}", controller);
             roomController = controller;
         }
 
         public void SetLocked(bool locked)
         {
+            Debug.Log($"[Exit] SetLocked({locked})");
             isLocked = locked;
 
             if (lockedVisual != null)
@@ -39,19 +38,22 @@ namespace Arcanist
 
         private void Update()
         {
+            Debug.Log($"[Exit] inside={isPlayerInside}, locked={isLocked}");
             if (!isPlayerInside || isLocked)
             {
                 return;
             }
 
-            if (SimpleInput.GetKeyDown(interactKey))
+            if (SimpleInput.GetKeyDown(Key.UpArrow))
             {
+                Debug.Log("[Exit] TryExitRoom 호출");
                 roomController?.TryExitRoom();
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            Debug.Log($"[Exit] Enter {other.name}, tag={other.tag}");
             if (other.CompareTag("Player"))
             {
                 isPlayerInside = true;
