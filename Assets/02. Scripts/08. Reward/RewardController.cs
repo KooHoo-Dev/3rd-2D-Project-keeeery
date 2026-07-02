@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Arcanist
 {
@@ -31,18 +33,13 @@ namespace Arcanist
         [SerializeField] private float selectedHoldDuration = 0.18f;
         [SerializeField] private float cardSpawnDelay = 0.08f;
 
-        [Header("Add Announce")]
-        [SerializeField] private CanvasGroup addAnnounceCanvasGroup;
-        [SerializeField] private float addAnnounceFadeInDuration = 0.25f;
-        [SerializeField] private float addAnnounceHoldDuration = 0.35f;
-        [SerializeField] private float addAnnounceFadeOutDuration = 0.25f;
-
         private readonly List<RewardCardView> rewardCardViews = new List<RewardCardView>();
 
         private OverlayController overlayController;
         private RoomController roomController;
         private Coroutine spawnCoroutine;
         private RewardCardView selectedRewardCardView;
+        private AnnounceMessage announceMessage;
         private bool isSelectingReward;
 
         private void Awake()
@@ -202,8 +199,10 @@ namespace Arcanist
             yield return selectedMotion.PlayExit(centerScale);
 
             GrantReward(selectedView.CardData);
-            yield return PlayAddAnnounce();
             HideOverlayOrCloseReward();
+
+            if (announceMessage != null)
+                announceMessage.Show();
         }
 
         private IEnumerator FadeUnselectedCards(RewardCardView selectedView)
@@ -245,19 +244,6 @@ namespace Arcanist
 
             selectedRect.position = targetPosition;
             selectedRect.localScale = targetScale;
-        }
-
-        private IEnumerator PlayAddAnnounce()
-        {
-            if (addAnnounceCanvasGroup == null)
-                yield break;
-
-            yield return FadeCanvasGroup(addAnnounceCanvasGroup, 1.0f, addAnnounceFadeInDuration);
-
-            if (addAnnounceHoldDuration > 0.0f)
-                yield return new WaitForSecondsRealtime(addAnnounceHoldDuration);
-
-            yield return FadeCanvasGroup(addAnnounceCanvasGroup, 0.0f, addAnnounceFadeOutDuration);
         }
 
         private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float targetAlpha, float duration)
@@ -422,6 +408,9 @@ namespace Arcanist
 
             if (roomController == null)
                 roomController = FindFirstObjectByType<RoomController>();
+
+            if (announceMessage == null)
+                announceMessage = FindFirstObjectByType<AnnounceMessage>(FindObjectsInactive.Include);
         }
 
         private void ResetRewardState()
@@ -434,7 +423,6 @@ namespace Arcanist
         private void ResetTexts()
         {
             ResetCanvasGroup(rewardSelectTextCanvasGroup, 1.0f, true);
-            ResetCanvasGroup(addAnnounceCanvasGroup, 0.0f, false);
         }
 
         private void SetCardsInteractable(bool value)

@@ -13,51 +13,40 @@ namespace Arcanist
         private RoomController roomController;
         private bool isPlayerInside;
         private bool isLocked = true;
+        private bool isInteractionConsumed;
 
         public void Initialize(RoomController controller)
         {
-            Debug.Log($"[Exit] Initialize -> {controller.name}", controller);
             roomController = controller;
         }
 
         public void SetLocked(bool locked)
         {
-            Debug.Log($"[Exit] SetLocked({locked})");
             isLocked = locked;
+            isInteractionConsumed = false;
 
             if (lockedVisual != null)
-            {
                 lockedVisual.SetActive(isLocked);
-            }
 
             if (unlockedVisual != null)
-            {
                 unlockedVisual.SetActive(!isLocked);
-            }
         }
 
         private void Update()
         {
-            Debug.Log($"[Exit] inside={isPlayerInside}, locked={isLocked}");
-            if (!isPlayerInside || isLocked)
-            {
-                return;
-            }
+            if (!isPlayerInside || isLocked || isInteractionConsumed) return;
 
             if (SimpleInput.GetKeyDown(Key.UpArrow))
             {
-                Debug.Log("[Exit] TryExitRoom 호출");
+                isInteractionConsumed = true;
                 roomController?.TryExitRoom();
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log($"[Exit] Enter {other.name}, tag={other.tag}");
             if (other.CompareTag("Player"))
-            {
                 isPlayerInside = true;
-            }
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -65,6 +54,7 @@ namespace Arcanist
             if (other.CompareTag("Player"))
             {
                 isPlayerInside = false;
+                isInteractionConsumed = false;
             }
         }
     }

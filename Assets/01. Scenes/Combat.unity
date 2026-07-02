@@ -1083,7 +1083,7 @@ GameObject:
   - component: {fileID: 317269985}
   - component: {fileID: 317269984}
   m_Layer: 5
-  m_Name: AddAnounce (TMP)
+  m_Name: AnounceMessage (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1098,14 +1098,14 @@ RectTransform:
   m_GameObject: {fileID: 317269982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0526316, y: 1.0526316, z: 1.0526316}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1982107693}
+  m_Father: {fileID: 977851465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 170}
+  m_AnchoredPosition: {x: 0, y: 171.05264}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &317269984
@@ -1116,7 +1116,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 317269982}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5465,6 +5465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 977851465}
+  - component: {fileID: 977851466}
   m_Layer: 5
   m_Name: HUDBottom
   m_TagString: Untagged
@@ -5484,6 +5485,7 @@ RectTransform:
   m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 317269983}
   - {fileID: 943675249}
   - {fileID: 1931535171}
   - {fileID: 642741750}
@@ -5495,6 +5497,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 500, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &977851466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977851464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e465be2d064150a1710b3e1ccae71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Arcanist.GuideMessage
+  CanvasGroup: {fileID: 317269984}
+  fadeInDuration: 0.25
+  holdDuration: 1.5
+  fadeOutDuration: 0.25
 --- !u!1 &992187758
 GameObject:
   m_ObjectHideFlags: 0
@@ -9430,7 +9448,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1338812209}
-  - {fileID: 317269983}
   - {fileID: 2129092181}
   m_Father: {fileID: 788923065}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9475,10 +9492,6 @@ MonoBehaviour:
   selectedMoveDuration: 0.3
   selectedHoldDuration: 0.35
   cardSpawnDelay: 0.05
-  addAnnounceCanvasGroup: {fileID: 317269984}
-  addAnnounceFadeInDuration: 0.15
-  addAnnounceHoldDuration: 0.95
-  addAnnounceFadeOutDuration: 0.15
 --- !u!1 &1990289656
 GameObject:
   m_ObjectHideFlags: 0
