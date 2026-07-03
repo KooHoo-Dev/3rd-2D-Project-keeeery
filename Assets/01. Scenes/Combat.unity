@@ -1741,7 +1741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8409d93b426c642838f03ce989c6af26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.PauseMenuButton
-  buttonType: 1
+  buttonType: 2
   hoverScaleMultiplier: 1.1
 --- !u!1 &335682330
 GameObject:
@@ -3745,7 +3745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8409d93b426c642838f03ce989c6af26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.PauseMenuButton
-  buttonType: 3
+  buttonType: 4
   hoverScaleMultiplier: 1.1
 --- !u!1 &648449742
 GameObject:
@@ -4607,7 +4607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8409d93b426c642838f03ce989c6af26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.PauseMenuButton
-  buttonType: 2
+  buttonType: 3
   hoverScaleMultiplier: 1.1
 --- !u!1 &746152643
 GameObject:

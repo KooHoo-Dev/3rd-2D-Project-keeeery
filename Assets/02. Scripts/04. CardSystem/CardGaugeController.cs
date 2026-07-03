@@ -6,6 +6,7 @@ namespace Arcanist
     public class CardGaugeController : MonoBehaviour
     {
         private CardSystem cardSystem;
+        private BuffController buffController;
 
         [Header("Gauge")]
         [SerializeField] private GameObject[] gaugeCells;
@@ -20,8 +21,8 @@ namespace Arcanist
 
         private void Awake()
         {
-            if (cardSystem == null)
-                cardSystem = GetComponent<CardSystem>();
+            cardSystem = GetComponent<CardSystem>();
+            buffController = GetComponent<BuffController>();
         }
 
         private void Start()
@@ -55,7 +56,10 @@ namespace Arcanist
 
             while (currentCell < gaugeCells.Length)
             {
-                yield return new WaitForSeconds(secondsPerCell);
+                float finalSecondsPerCell = secondsPerCell;
+                finalSecondsPerCell = buffController.ModifyCardGaugeChargeTime(secondsPerCell);
+
+                yield return new WaitForSeconds(finalSecondsPerCell);
 
                 if (currentCell < gaugeCells.Length && gaugeCells[currentCell] != null)
                     gaugeCells[currentCell].SetActive(true);

@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: "\uC2E0\uC758 \uC740\uCD1D"
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardData
   cardId: 
-  cardName: "\uC2E0\uC758 \uC740\uCD1D"
+  cardName: "\uC544\uB974\uCE74\uB2C8\uC2A4\uD2B8\uC758 \uC740\uCD1D"
   icon: {fileID: 21300000, guid: 7d9eb0c649f48c04c86d50bdd4a7e5e1, type: 3}
   cardType: 2
   grade: 3
   description: 
   animationTrigger: 
   effect: {fileID: 0}
+  requiresTarget: 0

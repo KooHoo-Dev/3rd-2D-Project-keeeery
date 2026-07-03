@@ -70,6 +70,8 @@ namespace Arcanist
 
         public override void TakeDamage(int damage)
         {
+            damage = CalculateFinalTakenDamage(damage);
+
             float beforeHpRatio = (float)Stat.Hp / Stat.MaxHp;
 
             if (Stat.ApplyDamage(damage))
@@ -88,6 +90,7 @@ namespace Arcanist
 
             StartCoroutine(HitEffectCoroutine());
         }
+        
         private void PlayDamageBarEffect(float beforeRatio, float afterRatio)
         {
             if (hpDelayBar == null)
@@ -206,6 +209,14 @@ namespace Arcanist
             parryCooldownFill.fillAmount = cooldownTime <= 0.0f
                 ? 0.0f
                 : Mathf.Clamp01(remainingTime / cooldownTime);
+        }
+
+        private int CalculateFinalTakenDamage(int damage)
+        {
+            if (TryGetComponent(out BuffController buffController))
+                damage = buffController.ModifyTakenDamage(damage);
+
+            return Mathf.Max(0, damage);
         }
 
         public override void TakeHeal(int heal)

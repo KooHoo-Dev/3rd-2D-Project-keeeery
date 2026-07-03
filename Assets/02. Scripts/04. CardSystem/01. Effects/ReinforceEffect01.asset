@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2166a989f624240c5a0acfe1a59762f8, type: 3}
   m_Name: ReinforceEffect01
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.BuffCardEffect
-  damageMultiplier: 1.05
   duration: 10
+  modifiers:
+  - effectType: 0
+    value: 1.05
