@@ -22,3 +22,4 @@ MonoBehaviour:
     \uC90D\uB2C8\uB2E4."
   animationTrigger: UpCast
   effect: {fileID: 11400000, guid: 4358dddaca1154eefa3782f7d1f34b39, type: 2}
+  requiresTarget: 1

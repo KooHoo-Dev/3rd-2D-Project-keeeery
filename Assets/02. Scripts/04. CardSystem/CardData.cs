@@ -33,6 +33,7 @@ namespace Arcanist
 
         [Header("Effect")]
         [SerializeField] private CardEffect effect;
+        [SerializeField] private bool requiresTarget;
 
         public string CardId => cardId;
         public string CardName => cardName;
@@ -42,6 +43,7 @@ namespace Arcanist
         public string Description => description;
         public string AnimationTrigger => animationTrigger;
         public CardEffect Effect => effect;
+        public bool RequiresTarget => requiresTarget;
 
         public string TypeText
         {

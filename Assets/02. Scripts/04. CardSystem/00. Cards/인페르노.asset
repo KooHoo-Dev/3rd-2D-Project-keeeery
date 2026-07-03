@@ -22,3 +22,4 @@ MonoBehaviour:
     \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   animationTrigger: LightCast
   effect: {fileID: 11400000, guid: 171184ecada0d420b93b05917e74eb2d, type: 2}
+  requiresTarget: 1

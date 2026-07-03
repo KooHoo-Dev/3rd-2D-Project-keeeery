@@ -202,7 +202,7 @@ namespace Arcanist
             HideOverlayOrCloseReward();
 
             if (announceMessage != null)
-                announceMessage.Show();
+                announceMessage.Show("카드가 보유 중인 카드 목록에 추가되었습니다!");
         }
 
         private IEnumerator FadeUnselectedCards(RewardCardView selectedView)

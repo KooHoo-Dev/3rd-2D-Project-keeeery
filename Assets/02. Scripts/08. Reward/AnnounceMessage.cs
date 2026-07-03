@@ -5,11 +5,14 @@ namespace Arcanist
 {
     public class AnnounceMessage : MonoBehaviour
     {
-        [Header("Add Announce")]
+        [Header("Fade Settings")]
         [SerializeField] public CanvasGroup CanvasGroup;
         [SerializeField] private float fadeInDuration = 0.25f;
         [SerializeField] private float holdDuration = 0.35f;
         [SerializeField] private float fadeOutDuration = 0.25f;
+
+        [Header("Message Text")]
+        [SerializeField] private TMPro.TMP_Text messageText;
 
         private Coroutine showCoroutine;
 
@@ -18,20 +21,30 @@ namespace Arcanist
             ResetMessage();
         }
 
-        public void Show()
+        public void Show(string message)
         {
-            if (CanvasGroup == null)
+            Show(message, true);
+        }
+
+        public void Show(string message, bool useFadeIn)
+        {
+            if (CanvasGroup == null || messageText == null)
                 return;
+
+            messageText.text = message;
 
             if (showCoroutine != null)
                 StopCoroutine(showCoroutine);
 
-            showCoroutine = StartCoroutine(ShowRoutine());
+            showCoroutine = StartCoroutine(ShowRoutine(useFadeIn));
         }
 
-        private IEnumerator ShowRoutine()
+        private IEnumerator ShowRoutine(bool useFadeIn)
         {
-            yield return FadeCanvasGroup(1.0f, fadeInDuration);
+            if (useFadeIn)
+                yield return FadeCanvasGroup(1.0f, fadeInDuration);
+            else
+                CanvasGroup.alpha = 1.0f;
 
             if (holdDuration > 0.0f)
                 yield return new WaitForSecondsRealtime(holdDuration);

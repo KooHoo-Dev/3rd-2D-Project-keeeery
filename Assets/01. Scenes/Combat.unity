@@ -1105,7 +1105,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 171.05264}
+  m_AnchoredPosition: {x: 0, y: 167.5}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &317269984
@@ -1168,8 +1168,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5513,6 +5513,7 @@ MonoBehaviour:
   fadeInDuration: 0.25
   holdDuration: 1.5
   fadeOutDuration: 0.25
+  messageText: {fileID: 317269985}
 --- !u!1 &992187758
 GameObject:
   m_ObjectHideFlags: 0
@@ -7157,10 +7158,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
   deckCards:
   - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
-  - {fileID: 11400000, guid: 97eef108c855a4939b35970b9be30788, type: 2}
   - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
   - {fileID: 11400000, guid: 66113365799a94dddaee187630f8ea28, type: 2}
-  - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
+  - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
+  - {fileID: 11400000, guid: d9fa59388c5ea46188ad7a62500f6dc4, type: 2}
+  - {fileID: 11400000, guid: 530e5dadfba644da2a3dab7bea8d7534, type: 2}
   maxDeckCardCount: 20
   allowDuplicateCards: 0
 --- !u!4 &1403432633
@@ -9712,6 +9714,8 @@ MonoBehaviour:
   playerController: {fileID: 1719134175}
   cardCastPoint: {fileID: 1719134164}
   enemyManager: {fileID: 511835451}
+  noTargetAnnounceMessage: "\uACF5\uACA9\uD560 \uB300\uC0C1\uC774 \uC5C6\uC2B5\uB2C8\uB2E4."
+  announceMessage: {fileID: 977851466}
 --- !u!114 &2004398621
 MonoBehaviour:
   m_ObjectHideFlags: 0

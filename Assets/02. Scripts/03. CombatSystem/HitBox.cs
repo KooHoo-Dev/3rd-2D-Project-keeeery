@@ -62,17 +62,18 @@ namespace Arcanist
         {
             HurtBox hurtBox = CombatSystem.Instance.GetHurtBoxOrNull(collision);
 
-            if (hurtBox == null)
-                return;
+            if (hurtBox == null) return;
 
             CombatEntity sender = Owner;
             CombatEntity receiver = hurtBox.Owner;
 
-            if (sender == null || receiver == null)
-                return;
+            if (sender == null || receiver == null) return;
 
-            if (sender == receiver)
-                return;
+            if (sender == receiver) return;
+
+            EnemyController enemy = receiver.GetComponent<EnemyController>();
+
+            if (enemy != null && enemy.IsDead) return;
 
             PlayerController playerController = receiver.GetComponent<PlayerController>();
 
@@ -82,8 +83,7 @@ namespace Arcanist
                 return;
             }
 
-            if (CanHit(hurtBox) == false)
-                return;
+            if (CanHit(hurtBox) == false) return;
 
             RegisterHit(hurtBox);
 

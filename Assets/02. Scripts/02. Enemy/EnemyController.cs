@@ -49,7 +49,7 @@ namespace Arcanist
         public Enemy Enemy { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
         public EnemyGrade Grade => grade;
-        public bool isDead;
+        public bool isDead { get; private set; }
         public bool IsDead => isDead;
         public Transform TargetPoint => targetPoint != null ? targetPoint : ActorTransform;
 
@@ -356,6 +356,7 @@ namespace Arcanist
 
             isDead = true;
             EnemyManager.Unregister(this);
+            Target = null;
             isHurt = false;
             StopMove();
             Animator.SetBool(IS_HURT, false);

@@ -28,11 +28,19 @@ namespace Arcanist
         [Header("Aim")]
         [SerializeField] private AimMode aimMode = AimMode.Forward;
 
+        public override bool RequiresTarget => NeedsTarget();
+
         public override void Execute(CardEffectContext context)
         {
             if (effectPrefab == null)
             {
                 Debug.LogWarning($"ProjectileCardEffect ::: Effect Prefab is missing. ({context.Card.CardName})");
+                return;
+            }
+
+            if (NeedsTarget() && context.HasTarget == false)
+            {
+                Debug.LogWarning($"ProjectileCardEffect ::: Target is missing. ({context.Card.CardName})");
                 return;
             }
 
@@ -63,6 +71,11 @@ namespace Arcanist
 
                 hitBoxes[i].Initialize(owner);
             }
+        }
+
+        private bool NeedsTarget()
+        {
+            return spawnMode == SpawnMode.TargetPosition || aimMode == AimMode.Target;
         }
 
         private Vector3 ResolveSpawnPosition(CardEffectContext context)

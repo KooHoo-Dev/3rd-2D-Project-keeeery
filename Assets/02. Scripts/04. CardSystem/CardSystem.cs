@@ -30,6 +30,10 @@ namespace Arcanist
         [Header("Targeting")]
         [SerializeField] private EnemyManager enemyManager;
 
+        [Header("Announce Message")]
+        [SerializeField] private string noTargetAnnounceMessage = "공격할 대상이 없습니다.";
+        [SerializeField] private AnnounceMessage announceMessage;
+
         private CardGaugeController cardGaugeController;
         private CardHandUI cardHandUI;
         private CardData pendingSkillCard;
@@ -294,16 +298,16 @@ namespace Arcanist
         private void UseCard(int slotIndex)
         {
             if (cardHandUI == null) return;
-
             if (cardHandUI.IsDrawing) return;
 
             CardData usedCard = cardHandUI.GetCard(slotIndex);
-
             if (usedCard == null) return;
+
+            if (TryPrepareCardUse(usedCard) == false)
+                return;
 
             pendingSkillCard = usedCard;
             PlayCardSkillMotion(usedCard);
-
             cardHandUI.UseCard(slotIndex);
             hand.Remove(usedCard);
 
@@ -311,6 +315,88 @@ namespace Arcanist
                 discardPile.Add(usedCard);
 
             TryDrawIfReady();
+        }
+
+        private bool TryPrepareCardUse(CardData card)
+        {
+            if (card == null)
+                return false;
+
+            if (RequiresTarget(card) == false)
+                return true;
+
+            if (TryFindValidTarget(GetCastPointTransform().position, out _))
+                return true;
+
+            ShowAnnounceMessage(noTargetAnnounceMessage);
+            return false;
+        }
+
+        private bool RequiresTarget(CardData card)
+        {
+            if (card == null)
+                return false;
+
+            if (card.RequiresTarget)
+                return true;
+
+            if (card.Effect == null)
+                return false;
+
+            return card.Effect.RequiresTarget;
+        }
+
+        private Transform GetCastPointTransform()
+        {
+            if (cardCastPoint != null)
+                return cardCastPoint;
+
+            if (playerController != null)
+                return playerController.transform;
+
+            return transform;
+        }
+
+        private bool TryFindValidTarget(Vector3 origin, out Transform target)
+        {
+            target = null;
+
+            if (enemyManager == null)
+                return false;
+
+            Transform foundTarget = enemyManager.FindBestTarget(origin);
+
+            if (IsValidTarget(foundTarget) == false)
+                return false;
+
+            target = foundTarget;
+            return true;
+        }
+
+        private bool IsValidTarget(Transform target)
+        {
+            if (target == null)
+                return false;
+
+            EnemyController enemyController = target.GetComponentInParent<EnemyController>();
+
+            if (enemyController == null)
+                return false;
+
+            return enemyController.IsDead == false;
+        }
+
+        private void ShowAnnounceMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message)) return;
+
+            if (announceMessage != null)
+            {
+                announceMessage.Show(message, false);
+                return;
+            }
+
+            Debug.Log(message);
         }
 
         private void PlayCardSkillMotion(CardData card)
@@ -325,7 +411,11 @@ namespace Arcanist
                 ? fallbackCardSkillTrigger
                 : card.AnimationTrigger;
 
-            if (string.IsNullOrEmpty(triggerName)) return;
+            if (string.IsNullOrEmpty(triggerName))
+            {
+                playerController?.EndCardSkill();
+                return;
+            }
 
             playerAnimator.ResetTrigger(triggerName);
             playerAnimator.SetTrigger(triggerName);
@@ -340,12 +430,30 @@ namespace Arcanist
 
             if (card.Effect == null) return;
 
-            Transform castPoint = cardCastPoint != null ? cardCastPoint : playerController != null ? playerController.transform : transform;
+            Transform castPoint = GetCastPointTransform();
             int facingDirection = playerController != null ? playerController.FacingDirection : 1;
-            Transform target = enemyManager != null ? enemyManager.FindBestTarget(castPoint.position) : null;
-            CardEffectContext context = new(card, playerController, castPoint, facingDirection, target);
+            Transform target = null;
 
+            if (TryResolveTargetForCard(card, castPoint.position, out target) == false)
+            {
+                ShowAnnounceMessage(noTargetAnnounceMessage);
+                playerController?.EndCardSkill();
+                return;
+            }
+
+            CardEffectContext context = new(card, playerController, castPoint, facingDirection, target);
             card.Effect.Execute(context);
+        }
+
+        private bool TryResolveTargetForCard(CardData card, Vector3 origin, out Transform target)
+        {
+            target = null;
+
+            if (RequiresTarget(card))
+                return TryFindValidTarget(origin, out target);
+
+            TryFindValidTarget(origin, out target);
+            return true;
         }
 
         private bool IsCardInPlayerDeck(CardData card)
