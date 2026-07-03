@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0318d7a0b17084eb88274240d01265d1, type: 3}
   m_Name: FireballEffect
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.ProjectileCardEffect
-  projectilePrefab: {fileID: 7182207599076861253, guid: 4f36e8122c1364385b2bdad60fb8f994, type: 3}
+  effectPrefab: {fileID: 7182207599076861253, guid: 4f36e8122c1364385b2bdad60fb8f994, type: 3}
   spawnMode: 0
   spawnOffset: {x: 0.3, y: 0.5}
   aimMode: 0

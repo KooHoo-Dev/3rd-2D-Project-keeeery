@@ -108,7 +108,7 @@ namespace Arcanist
 
         public void DestroySelf()
         {
-            Destroy(gameObject);
+            CardEffectSpawner.Despawn(gameObject);
         }
 
         private void Move()

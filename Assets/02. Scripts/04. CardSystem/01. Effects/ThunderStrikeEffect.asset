@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0318d7a0b17084eb88274240d01265d1, type: 3}
   m_Name: ThunderStrikeEffect
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.ProjectileCardEffect
-  projectilePrefab: {fileID: 2305514442958694652, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
+  effectPrefab: {fileID: 2305514442958694652, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
   spawnMode: 1
   spawnOffset: {x: 0, y: -0.25}
   aimMode: 2

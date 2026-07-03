@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0318d7a0b17084eb88274240d01265d1, type: 3}
   m_Name: BlackHoleEffect
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.ProjectileCardEffect
-  projectilePrefab: {fileID: 4929970652419040616, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+  effectPrefab: {fileID: 4929970652419040616, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
   spawnMode: 1
   spawnOffset: {x: 0, y: 0.5}
   aimMode: 2

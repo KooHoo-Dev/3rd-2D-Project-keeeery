@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0318d7a0b17084eb88274240d01265d1, type: 3}
   m_Name: IcePillarEffect
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.ProjectileCardEffect
-  projectilePrefab: {fileID: 4050113788278671481, guid: eb745d242f9bd48eea897533ee1e2bb7, type: 3}
+  effectPrefab: {fileID: 4050113788278671481, guid: eb745d242f9bd48eea897533ee1e2bb7, type: 3}
   spawnMode: 0
   spawnOffset: {x: 0.5, y: 0}
   aimMode: 0

@@ -6053,8 +6053,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1204970926}
   - component: {fileID: 1204970927}
+  - component: {fileID: 1204970928}
   m_Layer: 5
-  m_Name: FXSpawner
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6088,6 +6089,87 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FxSpawner
   fxRoot: {fileID: 0}
+--- !u!114 &1204970928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204970925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3cc55b3d87b7452bb90def8929b44f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardEffectSpawner
+--- !u!1001 &1209434718
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787290288738440968, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4929970652419040616, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_Name
+      value: BlackHole
+      objectReference: {fileID: 0}
+    - target: {fileID: 4929970652419040616, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8000980268303036194, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8000980268303036194, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d00be2180c44c4adb95ac0aba5e86c39, type: 3}
 --- !u!1 &1217425803
 GameObject:
   m_ObjectHideFlags: 0
@@ -9490,7 +9572,7 @@ MonoBehaviour:
   epicWeight: 7
   legendaryWeight: 1
   rewardSelectTextCanvasGroup: {fileID: 1338812211}
-  selectedCenterScale: 1.65
+  selectedCenterScale: 1.7
   selectedMoveDuration: 0.3
   selectedHoldDuration: 0.35
   cardSpawnDelay: 0.05
@@ -10558,7 +10640,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.35
+  m_Intensity: 0.3
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000a503cfb0cf8f02ab
@@ -11183,9 +11265,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1197134124188972403, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239234229633612730, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239234229633612730, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2305514442958694652, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
       propertyPath: m_Name
       value: ThunderStrike
+      objectReference: {fileID: 0}
+    - target: {fileID: 2305514442958694652, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046602759470773162, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8749701288450872791, guid: b36f8b02f062e49ca9d11001ad7304c0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11442,6 +11544,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1020382633740440342, guid: 48e903b755eb4487c9354b551db312ce, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1020382633740440342, guid: 48e903b755eb4487c9354b551db312ce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959109966306244575, guid: 48e903b755eb4487c9354b551db312ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3099229325839154474, guid: 48e903b755eb4487c9354b551db312ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4170583402558360546, guid: 48e903b755eb4487c9354b551db312ce, type: 3}
       propertyPath: m_Name
       value: Infierno
@@ -11516,3 +11634,4 @@ SceneRoots:
   - {fileID: 1820968475}
   - {fileID: 8385894243434814502}
   - {fileID: 6670399272513839180}
+  - {fileID: 1209434718}

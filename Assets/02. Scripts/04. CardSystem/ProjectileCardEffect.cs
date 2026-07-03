@@ -18,8 +18,8 @@ namespace Arcanist
             None
         }
 
-        [Header("Projectile")]
-        [SerializeField] private GameObject projectilePrefab;
+        [Header("Effect Prefab")]
+        [SerializeField] private GameObject effectPrefab;
 
         [Header("Spawn")]
         [SerializeField] private SpawnMode spawnMode = SpawnMode.CastPoint;
@@ -30,9 +30,9 @@ namespace Arcanist
 
         public override void Execute(CardEffectContext context)
         {
-            if (projectilePrefab == null)
+            if (effectPrefab == null)
             {
-                Debug.LogWarning($"ProjectileCardEffect ::: Projectile Prefab is missing. ({context.Card.CardName})");
+                Debug.LogWarning($"ProjectileCardEffect ::: Effect Prefab is missing. ({context.Card.CardName})");
                 return;
             }
 
@@ -40,8 +40,12 @@ namespace Arcanist
             Vector2 direction = ResolveDirection(context, spawnPosition);
             Quaternion rotation = ResolveRotation(direction);
 
-            GameObject projectile = Object.Instantiate(projectilePrefab, spawnPosition, rotation);
-            ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
+            GameObject effectObject = CardEffectSpawner.Spawn(effectPrefab, spawnPosition, rotation);
+
+            if (effectObject == null)
+                return;
+
+            ProjectileController projectileController = effectObject.GetComponent<ProjectileController>();
 
             if (projectileController != null)
                 projectileController.Initialize(direction);
@@ -50,7 +54,7 @@ namespace Arcanist
                 ? context.Player.GetComponent<CombatEntity>()
                 : null;
 
-            HitBox[] hitBoxes = projectile.GetComponentsInChildren<HitBox>(true);
+            HitBox[] hitBoxes = effectObject.GetComponentsInChildren<HitBox>(true);
 
             for (int i = 0; i < hitBoxes.Length; i++)
             {
