@@ -57,7 +57,9 @@ namespace Arcanist
             while (currentCell < gaugeCells.Length)
             {
                 float finalSecondsPerCell = secondsPerCell;
-                finalSecondsPerCell = buffController.ModifyCardGaugeChargeTime(secondsPerCell);
+
+                if (buffController != null)
+                    finalSecondsPerCell = buffController.ModifyCardGaugeChargeTime(secondsPerCell);
 
                 yield return new WaitForSeconds(finalSecondsPerCell);
 
@@ -126,7 +128,8 @@ namespace Arcanist
             isCharging = false;
             isGaugeFull = true;
 
-            cardSystem.OnGaugeFull();
+            if (cardSystem != null)
+                cardSystem.OnGaugeFull();
         }
     }
 }

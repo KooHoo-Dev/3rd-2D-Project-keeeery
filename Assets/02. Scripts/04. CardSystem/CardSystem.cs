@@ -32,6 +32,7 @@ namespace Arcanist
 
         [Header("Announce Message")]
         [SerializeField] private string noTargetAnnounceMessage = "공격할 대상이 없습니다.";
+        [SerializeField] private string fullHpAnnounceMessage = "체력이 이미 가득 찼습니다.";
         [SerializeField] private AnnounceMessage announceMessage;
 
         private CardGaugeController cardGaugeController;
@@ -322,6 +323,12 @@ namespace Arcanist
             if (card == null)
                 return false;
 
+            if (IsHealCard(card) && IsPlayerHpFull())
+            {
+                ShowAnnounceMessage(fullHpAnnounceMessage);
+                return false;
+            }
+
             if (RequiresTarget(card) == false)
                 return true;
 
@@ -330,6 +337,33 @@ namespace Arcanist
 
             ShowAnnounceMessage(noTargetAnnounceMessage);
             return false;
+        }
+
+        private bool IsHealCard(CardData card)
+        {
+            if (card == null || card.Effect == null)
+                return false;
+
+            if (card.Effect is BuffCardEffect buffCardEffect)
+                return buffCardEffect.HasModifier(BuffEffectType.HealRatio);
+
+            return false;
+        }
+
+        private bool IsPlayerHpFull()
+        {
+            Player player = null;
+
+            if (playerController != null)
+                player = playerController.GetComponent<Player>();
+
+            if (player == null)
+                player = GetComponent<Player>();
+
+            if (player == null || player.Stat == null)
+                return false;
+
+            return player.Stat.Hp >= player.Stat.MaxHp;
         }
 
         private bool RequiresTarget(CardData card)

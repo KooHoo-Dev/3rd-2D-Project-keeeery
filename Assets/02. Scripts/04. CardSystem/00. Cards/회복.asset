@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8428a9727c6b847b79e38d168e637d33, type: 3}
-  m_Name: "\uC2E0\uC758 \uC740\uCD1D"
+  m_Name: "\uD68C\uBCF5"
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardData
   cardId: 
-  cardName: "\uC544\uB974\uCE74\uB2C8\uC2A4\uD2B8\uC758 \uC740\uCD1D"
-  icon: {fileID: 21300000, guid: 7d9eb0c649f48c04c86d50bdd4a7e5e1, type: 3}
-  cardType: 2
-  grade: 3
-  description: 
+  cardName: "\uD68C\uBCF5"
+  icon: {fileID: 21300000, guid: c6eda9903e38d5941ba0ab65645ac149, type: 3}
+  cardType: 1
+  grade: 1
+  description: "\uCD5C\uB300 \uCCB4\uB825\uC758 10%\uB9CC\uD07C \uCCB4\uB825\uC744
+    \uC989\uC2DC \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   animationTrigger: 
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: 173fb0d74668c4515a30beea44222642, type: 2}
   requiresTarget: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8428a9727c6b847b79e38d168e637d33, type: 3}
+  m_Name: "\uC544\uB974\uCE74\uB2C8\uC2A4\uD2B8\uC758 \uACC4\uC2B9"
+  m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardData
+  cardId: buff_arcanist
+  cardName: "\uC544\uB974\uCE74\uB2C8\uC2A4\uD2B8\uC758 \uACC4\uC2B9"
+  icon: {fileID: 21300000, guid: 7d9eb0c649f48c04c86d50bdd4a7e5e1, type: 3}
+  cardType: 2
+  grade: 3
+  description: "15\uCD08\uAC04 \uCE74\uB4DC \uAC8C\uC774\uC9C0 \uD68C\uBCF5 \uC18D\uB3C4\uAC00
+    100%, \uC8FC\uB294 \uD53C\uD574\uAC00 50% \uC99D\uAC00\uD558\uACE0, \uBC1B\uB294
+    \uD53C\uD574\uAC00 30% \uAC10\uC18C\uD569\uB2C8\uB2E4."
+  animationTrigger: 
+  effect: {fileID: 11400000, guid: 30524c2c9578d4a83b0e4b139a25f9bf, type: 2}
+  requiresTarget: 0

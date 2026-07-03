@@ -48,6 +48,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -40
       objectReference: {fileID: 0}
+    - target: {fileID: 4028187536835006010, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_text
+      value: "\uCE74\uB4DC \uC124\uBA85 \uCE74\uB4DC \uC124\uBA85 \uCE74\uB4DC \uC124\uBA85
+        \uCE74\uB4DC \uC124\uBA85 \uCE74\uB4DC \uC124\uBA85 \uCE74\uB4DC \uC124\uBA85
+        \uCE74\uB4DC \uC124\uBA85 \uCE74\uB4DC \uC124\uBA85 \uCE74\uB4DC \uC124\uBA85
+        \uCE74\uB4DC \uC124\uBA85 \uCE74\uB4DC \uC124\uBA85 "
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028187536835006010, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028187536835006010, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4520765847367048633, guid: 779027df7d5704ea093fd7761e8cfac4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -26.5

@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8428a9727c6b847b79e38d168e637d33, type: 3}
-  m_Name: Heal
+  m_Name: "\uBE44\uC804 \uD3ED\uC8FC"
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardData
-  cardId: 
-  cardName: "\uD68C\uBCF5"
-  icon: {fileID: 21300000, guid: 2a0f251337c30d34f913b471b3865dbb, type: 3}
+  cardId: buff_gaugespeed03
+  cardName: "\uBE44\uC804 \uD3ED\uC8FC"
+  icon: {fileID: 21300000, guid: dd7c6698234b468468433441bb6cd424, type: 3}
   cardType: 2
-  grade: 1
-  description: 
+  grade: 2
+  description: "12\uCD08\uAC04 \uCE74\uB4DC \uAC8C\uC774\uC9C0 \uD68C\uBCF5 \uC18D\uB3C4\uAC00
+    100%, \uC8FC\uB294 \uD53C\uD574\uAC00 20% \uC99D\uAC00\uD569\uB2C8\uB2E4."
   animationTrigger: 
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: 9c5cc5b5dfa90485fb89e834543c4442, type: 2}
   requiresTarget: 0

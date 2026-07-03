@@ -9,6 +9,8 @@ namespace Arcanist
         TakenDamageDecrease,
         TakenDamageIncrease,
         CardGaugeChargeSpeedIncrease,
+        HealRatio,
+        ReviveOnce,
     }
 
     [System.Serializable]
@@ -28,12 +30,23 @@ namespace Arcanist
         [SerializeField] private float duration = 10.0f;
         [SerializeField] private List<BuffModifier> modifiers = new List<BuffModifier>();
 
+        public bool HasModifier(BuffEffectType effectType)
+        {
+            for (int i = 0; i < modifiers.Count; i++)
+            {
+                if (modifiers[i] != null && modifiers[i].EffectType == effectType)
+                    return true;
+            }
+
+            return false;
+        }
+        
         public override void Execute(CardEffectContext context)
         {
             if (context.Player == null || context.Card == null) return;
 
             BuffController buffController = context.Player.GetComponent<BuffController>();
-            if (buffController == null) return;
+            Player player = context.Player.GetComponent<Player>();
 
             string buffId = context.Card.CardId;
             Sprite icon = context.Card.Icon;
@@ -45,19 +58,36 @@ namespace Arcanist
                 switch (modifier.EffectType)
                 {
                     case BuffEffectType.DamageIncrease:
-                        buffController.ApplyDamageBuff(buffId, icon, modifier.Value, duration);
+                        if (buffController != null)
+                            buffController.ApplyDamageBuff(buffId, icon, modifier.Value, duration);
                         break;
 
                     case BuffEffectType.TakenDamageDecrease:
-                        buffController.ApplyTakenDamageDecreaseBuff(buffId, icon, modifier.Value, duration);
+                        if (buffController != null)
+                            buffController.ApplyTakenDamageDecreaseBuff(buffId, icon, modifier.Value, duration);
                         break;
 
                     case BuffEffectType.TakenDamageIncrease:
-                        buffController.ApplyTakenDamageIncreaseBuff(buffId, icon, modifier.Value, duration);
+                        if (buffController != null)
+                            buffController.ApplyTakenDamageIncreaseBuff(buffId, icon, modifier.Value, duration);
                         break;
 
                     case BuffEffectType.CardGaugeChargeSpeedIncrease:
-                        buffController.ApplyCardGaugeChargeSpeedBuff(buffId, icon, modifier.Value, duration);
+                        if (buffController != null)
+                            buffController.ApplyCardGaugeChargeSpeedBuff(buffId, icon, modifier.Value, duration);
+                        break;
+
+                    case BuffEffectType.HealRatio:
+                        if (player != null)
+                        {
+                            int healAmount = Mathf.RoundToInt(player.Stat.MaxHp * modifier.Value);
+                            player.TakeHeal(healAmount);
+                        }
+                        break;
+
+                    case BuffEffectType.ReviveOnce:
+                        if (buffController != null)
+                            buffController.ApplyReviveOnceBuff(buffId, icon, modifier.Value, duration);
                         break;
                 }
             }

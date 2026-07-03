@@ -316,12 +316,16 @@ MonoBehaviour:
   vignetteImage: {fileID: 1990289658}
   parryColor: {r: 0.62, g: 0.31, b: 0.93, a: 1}
   damageColor: {r: 1, g: 0.23, b: 0.19, a: 1}
+  reviveColor: {r: 1, g: 1, b: 0.9098039, a: 1}
   parryMaxAlpha: 0.2
   parryFadeInDuration: 0.05
   parryFadeOutDuration: 0.25
   damageMaxAlpha: 0.075
   damageFadeInDuration: 0.03
   damageFadeOutDuration: 0.75
+  reviveMaxAlpha: 0.15
+  reviveFadeInDuration: 0.08
+  reviveHoldDuration: 0.1
 --- !u!1 &104871394
 GameObject:
   m_ObjectHideFlags: 0
@@ -7250,14 +7254,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
   - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
   - {fileID: 11400000, guid: 1c115cd3991f5440da9bbc5bf0b60239, type: 2}
+  - {fileID: 11400000, guid: a9fed4645f9b648559f8503b5a9c9c92, type: 2}
+  - {fileID: 11400000, guid: e4ec7ab48fde644b8a5b508a5e10ae34, type: 2}
+  - {fileID: 11400000, guid: eb2c639771ce84a3f9e5e48b78a4d4a0, type: 2}
+  - {fileID: 11400000, guid: e4ac183c7dde34535afd99a3e23c5a91, type: 2}
   deckCards:
   - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
-  - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
   - {fileID: 11400000, guid: 66113365799a94dddaee187630f8ea28, type: 2}
   - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
   - {fileID: 11400000, guid: d9fa59388c5ea46188ad7a62500f6dc4, type: 2}
-  - {fileID: 11400000, guid: 530e5dadfba644da2a3dab7bea8d7534, type: 2}
   - {fileID: 11400000, guid: 1c115cd3991f5440da9bbc5bf0b60239, type: 2}
+  - {fileID: 11400000, guid: a9fed4645f9b648559f8503b5a9c9c92, type: 2}
+  - {fileID: 11400000, guid: eb2c639771ce84a3f9e5e48b78a4d4a0, type: 2}
+  - {fileID: 11400000, guid: e4ac183c7dde34535afd99a3e23c5a91, type: 2}
   maxDeckCardCount: 20
   allowDuplicateCards: 0
 --- !u!4 &1403432633
@@ -7289,32 +7298,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardDatabase
   dontDestroyOnLoad: 1
   allCards:
-  - {fileID: 11400000, guid: 97eef108c855a4939b35970b9be30788, type: 2}
   - {fileID: 11400000, guid: 2f1ad1e43e4e244bf8d2bcd04e98b7a4, type: 2}
-  - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
   - {fileID: 11400000, guid: f851349177d0446d7bee78b7b202ec01, type: 2}
-  - {fileID: 11400000, guid: d9fa59388c5ea46188ad7a62500f6dc4, type: 2}
-  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
-  - {fileID: 11400000, guid: a9fed4645f9b648559f8503b5a9c9c92, type: 2}
-  - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
-  - {fileID: 11400000, guid: 66113365799a94dddaee187630f8ea28, type: 2}
-  - {fileID: 11400000, guid: 342e549747df44ccca0eef92137bdb34, type: 2}
-  - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
   - {fileID: 11400000, guid: 435882a7ac6854662ac1d59429851838, type: 2}
   - {fileID: 11400000, guid: ce823070be33e4e6e93f23df48a3829e, type: 2}
+  - {fileID: 11400000, guid: 342e549747df44ccca0eef92137bdb34, type: 2}
+  - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
+  - {fileID: 11400000, guid: 66113365799a94dddaee187630f8ea28, type: 2}
+  - {fileID: 11400000, guid: f871bf265e96a42708639f38cd75b554, type: 2}
   - {fileID: 11400000, guid: fba5b8a97a21848f495bdefa161f3b62, type: 2}
-  - {fileID: 11400000, guid: 1c115cd3991f5440da9bbc5bf0b60239, type: 2}
   - {fileID: 11400000, guid: e4ac183c7dde34535afd99a3e23c5a91, type: 2}
   - {fileID: 11400000, guid: 530e5dadfba644da2a3dab7bea8d7534, type: 2}
+  - {fileID: 11400000, guid: f4d7811b854d54c73aa0da6fd47f8e07, type: 2}
+  - {fileID: 11400000, guid: c09cb282d1c724de49b6d6c23cd22be6, type: 2}
   - {fileID: 11400000, guid: d2e3d1d53586c4058a0fbc7aa9113b47, type: 2}
   - {fileID: 11400000, guid: d0b18ae6a0dda4d2eb63cc17fb4180b1, type: 2}
   - {fileID: 11400000, guid: 3072b5180a460419381744a8eb90ae3e, type: 2}
+  - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
   - {fileID: 11400000, guid: b32ace162971748dea2c9e3915a530fe, type: 2}
   - {fileID: 11400000, guid: db71822015ac5420a8999bf155df3b23, type: 2}
+  - {fileID: 11400000, guid: d9fa59388c5ea46188ad7a62500f6dc4, type: 2}
+  - {fileID: 11400000, guid: 1c115cd3991f5440da9bbc5bf0b60239, type: 2}
+  - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
   - {fileID: 11400000, guid: 90cc9ab7a7b6c4d468be5b4cf489d9fe, type: 2}
   - {fileID: 11400000, guid: db45cd152b8634662a02259403e647cf, type: 2}
+  - {fileID: 11400000, guid: e4ec7ab48fde644b8a5b508a5e10ae34, type: 2}
+  - {fileID: 11400000, guid: 97eef108c855a4939b35970b9be30788, type: 2}
   - {fileID: 11400000, guid: 227f5d7b91ecc4630b0fdae26c135420, type: 2}
-  - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
+  - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
+  - {fileID: 11400000, guid: a9fed4645f9b648559f8503b5a9c9c92, type: 2}
+  - {fileID: 11400000, guid: eb2c639771ce84a3f9e5e48b78a4d4a0, type: 2}
 --- !u!1 &1462424825
 GameObject:
   m_ObjectHideFlags: 0
@@ -9810,6 +9823,7 @@ MonoBehaviour:
   cardCastPoint: {fileID: 1719134164}
   enemyManager: {fileID: 511835451}
   noTargetAnnounceMessage: "\uACF5\uACA9\uD560 \uB300\uC0C1\uC774 \uC5C6\uC2B5\uB2C8\uB2E4."
+  fullHpAnnounceMessage: "\uCCB4\uB825\uC774 \uC774\uBBF8 \uAC00\uB4DD \uCC3C\uC2B5\uB2C8\uB2E4."
   announceMessage: {fileID: 977851466}
 --- !u!114 &2004398621
 MonoBehaviour:
@@ -11061,6 +11075,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 426346859}
     - target: {fileID: 1753533218181533399, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
+      propertyPath: hpBarImage
+      value: 
+      objectReference: {fileID: 426346860}
+    - target: {fileID: 1753533218181533399, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
       propertyPath: hpDelayBar
       value: 
       objectReference: {fileID: 1923340180}
@@ -11072,6 +11090,10 @@ PrefabInstance:
       propertyPath: parryCooldownFill
       value: 
       objectReference: {fileID: 642741751}
+    - target: {fileID: 1753533218181533399, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
+      propertyPath: <Stat>k__BackingField.<MaxHp>k__BackingField
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 2968401417501518829, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
       propertyPath: m_Name
       value: LocalPlayer
@@ -11080,6 +11102,10 @@ PrefabInstance:
       propertyPath: buffViewController
       value: 
       objectReference: {fileID: 1202139809}
+    - target: {fileID: 4227664632146291980, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
+      propertyPath: screenEffectController
+      value: 
+      objectReference: {fileID: 82030804}
     - target: {fileID: 4350949043046959774, guid: e182b9c322248401aad90cb31e37dd97, type: 3}
       propertyPath: hitStopController
       value: 

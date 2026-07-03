@@ -18,11 +18,20 @@ namespace Arcanist
 
         [field: SerializeField] public PlayerStat Stat { get; private set; }
 
+        [Header("HP")]
         [SerializeField] private Transform hpBar;
         [SerializeField] private Transform hpDelayBar;
         [SerializeField] private float maxHpBarScaleX = 2.5f;
         [SerializeField] private float hpDelayStartTime = 0.4f;
         [SerializeField] private float hpDelaySpeed = 3.0f;
+
+        [Header("Heal")]
+        [SerializeField] private Image hpBarImage;
+        [SerializeField] private Color healColor = Color.green;
+        [SerializeField] private float healFlashDuration = 0.5f;
+
+        private Color defaultHpBarColor;
+        private Coroutine healFlashCoroutine;
 
         [Header("Stamina")]
         [SerializeField] private Transform staminaBar;
@@ -51,6 +60,8 @@ namespace Arcanist
             LocalPlayer = this;
             Stat.ResetToFull();
             currentStamina = maxStamina;
+            if (hpBarImage != null)
+                defaultHpBarColor = hpBarImage.color;
             UpdateHpBar();
             UpdateStaminaBar();
 
@@ -76,6 +87,9 @@ namespace Arcanist
 
             if (Stat.ApplyDamage(damage))
             {
+                if (TryConsumeReviveOnce())
+                    return;
+
                 UpdateHpBar();
                 PlayDamageBarEffect(beforeHpRatio, 0.0f);
                 PlayerController.Dead();
@@ -120,6 +134,39 @@ namespace Arcanist
 
                 yield return null;
             }
+        }
+
+        private void PlayHealEffect()
+        {
+            if (hpBarImage == null)
+                return;
+
+            if (healFlashCoroutine != null)
+                StopCoroutine(healFlashCoroutine);
+
+            healFlashCoroutine = StartCoroutine(HealBarFlashCoroutine());
+        }
+
+        private IEnumerator HealBarFlashCoroutine()
+        {
+            hpBarImage.color = healColor;
+
+            float elapsedTime = 0.0f;
+
+            while (elapsedTime < healFlashDuration)
+            {
+                float normalizedTime = healFlashDuration <= 0.0f
+                    ? 1.0f
+                    : elapsedTime / healFlashDuration;
+
+                hpBarImage.color = Color.Lerp(healColor, defaultHpBarColor, normalizedTime);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            hpBarImage.color = defaultHpBarColor;
+            healFlashCoroutine = null;
         }
 
         private IEnumerator HitEffectCoroutine()
@@ -211,6 +258,14 @@ namespace Arcanist
                 : Mathf.Clamp01(remainingTime / cooldownTime);
         }
 
+        private bool TryConsumeReviveOnce()
+        {
+            if (TryGetComponent(out BuffController buffController) == false)
+                return false;
+
+            return buffController.TryConsumeReviveOnce(this);
+        }
+
         private int CalculateFinalTakenDamage(int damage)
         {
             if (TryGetComponent(out BuffController buffController))
@@ -221,8 +276,11 @@ namespace Arcanist
 
         public override void TakeHeal(int heal)
         {
-            
+            if (heal <= 0) return;
+
+            Stat.ApplyHeal(heal);
+            UpdateHpBar();
+            PlayHealEffect();
         }
     }
 }
-
