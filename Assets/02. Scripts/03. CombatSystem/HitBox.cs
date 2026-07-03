@@ -89,6 +89,9 @@ namespace Arcanist
 
             int damage = AttackInfo.RollDamage();
 
+            if (sender.TryGetComponent(out BuffController buffController))
+                damage = buffController.ModifyDamage(damage);
+
             CombatEvent @event;
             @event.EventType = CombatEventType.DamageEvent;
             @event.Amount = damage;

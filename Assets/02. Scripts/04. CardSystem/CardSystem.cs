@@ -403,22 +403,35 @@ namespace Arcanist
         {
             if (card == null) return;
 
-            if (playerAnimator == null) return;
-
-            playerController?.BeginCardSkill();
-
             string triggerName = string.IsNullOrEmpty(card.AnimationTrigger)
                 ? fallbackCardSkillTrigger
                 : card.AnimationTrigger;
 
-            if (string.IsNullOrEmpty(triggerName))
+            if (playerAnimator == null || HasAnimatorTrigger(triggerName) == false)
             {
-                playerController?.EndCardSkill();
+                ExecutePendingCardSkill();
                 return;
             }
 
+            playerController?.BeginCardSkill();
             playerAnimator.ResetTrigger(triggerName);
             playerAnimator.SetTrigger(triggerName);
+        }
+
+        private bool HasAnimatorTrigger(string triggerName)
+        {
+            if (string.IsNullOrEmpty(triggerName) || playerAnimator == null)
+                return false;
+
+            AnimatorControllerParameter[] parameters = playerAnimator.parameters;
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].type == AnimatorControllerParameterType.Trigger && parameters[i].name == triggerName)
+                    return true;
+            }
+
+            return false;
         }
 
         public void ExecutePendingCardSkill()

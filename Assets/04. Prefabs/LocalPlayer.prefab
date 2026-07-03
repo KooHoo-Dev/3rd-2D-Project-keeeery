@@ -133,6 +133,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  explodeProjectileOnHit: 0
+  projectileController: {fileID: 0}
+  allowMultiHit: 0
+  multiHitInterval: 0.25
 --- !u!61 &3516409619870467734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -341,6 +345,7 @@ GameObject:
   - component: {fileID: 107812643175150398}
   - component: {fileID: 8373384800210950506}
   - component: {fileID: 4350949043046959774}
+  - component: {fileID: 4227664632146291980}
   m_Layer: 8
   m_Name: LocalPlayer
   m_TagString: Player
@@ -616,6 +621,19 @@ MonoBehaviour:
   burstRadius: 9
   burstInTime: 0.015
   burstOutTime: 0.25
+--- !u!114 &4227664632146291980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968401417501518829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b61dabc36b294e2bb1e4f30f00fecfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Arcanist.BuffController
+  buffViewController: {fileID: 0}
 --- !u!1 &3191532438956212976
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,6 +932,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  explodeProjectileOnHit: 0
+  projectileController: {fileID: 0}
+  allowMultiHit: 0
+  multiHitInterval: 0.25
 --- !u!61 &5943447859623294796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6253,6 +6275,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  explodeProjectileOnHit: 0
+  projectileController: {fileID: 0}
+  allowMultiHit: 0
+  multiHitInterval: 0.25
 --- !u!61 &165717915923768831
 BoxCollider2D:
   m_ObjectHideFlags: 0
