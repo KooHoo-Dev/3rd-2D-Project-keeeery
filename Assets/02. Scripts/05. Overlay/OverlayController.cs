@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -27,6 +28,10 @@ namespace Arcanist
         [Header("Fade")]
         [SerializeField] private float menuFadeDuration = 0.25f;
         [SerializeField] private float deathFadeDuration = 2.0f;
+        [SerializeField] private CanvasGroup fadePanel;
+        [SerializeField] private float respawnFadeDuration = 0.35f;
+        [SerializeField] private float respawnBlackHoldDuration = 0.25f;
+        [SerializeField] private float respawnCameraWaitTimeout = 1.0f;
 
         [Header("DeathWindow")]
         [SerializeField] private Transform promptTargetPivot;
@@ -34,7 +39,9 @@ namespace Arcanist
 
         [Header("Reward")]
         [SerializeField] private RewardController rewardController;
-        
+
+        [Header("Camera Controller")]
+        [SerializeField] private PlayerCameraController playerCameraController;  
         private RectTransform reviveInputPrompt;
 
         public enum OverlayState
@@ -50,6 +57,7 @@ namespace Arcanist
         public OverlayState CurrentState { get; private set; }
 
         private Coroutine fadeRoutine;
+        private bool isRespawning;
 
         private void Awake()
         {
@@ -57,6 +65,9 @@ namespace Arcanist
 
             if (playerController == null)
                 playerController = FindFirstObjectByType<PlayerController>();
+
+            if (playerCameraController == null)
+                playerCameraController = FindFirstObjectByType<PlayerCameraController>();
 
             if (rewardController == null)
                 rewardController = FindFirstObjectByType<RewardController>(FindObjectsInactive.Include);
@@ -184,6 +195,119 @@ namespace Arcanist
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
 
             fadeRoutine = StartCoroutine(FadeRoutine(0.0f, normalLightIntensity, menuFadeDuration, true));
+        }
+
+        public IEnumerator RespawnFadeRoutine(Action onBlackScreen)
+        {
+            CurrentState = OverlayState.Death;
+            SimpleInput.IsKeyBoardInputBlocked = true;
+            Time.timeScale = 1.0f;
+            overlayRoot.SetActive(true);
+
+            if (fadeRoutine != null)
+            {
+                StopCoroutine(fadeRoutine);
+                fadeRoutine = null;
+            }
+
+            fadePanel.gameObject.SetActive(true);
+            fadePanel.transform.SetAsLastSibling();
+            fadePanel.alpha = 0.0f;
+
+            yield return StartCoroutine(FadeCanvasGroup(fadePanel, 0.0f, 1.0f, respawnFadeDuration));
+
+            HideAllWindows();
+            overlayGroup.alpha = 0.0f;
+            overlayRoot.SetActive(false);
+            globalLight.intensity = normalLightIntensity;
+
+            onBlackScreen?.Invoke();
+
+            float waitStartTime = Time.unscaledTime;
+            while (playerCameraController != null && !playerCameraController.IsAtTarget)
+            {
+                if (Time.unscaledTime - waitStartTime >= respawnCameraWaitTimeout)
+                    break;
+
+                yield return null;
+            }
+
+            yield return new WaitForSecondsRealtime(respawnBlackHoldDuration);
+
+            CurrentState = OverlayState.None;
+            yield return StartCoroutine(FadeCanvasGroup(fadePanel, 1.0f, 0.0f, respawnFadeDuration));
+
+            fadePanel.alpha = 0.0f;
+            fadePanel.gameObject.SetActive(false);
+
+            CurrentState = OverlayState.None;
+            SimpleInput.IsKeyBoardInputBlocked = false;
+            Time.timeScale = 1.0f;
+        }
+
+        public void ReturnToCheckpoint()
+        {
+            if (isRespawning)
+                return;
+
+            if (playerController == null)
+                playerController = FindFirstObjectByType<PlayerController>();
+
+            if (playerController == null)
+            {
+                Debug.LogWarning("[Checkpoint] PlayerController is missing.");
+                return;
+            }
+
+            if (!SaveManager.Instance.TryGetCheckpoint(out CheckpointSaveData data))
+            {
+                Debug.LogWarning("[Checkpoint] No checkpoint data.");
+                return;
+            }
+
+            Checkpoint checkpoint = CheckpointFinder.Find(data.roomId, data.checkpointId);
+
+            if (checkpoint == null)
+            {
+                Debug.LogWarning($"[Checkpoint] Checkpoint not found: {data.roomId} / {data.checkpointId}");
+                return;
+            }
+
+            StartCoroutine(ReturnToCheckpointRoutine(checkpoint, data));
+        }
+
+        private IEnumerator ReturnToCheckpointRoutine(Checkpoint checkpoint, CheckpointSaveData data)
+        {
+            isRespawning = true;
+
+            yield return RespawnFadeRoutine(() =>
+            {
+                playerController.Respawn(checkpoint.RespawnPosition, data.currentHp);
+                Debug.Log($"[Checkpoint] Returned to {checkpoint.RespawnPosition}");
+            });
+
+            isRespawning = false;
+        }
+
+        private IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration)
+        {
+            group.alpha = from;
+
+            float time = 0f;
+
+            while (time < duration)
+            {
+                time += Time.unscaledDeltaTime;
+
+                float t = Mathf.Clamp01(time / duration);
+                t = Mathf.SmoothStep(0.0f, 1.0f, t);
+
+                group.alpha = Mathf.Lerp(from, to, t);
+
+                yield return null;
+            }
+
+            group.alpha = to;
         }
 
         private void ShowWindow(GameObject targetWindow, float targetLightIntensity, float duration)

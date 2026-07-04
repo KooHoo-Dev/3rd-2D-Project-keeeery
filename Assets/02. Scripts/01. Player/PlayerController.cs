@@ -331,6 +331,51 @@ namespace Arcanist
             overlayController.StartDeathOverlay();
         }
 
+        public void Respawn(Vector3 position, int hp)
+        {
+            transform.position = position;
+
+            isDead = false;
+            isHurt = false;
+            isCastingSkill = false;
+            IsParrying = false;
+            CloseParryWindow();
+            StopMovement();
+            StopSprintLoopFx();
+
+            Animator.Rebind();
+            Animator.Update(0.0f);
+
+            Animator.ResetTrigger(DEATH);
+            Animator.ResetTrigger(PARRY);
+            Animator.ResetTrigger(PARRY_SUCCESS);
+            Animator.ResetTrigger(DASH);
+            Animator.ResetTrigger(JUMP);
+            Animator.ResetTrigger(DOUBLE_JUMP);
+            Animator.ResetTrigger(DESCENDING);
+            Animator.SetBool(IS_HURT, false);
+            Animator.SetBool(IS_CASTING_SKILL, false);
+            Animator.SetBool(IS_ATTACK, false);
+            Animator.SetBool(IS_SPRINT, false);
+            Animator.SetBool(IS_GROUNDED, Controller2D.IsGrounded);
+            Animator.SetFloat(MOVEMENT, 0.0f);
+            Animator.Play(ANIM_TAG_MOVEMENT, 0, 0.0f);
+            Animator.Update(0.0f);
+
+            currentState?.Exit();
+            currentState = null;
+
+            nextDashTime = 0.0f;
+            nextParryTime = 0.0f;
+            hurtEndTime = 0.0f;
+            staminaRecoveryStartTime = 0.0f;
+            sprintInputGraceEndTime = 0.0f;
+            isSprint = false;
+
+            Player.LocalPlayer?.RestoreHealthTo(hp);
+            Debug.Log($"[Player] Respawned at {position} / HP {hp}");
+        }
+
         public void ShowDeathWindow()
         {
             overlayController.ShowDeathWindow();

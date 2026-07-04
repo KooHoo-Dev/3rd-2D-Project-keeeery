@@ -75,7 +75,7 @@ namespace Arcanist
                     break;
                     
                 case ButtonType.ReturnToCheckPoint:
-                    // TODO: 체크포인트 부활 구현
+                    overlayController.ReturnToCheckpoint();
                     break;
 
                 case ButtonType.Option:

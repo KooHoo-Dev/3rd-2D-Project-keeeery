@@ -28,6 +28,17 @@ namespace Arcanist
         private float lastDirection = 1f;
         private Vector3 previousPlayerPosition;
 
+        public bool IsAtTarget
+        {
+            get
+            {
+                if (Camera.main == null || cameraTarget == null)
+                    return true;
+
+                return Vector2.Distance(Camera.main.transform.position, cameraTarget.position) < 0.2f;
+            }
+        }
+        
         private void Start()
         {
             previousPlayerPosition = player.position;

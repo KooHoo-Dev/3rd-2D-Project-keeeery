@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,9 +10,11 @@ namespace Arcanist
     {
         private const int MIN_DECK_CARD_COUNT = 5;
 
+        private PlayerController player;
         private OverlayController overlayController;
         private PlayerInventory playerInventory;
         private InventoryWindow inventoryWindow;
+        private bool isRespawning;
 
         // [Header("Reward Test")]
         // [SerializeField] private RectTransform rewardContainer;
@@ -35,8 +38,10 @@ namespace Arcanist
 
             if (overlayController.CurrentState == OverlayController.OverlayState.Death)
             {
-                if (SimpleInput.GetKeyDown(Key.UpArrow))
-                    SceneManager.LoadScene("Combat");
+                if (!isRespawning && SimpleInput.GetKeyDown(Key.UpArrow))
+                {
+                    TryRespawnFromCheckpoint();
+                }
 
                 return;
             }
@@ -56,6 +61,45 @@ namespace Arcanist
 
             if (SimpleInput.GetKeyDown(Key.Escape))
                 TogglePause();
+        }
+
+        private void TryRespawnFromCheckpoint()
+        {
+            ResolveReferences();
+
+            if (player == null)
+            {
+                Debug.LogWarning("[Respawn] PlayerController is missing.");
+                return;
+            }
+            if (!SaveManager.Instance.TryGetCheckpoint(out CheckpointSaveData data))
+            {
+                Debug.LogWarning("[Respawn] No checkpoint data.");
+                return;
+            }
+
+            Checkpoint checkpoint = CheckpointFinder.Find(data.roomId, data.checkpointId);
+
+            if (checkpoint == null)
+            {
+                Debug.LogWarning($"[Respawn] Checkpoint not found: {data.roomId} / {data.checkpointId}");
+                return;
+            }
+
+            StartCoroutine(RespawnRoutine(checkpoint, data));
+        }
+
+        private IEnumerator RespawnRoutine(Checkpoint checkpoint, CheckpointSaveData data)
+        {
+            isRespawning = true;
+
+            yield return overlayController.RespawnFadeRoutine(() =>
+            {
+                player.Respawn(checkpoint.RespawnPosition, data.currentHp);
+                Debug.Log($"[Respawn] Moved to {checkpoint.RespawnPosition}");
+            });
+
+            isRespawning = false;
         }
 
         private void TogglePause()
@@ -149,6 +193,8 @@ namespace Arcanist
 
         private void ResolveReferences()
         {
+            if (player == null)
+                player = FindFirstObjectByType<PlayerController>();
             if (playerInventory == null)
                 playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
 

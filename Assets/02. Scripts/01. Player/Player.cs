@@ -42,6 +42,7 @@ namespace Arcanist
         [SerializeField] private Image parryCooldownFill;
 
         public AttackInfo AttackInfo;
+        public int CurrentHp => Stat.Hp;
 
         private static readonly int HIT_EFFECT_BLEND = Shader.PropertyToID("_HitEffectBlend");
 
@@ -274,6 +275,32 @@ namespace Arcanist
             return Mathf.Max(0, damage);
         }
 
+        public void RestoreHealthTo(int hp)
+        {
+            int targetHp = Mathf.Clamp(hp, 1, Stat.MaxHp);
+
+            Stat.ResetToFull();
+
+            int damageAmount = Stat.MaxHp - targetHp;
+            if (damageAmount > 0)
+                Stat.ApplyDamage(damageAmount);
+
+            UpdateHpBar();
+
+            if (hpDelayCoroutine != null)
+            {
+                StopCoroutine(hpDelayCoroutine);
+                hpDelayCoroutine = null;
+            }
+
+            if (hpDelayBar != null)
+            {
+                Vector3 delayScale = hpDelayBar.localScale;
+                delayScale.x = ((float)Stat.Hp / Stat.MaxHp) * maxHpBarScaleX;
+                hpDelayBar.localScale = delayScale;
+            }
+        }
+        
         public override void TakeHeal(int heal)
         {
             if (heal <= 0) return;
