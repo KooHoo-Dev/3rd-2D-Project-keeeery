@@ -50,6 +50,25 @@ namespace Arcanist
             slotCards = new CardData[cardSlots.Length];
         }
 
+        public void ClearAllSlots()
+        {
+            StopAllCoroutines();
+            isDrawing = false;
+            isUsingCard = false;
+
+            for (int i = 0; i < slotCards.Length; i++)
+                slotCards[i] = null;
+
+            for (int i = 0; i < cardSlots.Length; i++)
+            {
+                if (cardSlots[i] == null)
+                    continue;
+
+                for (int j = cardSlots[i].childCount - 1; j >= 0; j--)
+                    Destroy(cardSlots[i].GetChild(j).gameObject);
+            }
+        }
+
         public bool TryDrawToFirstEmptySlot(CardData cardData, Action onCompleted = null)
         {
             if (cardData == null)

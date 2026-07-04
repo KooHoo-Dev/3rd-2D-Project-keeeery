@@ -14,10 +14,6 @@ namespace Arcanist
         private OverlayController overlayController;
         private PlayerInventory playerInventory;
         private InventoryWindow inventoryWindow;
-        private bool isRespawning;
-
-        // [Header("Reward Test")]
-        // [SerializeField] private RectTransform rewardContainer;
 
         public PlayerInventory PlayerInventory => playerInventory;
         public InventoryWindow InventoryWindow => inventoryWindow;
@@ -38,20 +34,11 @@ namespace Arcanist
 
             if (overlayController.CurrentState == OverlayController.OverlayState.Death)
             {
-                if (!isRespawning && SimpleInput.GetKeyDown(Key.UpArrow))
-                {
-                    TryRespawnFromCheckpoint();
-                }
+                if (SimpleInput.GetKeyDown(Key.UpArrow))
+                    overlayController.ReturnToCheckpoint();
 
                 return;
             }
-
-            // 보상 화면 테스트용 - 실제 보상 흐름은 RoomExitController -> RoomController.TryExitRoom()에서 처리
-            // if (SimpleInput.GetKeyDown(Key.R))
-            // {
-            //     ToggleReward();
-            //     return;
-            // }
 
             if (SimpleInput.GetKeyDown(Key.I))
             {
@@ -61,45 +48,6 @@ namespace Arcanist
 
             if (SimpleInput.GetKeyDown(Key.Escape))
                 TogglePause();
-        }
-
-        private void TryRespawnFromCheckpoint()
-        {
-            ResolveReferences();
-
-            if (player == null)
-            {
-                Debug.LogWarning("[Respawn] PlayerController is missing.");
-                return;
-            }
-            if (!SaveManager.Instance.TryGetCheckpoint(out CheckpointSaveData data))
-            {
-                Debug.LogWarning("[Respawn] No checkpoint data.");
-                return;
-            }
-
-            Checkpoint checkpoint = CheckpointFinder.Find(data.roomId, data.checkpointId);
-
-            if (checkpoint == null)
-            {
-                Debug.LogWarning($"[Respawn] Checkpoint not found: {data.roomId} / {data.checkpointId}");
-                return;
-            }
-
-            StartCoroutine(RespawnRoutine(checkpoint, data));
-        }
-
-        private IEnumerator RespawnRoutine(Checkpoint checkpoint, CheckpointSaveData data)
-        {
-            isRespawning = true;
-
-            yield return overlayController.RespawnFadeRoutine(() =>
-            {
-                player.Respawn(checkpoint.RespawnPosition, data.currentHp);
-                Debug.Log($"[Respawn] Moved to {checkpoint.RespawnPosition}");
-            });
-
-            isRespawning = false;
         }
 
         private void TogglePause()
@@ -140,36 +88,6 @@ namespace Arcanist
             if (overlayController.CurrentState == OverlayController.OverlayState.None)
                 overlayController.ShowInventory();
         }
-
-        // 보상 화면 테스트용 - 실제 보상 흐름에서는 사용하지 않음
-        // public void ToggleReward()
-        // {
-        //     if (overlayController.CurrentState == OverlayController.OverlayState.None)
-        //     {
-        //         ClearRewardContainer();
-        //         overlayController.ShowReward();
-        //     }
-        // }
-
-        // 보상 화면 테스트용 - 실제 보상 흐름에서는 사용하지 않음
-        // private void ClearRewardContainer()
-        // {
-        //     if (rewardContainer == null)
-        //         return;
-        //
-        //     for (int i = rewardContainer.childCount - 1; i >= 0; i--)
-        //     {
-        //         Transform child = rewardContainer.GetChild(i);
-        //
-        //         if (child == null)
-        //             continue;
-        //
-        //         GameObject childObject = child.gameObject;
-        //         child.SetParent(null, false);
-        //         childObject.SetActive(false);
-        //         Destroy(childObject);
-        //     }
-        // }
 
         private void TryCloseInventory()
         {

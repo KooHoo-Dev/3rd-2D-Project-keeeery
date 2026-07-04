@@ -35,6 +35,17 @@ namespace Arcanist
             CheckRoomClear();
         }
 
+        public void ResetEnemiesForRespawn()
+        {
+            if (enemyRoot == null)
+                enemyRoot = transform;
+
+            ClearAllEnemiesInRoom();
+            isCleared = false;
+            SpawnNormalEnemies();
+            CheckRoomClear();
+        }
+
         private void SpawnNormalEnemies()
         {
             if (normalEnemyPrefabs.Count == 0 || normalSpawnPoints.Count == 0)
@@ -154,11 +165,42 @@ namespace Arcanist
             roomController?.OnAllEnemiesDefeated();
         }
 
+        private void ClearAllEnemiesInRoom()
+        {
+            Debug.Log($"[EnemyRoom] ClearAllEnemiesInRoom - childCount={enemyRoot.childCount}, spawned={spawnedEnemies.Count}");
+
+            for (int i = spawnedEnemies.Count - 1; i >= 0; i--)
+            {
+                if (spawnedEnemies[i] == null)
+                    continue;
+
+                spawnedEnemies[i].SetActive(false);
+                Destroy(spawnedEnemies[i]);
+            }
+
+            EnemyController[] enemies = enemyRoot.GetComponentsInChildren<EnemyController>(true);
+
+            for (int i = enemies.Length - 1; i >= 0; i--)
+            {
+                if (enemies[i] == null) continue;
+
+                GameObject enemyObject = enemies[i].gameObject;
+                enemyObject.SetActive(false);
+                Destroy(enemyObject);
+            }
+
+            spawnedEnemies.Clear();
+        }
+
         private void ClearSpawnedEnemies()
         {
             for (int i = spawnedEnemies.Count - 1; i >= 0; i--)
-                if (spawnedEnemies[i] != null)
-                    Destroy(spawnedEnemies[i]);
+            {
+                if (spawnedEnemies[i] == null) continue;
+
+                spawnedEnemies[i].SetActive(false);
+                Destroy(spawnedEnemies[i]);
+            }
 
             spawnedEnemies.Clear();
         }

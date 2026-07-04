@@ -373,6 +373,10 @@ namespace Arcanist
             isSprint = false;
 
             Player.LocalPlayer?.RestoreHealthTo(hp);
+
+            if(TryGetComponent(out CardSystem cardSystem))
+                cardSystem.ResetRuntimeCardsForRespawn();
+                
             Debug.Log($"[Player] Respawned at {position} / HP {hp}");
         }
 

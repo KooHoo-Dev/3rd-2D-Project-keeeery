@@ -172,6 +172,25 @@ namespace Arcanist
             Shuffle(drawPile);
         }
 
+        public void ResetRuntimeCardsForRespawn()
+        {
+            pendingSkillCard = null;
+            isGaugeFull = false;
+
+            hand.Clear();
+            drawPile.Clear();
+            discardPile.Clear();
+
+            foreach (CardData card in playerDeck)
+                drawPile?.Add(card);
+
+            Shuffle(drawPile);
+            isDeckInitialized = playerDeck.Count > 0;
+
+            cardHandUI?.ClearAllSlots();
+            cardGaugeController?.ResetGaugeAndRecharge();
+        }
+
         public void AddOwnedCard(CardData card)
         {
             if (card == null) return;

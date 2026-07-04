@@ -282,8 +282,25 @@ namespace Arcanist
 
             yield return RespawnFadeRoutine(() =>
             {
-                playerController.Respawn(checkpoint.RespawnPosition, data.currentHp);
-                Debug.Log($"[Checkpoint] Returned to {checkpoint.RespawnPosition}");
+                Debug.Log("[Checkpoint] On black screen callback");
+
+                RoomManager roomManager = RoomManager.Instance;
+
+                if (roomManager == null)
+                    roomManager = FindFirstObjectByType<RoomManager>();
+
+                if (roomManager != null)
+                    roomManager.ResetCurrentRoom();
+                else
+                    Debug.LogWarning("[Checkpoint] RoomManager is missing. Room was not reset.");
+
+                Checkpoint reloadedCheckpoint = CheckpointFinder.Find(data.roomId, data.checkpointId);
+                Vector3 respawnPosition = reloadedCheckpoint != null
+                    ? reloadedCheckpoint.RespawnPosition
+                    : checkpoint.RespawnPosition;
+
+                playerController.Respawn(respawnPosition, data.currentHp);
+                Debug.Log($"[Checkpoint] Returned to {respawnPosition}");
             });
 
             isRespawning = false;

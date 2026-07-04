@@ -5,6 +5,8 @@ namespace Arcanist
 {
     public class RoomManager : MonoBehaviour
     {
+        public static RoomManager Instance { get; private set; }
+
         [Header("Room")]
         [SerializeField] private Transform roomRoot;
         [SerializeField] private Vector3 roomSpawnPosition = Vector3.zero;
@@ -18,6 +20,11 @@ namespace Arcanist
         private GameObject currentRoom;
         private int currentRoomIndex = -1;
 
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         private void Start()
         {
             LoadRoom(0);
@@ -26,6 +33,29 @@ namespace Arcanist
         public void LoadNextRoom()
         {
             LoadRoom(currentRoomIndex + 1);
+        }
+
+        public void ResetCurrentRoom()
+        {
+            Debug.Log($"[RoomManager] ResetCurrentRoom currentIndex={currentRoomIndex}");
+
+            RoomController roomController = currentRoom != null
+                ? currentRoom.GetComponentInChildren<RoomController>()
+                : null;
+
+            if (roomController != null)
+            {
+                roomController.ResetRoomForRespawn();
+                return;
+            }
+
+            if (currentRoomIndex < 0)
+            {
+                LoadRoom(0);
+                return;
+            }
+
+            LoadRoom(currentRoomIndex);
         }
 
         private void LoadRoom(int roomIndex)

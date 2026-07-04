@@ -63,14 +63,16 @@ namespace Arcanist
         private void StartRoom()
         {
             currentState = RoomState.Combat;
-
-            if (roomExitController != null)
-                roomExitController.SetLocked(true);
-
-            if (enemyRoomController != null)
-                enemyRoomController.SpawnEnemies();
-
+            roomExitController?.SetLocked(true);
+            enemyRoomController?.SpawnEnemies();
             onRoomStarted?.Invoke();
+        }
+
+        public void ResetRoomForRespawn()
+        {
+            currentState = RoomState.Combat;
+            roomExitController?.SetLocked(true);
+            enemyRoomController?.ResetEnemiesForRespawn();
         }
 
         public void OnAllEnemiesDefeated()
@@ -79,9 +81,7 @@ namespace Arcanist
             if (currentState != RoomState.Combat) return;
 
             currentState = RoomState.Reward;
-
-            if (roomExitController != null)
-                roomExitController.SetLocked(false);
+            roomExitController?.SetLocked(false);
         }
 
         public void CompleteReward()
@@ -89,9 +89,7 @@ namespace Arcanist
             if (currentState != RoomState.Reward) return;
 
             currentState = RoomState.Cleared;
-
-            if (roomExitController != null)
-                roomExitController.SetLocked(false);
+            roomExitController?.SetLocked(false);
         }
 
         public void TryExitRoom()
@@ -108,7 +106,7 @@ namespace Arcanist
                 return;
             }
 
-            if (!CanExit) return;
+            if (CanExit == false) return;
 
             onExitRequested?.Invoke();
             roomManager?.LoadNextRoom();
