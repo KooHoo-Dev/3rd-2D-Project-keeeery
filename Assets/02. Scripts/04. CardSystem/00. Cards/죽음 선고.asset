@@ -18,5 +18,6 @@ MonoBehaviour:
   cardType: 0
   grade: 3
   description: 
-  animationTrigger: 
-  effect: {fileID: 0}
+  animationTrigger: UpCast
+  effect: {fileID: 11400000, guid: bbc2a9d1e2a044348a5d19396f30251f, type: 2}
+  requiresTarget: 0

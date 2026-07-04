@@ -13,6 +13,16 @@ namespace Arcanist
         [SerializeField] private bool allowMultiHit;
         [SerializeField] private float multiHitInterval = 0.25f;
 
+        [Header("Impact Feedback")]
+        [SerializeField] private bool useHitStop;
+        [SerializeField] private HitStopController hitStopController;
+        [SerializeField] private float hitStopDuration = 0.06f;
+
+        [SerializeField] private bool useCameraShake;
+        [SerializeField] private CameraImpulseController cameraImpulseController;
+
+        private bool impactFeedbackPlayed;
+
         private CombatEntity Owner { get; set; }
 
         private readonly HashSet<HurtBox> checkList = new HashSet<HurtBox>();
@@ -36,6 +46,7 @@ namespace Arcanist
         {
             checkList.Clear();
             lastHitTimes.Clear();
+            impactFeedbackPlayed = false;
         }
 
         public void Initialize(CombatEntity owner)
@@ -43,6 +54,16 @@ namespace Arcanist
             Owner = owner;
             checkList.Clear();
             lastHitTimes.Clear();
+            impactFeedbackPlayed = false;
+        }
+
+        private void ResolveFeedbackControllers()
+        {
+            if (hitStopController == null)
+                hitStopController = FindFirstObjectByType<HitStopController>();
+
+            if (cameraImpulseController == null)
+                cameraImpulseController = FindFirstObjectByType<CameraImpulseController>();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -86,6 +107,7 @@ namespace Arcanist
             if (CanHit(hurtBox) == false) return;
 
             RegisterHit(hurtBox);
+            PlayImpactFeedbackOnce();
 
             int damage = AttackInfo.RollDamage();
 
@@ -124,6 +146,21 @@ namespace Arcanist
             }
 
             checkList.Add(hurtBox);
+        }
+
+        private void PlayImpactFeedbackOnce()
+        {
+            if (impactFeedbackPlayed)
+                return;
+
+            impactFeedbackPlayed = true;
+            ResolveFeedbackControllers();
+
+            if (useHitStop && hitStopController != null)
+                hitStopController.Play(hitStopDuration);
+
+            if (useCameraShake && cameraImpulseController != null)
+                cameraImpulseController.Play();
         }
     }
 }

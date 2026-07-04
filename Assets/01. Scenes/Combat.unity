@@ -326,6 +326,10 @@ MonoBehaviour:
   reviveMaxAlpha: 0.15
   reviveFadeInDuration: 0.08
   reviveHoldDuration: 0.1
+  screenInvertMaterial: {fileID: 2100000, guid: 46e33d4b19e71488aacf35ce84ea8b3d, type: 2}
+  deathSentenceFlashDuration: 0.08
+  deathSentenceSlowScale: 0.15
+  deathSentenceSlowDuration: 0.08
 --- !u!1 &104871394
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,7 +839,7 @@ GameObject:
   - component: {fileID: 221220324}
   - component: {fileID: 221220323}
   m_Layer: 5
-  m_Name: ParryImplseSource
+  m_Name: CameraImpulseSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7258,15 +7262,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4ec7ab48fde644b8a5b508a5e10ae34, type: 2}
   - {fileID: 11400000, guid: eb2c639771ce84a3f9e5e48b78a4d4a0, type: 2}
   - {fileID: 11400000, guid: e4ac183c7dde34535afd99a3e23c5a91, type: 2}
+  - {fileID: 11400000, guid: db45cd152b8634662a02259403e647cf, type: 2}
   deckCards:
   - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
   - {fileID: 11400000, guid: 66113365799a94dddaee187630f8ea28, type: 2}
-  - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
   - {fileID: 11400000, guid: d9fa59388c5ea46188ad7a62500f6dc4, type: 2}
   - {fileID: 11400000, guid: 1c115cd3991f5440da9bbc5bf0b60239, type: 2}
-  - {fileID: 11400000, guid: a9fed4645f9b648559f8503b5a9c9c92, type: 2}
   - {fileID: 11400000, guid: eb2c639771ce84a3f9e5e48b78a4d4a0, type: 2}
   - {fileID: 11400000, guid: e4ac183c7dde34535afd99a3e23c5a91, type: 2}
+  - {fileID: 11400000, guid: db45cd152b8634662a02259403e647cf, type: 2}
   maxDeckCardCount: 20
   allowDuplicateCards: 0
 --- !u!4 &1403432633
@@ -10953,6 +10957,75 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6118618031695856899, guid: 5533029a1aef24cb1b7db1736a7d6a35, type: 3}
   m_PrefabInstance: {fileID: 2333781057312094143}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2051600743231750937
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5283764433995171974, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: hitStopController
+      value: 
+      objectReference: {fileID: 2004398625}
+    - target: {fileID: 5283764433995171974, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: cameraImpulseController
+      value: 
+      objectReference: {fileID: 221220323}
+    - target: {fileID: 6082982004038532130, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: screenEffectController
+      value: 
+      objectReference: {fileID: 82030804}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043641954718192995, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588850060066991276, guid: 945898378e8334c428d0cba17874eca0, type: 3}
+      propertyPath: m_Name
+      value: DeathSentenceEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 945898378e8334c428d0cba17874eca0, type: 3}
 --- !u!1001 &2333781057312094143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11768,3 +11841,4 @@ SceneRoots:
   - {fileID: 8385894243434814502}
   - {fileID: 6670399272513839180}
   - {fileID: 1209434718}
+  - {fileID: 2051600743231750937}

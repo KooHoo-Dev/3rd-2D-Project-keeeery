@@ -29,11 +29,29 @@ namespace Arcanist
         [SerializeField] private float reviveFadeInDuration = 0.08f;
         [SerializeField] private float reviveHoldDuration = 0.1f;
 
+        [Header("Invert Effect")]
+        [SerializeField] private Material screenInvertMaterial;
+        [SerializeField] private float deathSentenceFlashDuration = 0.05f;
+        [SerializeField] private float deathSentenceSlowScale = 0.25f;
+        [SerializeField] private float deathSentenceSlowDuration = 0.08f;
+
+        private Coroutine deathSentenceFlashRoutine;
+
         private Coroutine glowRoutine;
 
         private void Awake()
         {
             SetVignetteAlpha(0f);
+            ResetInvertEffect();
+        }
+
+        private void OnDisable()
+        {
+            if (deathSentenceFlashRoutine != null)
+                StopCoroutine(deathSentenceFlashRoutine);
+
+            ResetInvertEffect();
+            deathSentenceFlashRoutine = null;
         }
 
         public void PlayParryGlow()
@@ -49,6 +67,45 @@ namespace Arcanist
         public void PlayReviveGlow(float fadeOutDuration)
         {
             PlayGlow(reviveColor, reviveMaxAlpha, reviveFadeInDuration, Mathf.Max(0.0f, fadeOutDuration), reviveHoldDuration);
+        }
+
+        public void PlayDeathSentenceFlash()
+        {
+            if (screenInvertMaterial == null)
+                return;
+
+            if (deathSentenceFlashRoutine != null)
+                StopCoroutine(deathSentenceFlashRoutine);
+
+            deathSentenceFlashRoutine = StartCoroutine(DeathSentenceFlashRoutine());
+        }
+
+        private IEnumerator DeathSentenceFlashRoutine()
+        {
+            float previousTimeScale = Time.timeScale;
+            float previousFixedDeltaTime = Time.fixedDeltaTime;
+
+            Time.timeScale = deathSentenceSlowScale;
+            Time.fixedDeltaTime = previousFixedDeltaTime * deathSentenceSlowScale;
+            screenInvertMaterial.SetFloat("_Blend", 1.0f);
+
+            yield return new WaitForSecondsRealtime(deathSentenceFlashDuration);
+
+            screenInvertMaterial.SetFloat("_Blend", 0.0f);
+
+            float remainingSlowDuration = Mathf.Max(0.0f, deathSentenceSlowDuration - deathSentenceFlashDuration);
+            if (remainingSlowDuration > 0.0f)
+                yield return new WaitForSecondsRealtime(remainingSlowDuration);
+
+            Time.timeScale = previousTimeScale;
+            Time.fixedDeltaTime = previousFixedDeltaTime;
+            deathSentenceFlashRoutine = null;
+        }
+
+        private void ResetInvertEffect()
+        {
+            if (screenInvertMaterial != null)
+                screenInvertMaterial.SetFloat("_Blend", 0.0f);
         }
 
         private void PlayGlow(Color color, float maxAlpha, float fadeInDuration, float fadeOutDuration)
