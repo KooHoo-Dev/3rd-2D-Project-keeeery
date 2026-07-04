@@ -53,14 +53,14 @@ namespace Arcanist
             if (effectObject == null)
                 return;
 
-            ProjectileController projectileController = effectObject.GetComponent<ProjectileController>();
-
-            if (projectileController != null)
-                projectileController.Initialize(direction);
-
             CombatEntity owner = context.Player != null
                 ? context.Player.GetComponent<CombatEntity>()
                 : null;
+
+            ProjectileController projectileController = effectObject.GetComponent<ProjectileController>();
+
+            if (projectileController != null)
+                projectileController.Initialize(direction, owner);
 
             HitBox[] hitBoxes = effectObject.GetComponentsInChildren<HitBox>(true);
 

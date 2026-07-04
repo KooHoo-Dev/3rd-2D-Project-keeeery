@@ -43,6 +43,10 @@ namespace Arcanist
         [SerializeField] private EnemyGrade grade = EnemyGrade.Normal;
         [SerializeField] private Transform targetPoint;
 
+        [Header("Projectile")]
+        [SerializeField] private ProjectileController projectilePrefab;
+        [SerializeField] private Transform firePoint;
+
         [field: SerializeField] public Transform Target { get; private set; }
 
         public Animator Animator { get; private set; }
@@ -326,6 +330,40 @@ namespace Arcanist
             StopMove();
             ApplyHurtKnockback();
             Animator.SetBool(IS_HURT, true);
+        }
+
+        public void FireProjectile()
+        {
+            if (CanFireProjectile() == false)
+                return;
+
+            Vector3 firePosition = firePoint.position;
+            Vector2 fireDirection = GetHorizontalProjectileDirection(firePosition);
+
+            ProjectileController projectile = CardEffectSpawner
+                .Spawn(projectilePrefab.gameObject, firePosition, Quaternion.identity)
+                .GetComponent<ProjectileController>();
+
+            if (projectile == null)
+                return;
+
+            projectile.Initialize(fireDirection, Enemy);
+        }
+
+        private bool CanFireProjectile()
+        {
+            return isDead == false
+                && Target != null
+                && projectilePrefab != null
+                && firePoint != null
+                && Enemy != null;
+        }
+
+        private Vector2 GetHorizontalProjectileDirection(Vector3 firePosition)
+        {
+            return Target.position.x >= firePosition.x
+                ? Vector2.right
+                : Vector2.left;
         }
 
         private void ApplyHurtKnockback()

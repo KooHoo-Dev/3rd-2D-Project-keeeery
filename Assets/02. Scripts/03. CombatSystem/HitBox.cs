@@ -34,12 +34,6 @@ namespace Arcanist
 
             if (projectileController == null)
                 projectileController = GetComponentInParent<ProjectileController>();
-
-            // if (Owner == null && projectileController == null)
-            // {
-            //     Debug.LogError($"{name} : 부모 계층에서 CombatEntity 또는 ProjectileController를 찾지 못했습니다. 오브젝트를 삭제합니다");
-            //     Destroy(gameObject);
-            // }
         }
 
         private void OnEnable()

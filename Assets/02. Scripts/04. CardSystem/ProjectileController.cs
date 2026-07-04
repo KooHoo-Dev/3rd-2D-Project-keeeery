@@ -8,6 +8,7 @@ namespace Arcanist
         [SerializeField] private float speed = 8f;
         [SerializeField] private float lifeTime = 3f;
         [SerializeField] private bool moveAfterStartAnimation = true;
+        [SerializeField] private bool destroyOnHit = true;
 
         [Header("References")]
         [SerializeField] private Animator animator;
@@ -21,6 +22,7 @@ namespace Arcanist
         private bool isMoving;
         private bool isExploding;
         private float lifeTimer;
+        private HitBox hitBox;
 
         private void Awake()
         {
@@ -32,6 +34,9 @@ namespace Arcanist
 
             if (rigidBody == null)
                 rigidBody = GetComponent<Rigidbody2D>();
+
+            if (hitBox == null)
+                hitBox = GetComponentInChildren<HitBox>();
         }
 
         private void OnEnable()
@@ -46,8 +51,7 @@ namespace Arcanist
 
         private void Update()
         {
-            if (isExploding)
-                return;
+            if (isExploding) return;
 
             lifeTimer += Time.deltaTime;
 
@@ -56,15 +60,20 @@ namespace Arcanist
                 Explode();
                 return;
             }
+        }
 
-            if (isMoving == false)
-                return;
+        private void FixedUpdate()
+        {
+            if (isExploding || isMoving == false) return;
 
             Move();
         }
 
-        public void Initialize(Vector2 moveDirection)
+        public void Initialize(Vector2 moveDirection, CombatEntity owner)
         {
+            if (hitBox != null)
+                hitBox.Initialize(owner);
+
             if (moveDirection.sqrMagnitude <= 0f)
                 moveDirection = Vector2.right;
 
@@ -91,6 +100,12 @@ namespace Arcanist
             if (isExploding)
                 return;
 
+            if (destroyOnHit)
+            {
+                DestroySelf();
+                return;
+            }
+
             isExploding = true;
             isMoving = false;
 
@@ -113,10 +128,10 @@ namespace Arcanist
 
         private void Move()
         {
-            Vector2 movement = direction * speed * Time.deltaTime;
+            Vector2 movement = direction * speed * Time.fixedDeltaTime;
 
             if (rigidBody != null)
-                rigidBody.MovePosition(rigidBody.position + movement);
+                rigidBody?.MovePosition(rigidBody.position + movement);
             else
                 transform.position += (Vector3)movement;
         }
