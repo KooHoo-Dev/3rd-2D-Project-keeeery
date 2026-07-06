@@ -35,6 +35,9 @@ namespace Arcanist
         [SerializeField] private string fullHpAnnounceMessage = "체력이 이미 가득 찼습니다.";
         [SerializeField] private AnnounceMessage announceMessage;
 
+        [Header("Recent Card UI")]
+        [SerializeField] private RecentCardUIController recentCardUIController;
+
         private CardGaugeController cardGaugeController;
         private CardHandUI cardHandUI;
         private CardData pendingSkillCard;
@@ -189,6 +192,7 @@ namespace Arcanist
 
             cardHandUI?.ClearAllSlots();
             cardGaugeController?.ResetGaugeAndRecharge();
+            recentCardUIController?.Clear();
         }
 
         public void AddOwnedCard(CardData card)
@@ -514,6 +518,7 @@ namespace Arcanist
 
             CardEffectContext context = new(card, playerController, castPoint, facingDirection, target);
             card.Effect.Execute(context);
+            recentCardUIController?.ShowUsedCard(card);
         }
 
         private bool TryResolveTargetForCard(CardData card, Vector3 origin, out Transform target)

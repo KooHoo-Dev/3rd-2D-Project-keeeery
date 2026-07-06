@@ -321,8 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f07ab4000a564aeaa08b8a471e2024c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.SceneBGMPlayer
-  bgmClip: {fileID: 0}
-  stopCurrentBGM: 1
+  bgmClip: {fileID: 8300000, guid: a175dcee079e84b389ad12420fbce4ea, type: 3}
+  stopCurrentBGM: 0
   playDelay: 1
 --- !u!4 &677383692
 Transform:
@@ -595,6 +595,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 3458353323414804869, guid: 171a50e6656c64f08ba87a6ec5a00e3b, type: 3}
+    - target: {fileID: 4873334721191929506, guid: 46baf09d29372437991714021e47411e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5065422647223432613, guid: 46baf09d29372437991714021e47411e, type: 3}
       propertyPath: m_Name
       value: ContinuePrompt
@@ -689,6 +693,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5115370859567007364, guid: 46baf09d29372437991714021e47411e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754026077089772704, guid: 46baf09d29372437991714021e47411e, type: 3}
+      propertyPath: m_text
+      value: "\uC5EC\uC815 \uC2DC\uC791\uD558\uAE30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754026077089772704, guid: 46baf09d29372437991714021e47411e, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7479109108354751488, guid: 46baf09d29372437991714021e47411e, type: 3}
@@ -857,7 +869,7 @@ MonoBehaviour:
   fadeDuration: 1
   displayDuration: 2.75
   introBlackScreenDuration: 0.75
-  nextSceneName: Combat
+  nextSceneName: Stage01_Room01
 --- !u!4 &1776810324
 Transform:
   m_ObjectHideFlags: 0
@@ -1037,6 +1049,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 749896888}
     m_Modifications:
+    - target: {fileID: 4873334721191929506, guid: 46baf09d29372437991714021e47411e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5065422647223432613, guid: 46baf09d29372437991714021e47411e, type: 3}
       propertyPath: m_Name
       value: SkipPrompt
@@ -1136,6 +1152,10 @@ PrefabInstance:
     - target: {fileID: 5115370859567007364, guid: 46baf09d29372437991714021e47411e, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754026077089772704, guid: 46baf09d29372437991714021e47411e, type: 3}
+      propertyPath: m_text
+      value: "\uAC74\uB108\uB6F0\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 7479109108354751488, guid: 46baf09d29372437991714021e47411e, type: 3}
       propertyPath: m_text

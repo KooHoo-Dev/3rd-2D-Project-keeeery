@@ -30,7 +30,7 @@ namespace Arcanist
         [SerializeField] private float introBlackScreenDuration = 0.75f;
 
         [Header("Scene")]
-        [SerializeField] private string nextSceneName = "Combat";
+        [SerializeField] private string nextSceneName = "Stage01_Room01";
 
         private Coroutine cutsceneRoutine;
         private bool isSkipping;

@@ -18,6 +18,7 @@ namespace Arcanist
             Transform parent = buffViewRoot != null ? buffViewRoot : transform;
             buffPool = new ComponentPool<BuffUIController>(buffUIPrefab, parent);
         }
+
         public void ShowBuff(string buffId, Sprite icon, float duration)
         {
             if (string.IsNullOrEmpty(buffId))
