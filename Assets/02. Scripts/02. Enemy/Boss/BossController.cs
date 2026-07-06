@@ -24,6 +24,9 @@ namespace Arcanist
         [SerializeField] private Transform targetPoint;
         [SerializeField] private Transform player;
 
+        [Header("Death Cinematic")]
+        [SerializeField] private BossDeathController bossDeathController;
+
         public Animator Animator { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
         public Boss Boss { get; private set; }
@@ -41,6 +44,10 @@ namespace Arcanist
             Animator = GetComponentInChildren<Animator>();
             Rigidbody = GetComponentInChildren<Rigidbody2D>();
             Boss = GetComponentInChildren<Boss>();
+
+            if (bossDeathController == null)
+                bossDeathController = GetComponentInChildren<BossDeathController>();
+
             spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
             originalScale = ActorTransform.localScale;
 
@@ -134,9 +141,13 @@ namespace Arcanist
             EnemyManager.Unregister(this);
             Target = null;
             StopMove();
+
+            if (bossDeathController != null)
+                bossDeathController.Play();
+
             ChangeState(typeof(GolemDeathState));
         }
-        
+
         public void SetTarget(Transform target)
         {
             Target = target;

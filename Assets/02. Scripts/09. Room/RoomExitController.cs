@@ -14,12 +14,18 @@ namespace Arcanist
         [Header("Input Prompt")]
         [SerializeField] private InputPromptController inputPromptController;
 
+        [Header("Inventory")]
+        [SerializeField] private OverlayController overlayController;
+        [SerializeField] private InventoryWindow inventoryWindow;
+
         private RoomController roomController;
         private readonly HashSet<Collider2D> playerCollidersInside = new HashSet<Collider2D>();
         private bool isPlayerInside;
         private bool isLocked = true;
         private bool isInteractionConsumed;
         private Coroutine hidePromptRoutine;
+
+        public bool IsPlayerInside => isPlayerInside && !isLocked;
 
         public void Initialize(RoomController controller)
         {
@@ -30,6 +36,12 @@ namespace Arcanist
 
             if (inputPromptController == null)
                 inputPromptController = FindFirstObjectByType<InputPromptController>();
+
+            if (overlayController == null)
+                overlayController = FindFirstObjectByType<OverlayController>();
+
+            if (inventoryWindow == null)
+                inventoryWindow = FindFirstObjectByType<InventoryWindow>();
 
             RefreshInputPrompt();
         }
@@ -54,7 +66,31 @@ namespace Arcanist
                 isInteractionConsumed = true;
                 RefreshInputPrompt();
                 TryUseExit();
+                return;
             }
+
+            if (SimpleInput.GetKeyDown(Key.DownArrow))
+                TryOpenDeckEditInventory();
+        }
+
+        public void TryOpenDeckEditInventory()
+        {
+            if (overlayController == null)
+                overlayController = FindFirstObjectByType<OverlayController>(FindObjectsInactive.Include);
+
+            if (inventoryWindow == null)
+                inventoryWindow = FindFirstObjectByType<InventoryWindow>(FindObjectsInactive.Include);
+
+            if (overlayController == null)
+                return;
+
+            if (overlayController.CurrentState != OverlayController.OverlayState.None)
+                return;
+
+            if (inventoryWindow != null)
+                inventoryWindow.SetDeckEditMode(true);
+
+            overlayController.ShowInventory();
         }
 
         private void TryUseExit()

@@ -8,12 +8,12 @@ namespace Arcanist
 {
     public class OverlayInputHandler : MonoBehaviour
     {
-        private const int MIN_DECK_CARD_COUNT = 5;
 
         private PlayerController player;
         private OverlayController overlayController;
         private PlayerInventory playerInventory;
         private InventoryWindow inventoryWindow;
+        private RoomExitController roomExitController;
 
         public PlayerInventory PlayerInventory => playerInventory;
         public InventoryWindow InventoryWindow => inventoryWindow;
@@ -86,7 +86,12 @@ namespace Arcanist
             }
 
             if (overlayController.CurrentState == OverlayController.OverlayState.None)
+            {
+                bool canEditDeck = roomExitController != null && roomExitController.IsPlayerInside;
+
+                inventoryWindow?.SetDeckEditMode(canEditDeck);
                 overlayController.ShowInventory();
+            }
         }
 
         private void TryCloseInventory()
@@ -97,27 +102,33 @@ namespace Arcanist
                 return;
             }
 
-            if (inventoryWindow != null)
-                inventoryWindow.PlayMinimumDeckWarningFeedback();
+            inventoryWindow?.PlayMinimumDeckWarningFeedback();
         }
 
         private bool CanCloseInventory()
         {
+            if (inventoryWindow != null && !inventoryWindow.CanEditDeck)
+                return true;
+
             if (playerInventory == null)
                 return true;
 
-            return playerInventory.DeckCards.Count >= MIN_DECK_CARD_COUNT;
+            return playerInventory.CanCompleteDeckEdit();
         }
 
         private void ResolveReferences()
         {
             if (player == null)
                 player = FindFirstObjectByType<PlayerController>();
+
             if (playerInventory == null)
                 playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
 
             if (inventoryWindow == null)
                 inventoryWindow = FindFirstObjectByType<InventoryWindow>(FindObjectsInactive.Include);
+
+            if (roomExitController == null)
+                roomExitController = FindFirstObjectByType<RoomExitController>();
         }
     }
 }

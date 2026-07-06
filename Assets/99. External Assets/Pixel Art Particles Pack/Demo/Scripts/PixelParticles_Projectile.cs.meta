@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a24798265faa3ff40a27993439f2ead9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129939
+  packageName: Pixel Art Particles Pack
+  packageVersion: 1.1.4
+  assetPath: Assets/Pixel Art Particles Pack/Demo/Scripts/PixelParticles_Projectile.cs
+  uploadId: 674159

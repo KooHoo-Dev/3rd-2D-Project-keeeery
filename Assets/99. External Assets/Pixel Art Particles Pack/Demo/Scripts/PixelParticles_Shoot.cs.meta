@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 5abcd3a1db54774489955522896b545f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129939
+  packageName: Pixel Art Particles Pack
+  packageVersion: 1.1.4
+  assetPath: Assets/Pixel Art Particles Pack/Demo/Scripts/PixelParticles_Shoot.cs
+  uploadId: 674159

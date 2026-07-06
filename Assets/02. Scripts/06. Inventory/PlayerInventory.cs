@@ -18,7 +18,10 @@ namespace Arcanist
         [SerializeField] private List<CardData> deckCards = new List<CardData>();
 
         [Header("Deck Rules")]
-        [SerializeField] private int maxDeckCardCount = 20;
+        [SerializeField] private int minDeckCardCount = 6;
+        [SerializeField] private int minDeckManaCost = 10;
+        [SerializeField] private int maxDeckManaCost = 11;
+        [SerializeField] private int maxDeckCardCount = 99;
         [SerializeField] private bool allowDuplicateCards;
 
         private readonly HashSet<string> newCardIds = new HashSet<string>();
@@ -27,7 +30,12 @@ namespace Arcanist
 
         public IReadOnlyList<CardData> OwnedCards => ownedCards;
         public IReadOnlyList<CardData> DeckCards => deckCards;
+        public int MinDeckCardCount => minDeckCardCount;
+        public int MinDeckManaCost => minDeckManaCost;
+        public int MaxDeckManaCost => maxDeckManaCost;
         public int MaxDeckCardCount => maxDeckCardCount;
+        public int DeckCardCount => deckCards.Count;
+        public int DeckManaCost => GetDeckManaCost();
 
         private void Awake()
         {
@@ -62,6 +70,47 @@ namespace Arcanist
             return deckCards.Count >= maxDeckCardCount;
         }
 
+        public bool HasEnoughDeckCards()
+        {
+            return deckCards.Count >= minDeckCardCount;
+        }
+
+        public bool IsDeckManaCostValid()
+        {
+            int manaCost = GetDeckManaCost();
+            return manaCost >= minDeckManaCost && manaCost <= maxDeckManaCost;
+        }
+
+        public bool CanCompleteDeckEdit()
+        {
+            return HasEnoughDeckCards() && IsDeckManaCostValid();
+        }
+
+        public bool WouldExceedDeckManaCost(CardData cardData)
+        {
+            if (cardData == null)
+                return false;
+
+            return GetDeckManaCost() + cardData.Cost > maxDeckManaCost;
+        }
+
+        public int GetDeckManaCost()
+        {
+            int totalCost = 0;
+
+            for (int i = 0; i < deckCards.Count; i++)
+            {
+                CardData cardData = deckCards[i];
+
+                if (cardData == null)
+                    continue;
+
+                totalCost += cardData.Cost;
+            }
+
+            return totalCost;
+        }
+
         public bool AddCard(CardData cardData, bool addToDeck = true)
         {
             if (cardData == null || ownedCards.Contains(cardData))
@@ -80,7 +129,7 @@ namespace Arcanist
 
         public bool AddToDeck(CardData cardData)
         {
-            if (cardData == null || !HasCard(cardData) || IsDeckFull())
+            if (cardData == null || !HasCard(cardData) || IsDeckFull() || WouldExceedDeckManaCost(cardData))
                 return false;
 
             if (!allowDuplicateCards && deckCards.Contains(cardData))

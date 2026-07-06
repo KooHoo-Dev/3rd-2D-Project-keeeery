@@ -40,6 +40,7 @@ namespace Arcanist
         [Header("Count Text")]
         [SerializeField] private TMP_Text allCardCountText;
         [SerializeField] private TMP_Text deckCardCountText;
+        [SerializeField] private TMP_Text deckManaCostText;
 
         [Header("Guide Message")]
         [SerializeField] private TMP_Text guideMessageText;
@@ -65,8 +66,7 @@ namespace Arcanist
         private readonly List<InventoryCardSlot> deckSlots = new List<InventoryCardSlot>();
         private InventoryCardSlot selectedCollectionSlot;
         private InventoryCardSlot selectedDeckSlot;
-        private const int MIN_DECK_CARD_COUNT = 5;
-        private const string MINIMUM_DECK_WARNING_MESSAGE = "카드 덱에는 최소 5장의 카드가 존재해야 합니다.";
+        private const string DECK_CONDITION_WARNING_MESSAGE = "카드 수와 마력 용량 조건을 만족해야 합니다.";
 
         private Vector3 actionDefaultScale = Vector3.one;
         private bool canUseDeckEdit;
@@ -103,14 +103,18 @@ namespace Arcanist
 
         public void PlayMinimumDeckWarningFeedback()
         {
-            ShowMinimumDeckWarning(true);
+            ShowDeckConditionWarning(true);
             ShakeGuideMessage();
         }
 
         public bool HasMinimumDeckCards()
         {
-            RefreshDebugCounts();
-            return deckCardCount >= MIN_DECK_CARD_COUNT;
+            return playerInventory != null && playerInventory.HasEnoughDeckCards();
+        }
+
+        public bool CanCompleteDeckEdit()
+        {
+            return playerInventory != null && playerInventory.CanCompleteDeckEdit();
         }
 
         private void CacheGuideMessageComponents()
@@ -304,6 +308,12 @@ namespace Arcanist
                 return;
             }
 
+            if (playerInventory.WouldExceedDeckManaCost(cardData))
+            {
+                ShowGuideMessage("마력 용량을 초과합니다.");
+                return;
+            }
+
             playerInventory.AddToDeck(cardData);
         }
 
@@ -451,34 +461,55 @@ namespace Arcanist
 
             if (deckCardCountText != null)
             {
-                deckCardCountText.text = $"{deckCardCount} / {maxDeckCardCount}";
-                deckCardCountText.color = deckCardCount < 5 ? Color.red : Color.white;
+                if (playerInventory == null)
+                {
+                    deckCardCountText.text = "0 / 0";
+                    deckCardCountText.color = Color.red;
+                }
+                else
+                {
+                    deckCardCountText.text = $"카드  현재 {deckCardCount} / 최소 {playerInventory.MinDeckCardCount}";
+                    deckCardCountText.color = playerInventory.HasEnoughDeckCards() ? Color.white : Color.red;
+                }
             }
 
-            RefreshMinimumDeckWarning();
+            if (deckManaCostText != null)
+            {
+                if (playerInventory == null)
+                {
+                    deckManaCostText.text = "0 / 0";
+                    deckManaCostText.color = Color.red;
+                }
+                else
+                {
+                    int deckManaCost = playerInventory.DeckManaCost;
+                    deckManaCostText.text = $"마력  {deckManaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost}";
+                    deckManaCostText.color = playerInventory.IsDeckManaCostValid() ? Color.white : Color.red;
+                }
+            }
+
+            RefreshDeckConditionWarning();
         }
 
-        private void RefreshMinimumDeckWarning()
+        private void RefreshDeckConditionWarning()
         {
-            RefreshDebugCounts();
-
-            if (deckCardCount < MIN_DECK_CARD_COUNT)
+            if (playerInventory == null || !playerInventory.CanCompleteDeckEdit())
             {
-                ShowMinimumDeckWarning(false);
+                ShowDeckConditionWarning(false);
                 return;
             }
 
-            FadeOutMinimumDeckWarningIfNeeded();
+            FadeOutDeckConditionWarningIfNeeded();
         }
 
-        private void ShowMinimumDeckWarning(bool forceRestart)
+        private void ShowDeckConditionWarning(bool forceRestart)
         {
             if (guideMessageText == null)
                 return;
 
             StopGuideMessageRoutine();
 
-            guideMessageText.text = MINIMUM_DECK_WARNING_MESSAGE;
+            guideMessageText.text = GetDeckConditionWarningMessage();
             guideMessageText.gameObject.SetActive(true);
 
             if (guideMessageGroup != null)
@@ -487,7 +518,7 @@ namespace Arcanist
             isMinimumDeckWarningVisible = true;
         }
 
-        private void FadeOutMinimumDeckWarningIfNeeded()
+        private void FadeOutDeckConditionWarningIfNeeded()
         {
             if (!isMinimumDeckWarningVisible)
                 return;
@@ -495,6 +526,25 @@ namespace Arcanist
             isMinimumDeckWarningVisible = false;
             StopGuideMessageRoutine();
             guideMessageRoutine = StartCoroutine(FadeOutGuideMessageRoutine());
+        }
+
+        private string GetDeckConditionWarningMessage()
+        {
+            if (playerInventory == null)
+                return DECK_CONDITION_WARNING_MESSAGE;
+
+            int deckManaCost = playerInventory.DeckManaCost;
+
+            if (!playerInventory.HasEnoughDeckCards())
+                return $"카드 덱에는 최소 {playerInventory.MinDeckCardCount}장의 카드가 필요합니다.";
+
+            if (deckManaCost < playerInventory.MinDeckManaCost)
+                return $"마력 용량이 부족합니다. ({deckManaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
+
+            if (deckManaCost > playerInventory.MaxDeckManaCost)
+                return $"마력 용량을 초과했습니다. ({deckManaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
+
+            return DECK_CONDITION_WARNING_MESSAGE;
         }
 
         private void ShakeGuideMessage()
@@ -555,14 +605,14 @@ namespace Arcanist
             canUseDeckEdit = false;
             string actionText = string.Empty;
 
-            if (!canEditDeck)
+            if (canEditDeck == false)
             {
-                actionText = selectedCollectionSlot != null || selectedDeckSlot != null ? "조회 전용" : string.Empty;
+                guideMessageText.text = "현재 지역에서는 조회만 가능합니다.";
             }
             else if (selectedCollectionSlot != null)
             {
                 actionText = "추가 >>";
-                canUseDeckEdit = !playerInventory.IsDeckFull();
+                canUseDeckEdit = playerInventory != null && !playerInventory.IsDeckFull() && !playerInventory.WouldExceedDeckManaCost(selectedCollectionSlot.CardData);
             }
             else if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
             {

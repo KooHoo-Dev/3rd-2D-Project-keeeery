@@ -979,6 +979,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.RoomExitController
   obelisk: {fileID: 3902838679822886702}
   inputPromptController: {fileID: 0}
+  overlayController: {fileID: 0}
+  inventoryWindow: {fileID: 0}
 --- !u!1 &4828906933035364398
 GameObject:
   m_ObjectHideFlags: 0

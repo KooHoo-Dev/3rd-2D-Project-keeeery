@@ -70,15 +70,35 @@ namespace Arcanist
                 switch (grade)
                 {
                     case CardGrade.Common:
-                        return "일반";
+                        return "1  일반";
                     case CardGrade.Rare:
-                        return "희귀";
+                        return "2  희귀";
                     case CardGrade.Epic:
-                        return "영웅";
+                        return "4  영웅";
                     case CardGrade.Legendary:
-                        return "전설";
+                        return "6  전설";
                     default:
                         return "등급 없음";
+                }
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                switch (grade)
+                {
+                    case CardGrade.Common:
+                        return 1;
+                    case CardGrade.Rare:
+                        return 2;
+                    case CardGrade.Epic:
+                        return 4;
+                    case CardGrade.Legendary:
+                        return 6;
+                    default:
+                        return 1;
                 }
             }
         }
