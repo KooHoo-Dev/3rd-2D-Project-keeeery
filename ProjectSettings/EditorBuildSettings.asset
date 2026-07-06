@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/01. Scenes/Intro.unity
     guid: 39a0bf68d82ac4787a1deaf296d1f07d
   - enabled: 1
-    path: Assets/01. Scenes/Combat.unity
+    path: Assets/01. Scenes/Stage01_Room01.unity
     guid: eafece17ffd534081893946c6740934e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

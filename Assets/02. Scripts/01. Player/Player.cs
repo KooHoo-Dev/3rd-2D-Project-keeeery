@@ -19,19 +19,7 @@ namespace Arcanist
         [field: SerializeField] public PlayerStat Stat { get; private set; }
 
         [Header("HP")]
-        [SerializeField] private Transform hpBar;
-        [SerializeField] private Transform hpDelayBar;
-        [SerializeField] private float maxHpBarScaleX = 2.5f;
-        [SerializeField] private float hpDelayStartTime = 0.4f;
-        [SerializeField] private float hpDelaySpeed = 3.0f;
-
-        [Header("Heal")]
-        [SerializeField] private Image hpBarImage;
-        [SerializeField] private Color healColor = Color.green;
-        [SerializeField] private float healFlashDuration = 0.5f;
-
-        private Color defaultHpBarColor;
-        private Coroutine healFlashCoroutine;
+        [SerializeField] private HealthBarUI healthBarUI;
 
         [Header("Stamina")]
         [SerializeField] private Transform staminaBar;
@@ -39,6 +27,7 @@ namespace Arcanist
         [SerializeField] private float maxStamina = 100.0f;
 
         [Header("Cooldown UI")]
+        [SerializeField] private GameObject parryCooldownRoot;
         [SerializeField] private Image parryCooldownFill;
 
         public AttackInfo AttackInfo;
@@ -51,7 +40,6 @@ namespace Arcanist
 
         private SpriteRenderer spriteRenderer;
         private Material instanceMaterial;
-        private Coroutine hpDelayCoroutine;
         private float currentStamina;
 
         protected PlayerController PlayerController { get; private set; }
@@ -61,18 +49,10 @@ namespace Arcanist
             LocalPlayer = this;
             Stat.ResetToFull();
             currentStamina = maxStamina;
-            if (hpBarImage != null)
-                defaultHpBarColor = hpBarImage.color;
-            UpdateHpBar();
+            healthBarUI?.Initialize(Stat.Hp, Stat.MaxHp);
             UpdateStaminaBar();
 
-            if (hpDelayBar != null)
-            {
-                Vector3 scale = hpDelayBar.localScale;
-                scale.x = maxHpBarScaleX;
-                hpDelayBar.localScale = scale;
-            }
-
+            parryCooldownRoot?.SetActive(false);
             parryCooldownFill.fillAmount = 0.0f;
 
             PlayerController = GetComponent<PlayerController>();
@@ -84,90 +64,26 @@ namespace Arcanist
         {
             damage = CalculateFinalTakenDamage(damage);
 
-            float beforeHpRatio = (float)Stat.Hp / Stat.MaxHp;
+            int beforeHp = Stat.Hp;
 
             if (Stat.ApplyDamage(damage))
             {
                 if (TryConsumeReviveOnce())
                     return;
 
-                UpdateHpBar();
-                PlayDamageBarEffect(beforeHpRatio, 0.0f);
+                if (healthBarUI != null)
+                    healthBarUI.ApplyDamage(beforeHp, Stat.Hp, Stat.MaxHp);
+
                 PlayerController.Dead();
                 return;
             }
 
-            float afterHpRatio = (float)Stat.Hp / Stat.MaxHp;
-
             PlayerController.Hurt();
-            UpdateHpBar();
-            PlayDamageBarEffect(beforeHpRatio, afterHpRatio);
+
+            if (healthBarUI != null)
+                healthBarUI.ApplyDamage(beforeHp, Stat.Hp, Stat.MaxHp);
 
             StartCoroutine(HitEffectCoroutine());
-        }
-        
-        private void PlayDamageBarEffect(float beforeRatio, float afterRatio)
-        {
-            if (hpDelayBar == null)
-                return;
-
-            if (hpDelayCoroutine != null)
-                StopCoroutine(hpDelayCoroutine);
-
-            Vector3 scale = hpDelayBar.localScale;
-            scale.x = beforeRatio * maxHpBarScaleX;
-            hpDelayBar.localScale = scale;
-
-            hpDelayCoroutine = StartCoroutine(DelayHpBarCoroutine(afterRatio));
-        }
-
-        private IEnumerator DelayHpBarCoroutine(float targetRatio)
-        {
-            yield return new WaitForSeconds(hpDelayStartTime);
-
-            float targetScale = targetRatio * maxHpBarScaleX;
-
-            while (hpDelayBar.localScale.x > targetScale)
-            {
-                Vector3 scale = hpDelayBar.localScale;
-                scale.x = Mathf.MoveTowards(scale.x, targetScale, hpDelaySpeed * Time.deltaTime);
-                hpDelayBar.localScale = scale;
-
-                yield return null;
-            }
-        }
-
-        private void PlayHealEffect()
-        {
-            if (hpBarImage == null)
-                return;
-
-            if (healFlashCoroutine != null)
-                StopCoroutine(healFlashCoroutine);
-
-            healFlashCoroutine = StartCoroutine(HealBarFlashCoroutine());
-        }
-
-        private IEnumerator HealBarFlashCoroutine()
-        {
-            hpBarImage.color = healColor;
-
-            float elapsedTime = 0.0f;
-
-            while (elapsedTime < healFlashDuration)
-            {
-                float normalizedTime = healFlashDuration <= 0.0f
-                    ? 1.0f
-                    : elapsedTime / healFlashDuration;
-
-                hpBarImage.color = Color.Lerp(healColor, defaultHpBarColor, normalizedTime);
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            hpBarImage.color = defaultHpBarColor;
-            healFlashCoroutine = null;
         }
 
         private IEnumerator HitEffectCoroutine()
@@ -186,24 +102,6 @@ namespace Arcanist
             }
 
             instanceMaterial.SetFloat(HIT_EFFECT_BLEND, 0.0f);
-        }
-
-        private void UpdateHpBar()
-        {
-            if (Stat.Hp <= 0)
-            {
-                Vector3 zeroScale = hpBar.localScale;
-                zeroScale.x = 0.0f;
-                hpBar.localScale = zeroScale;
-                return;
-            }
-
-            float hpRatio = (float)Stat.Hp / Stat.MaxHp;
-            float scaleX = hpRatio * maxHpBarScaleX;
-
-            Vector3 scale = hpBar.localScale;
-            scale.x = scaleX;
-            hpBar.localScale = scale;
         }
 
         public bool HasStamina(float amount)
@@ -251,12 +149,22 @@ namespace Arcanist
 
         public void UpdateParryCooldownUI(float remainingTime, float cooldownTime)
         {
-            if (parryCooldownFill == null)
-                return;
+            if (parryCooldownFill == null) return;
 
-            parryCooldownFill.fillAmount = cooldownTime <= 0.0f
-                ? 0.0f
-                : Mathf.Clamp01(remainingTime / cooldownTime);
+            if (cooldownTime <= 0.0f || remainingTime <= 0.0f)
+            {
+                parryCooldownFill.fillAmount = 0.0f;
+                parryCooldownRoot?.SetActive(false);
+
+                return;
+            }
+
+            if (parryCooldownRoot != null && parryCooldownRoot.activeSelf == false)
+                parryCooldownRoot.SetActive(true);
+
+            float remainingRatio = Mathf.Clamp01(remainingTime / cooldownTime);
+
+            parryCooldownFill.fillAmount = 1.0f - remainingRatio;
         }
 
         private bool TryConsumeReviveOnce()
@@ -285,20 +193,8 @@ namespace Arcanist
             if (damageAmount > 0)
                 Stat.ApplyDamage(damageAmount);
 
-            UpdateHpBar();
-
-            if (hpDelayCoroutine != null)
-            {
-                StopCoroutine(hpDelayCoroutine);
-                hpDelayCoroutine = null;
-            }
-
-            if (hpDelayBar != null)
-            {
-                Vector3 delayScale = hpDelayBar.localScale;
-                delayScale.x = ((float)Stat.Hp / Stat.MaxHp) * maxHpBarScaleX;
-                hpDelayBar.localScale = delayScale;
-            }
+            if (healthBarUI != null)
+                healthBarUI.Initialize(Stat.Hp, Stat.MaxHp);
         }
         
         public override void TakeHeal(int heal)
@@ -306,8 +202,9 @@ namespace Arcanist
             if (heal <= 0) return;
 
             Stat.ApplyHeal(heal);
-            UpdateHpBar();
-            PlayHealEffect();
+
+            if (healthBarUI != null)
+                healthBarUI.ApplyHeal(Stat.Hp, Stat.MaxHp);
         }
     }
 }

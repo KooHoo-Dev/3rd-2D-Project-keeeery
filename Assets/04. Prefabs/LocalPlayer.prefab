@@ -137,6 +137,11 @@ MonoBehaviour:
   projectileController: {fileID: 0}
   allowMultiHit: 0
   multiHitInterval: 0.25
+  useHitStop: 0
+  hitStopController: {fileID: 0}
+  hitStopDuration: 0.06
+  useCameraShake: 0
+  cameraImpulseController: {fileID: 0}
 --- !u!61 &3516409619870467734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -477,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1134fb0068dda44ac8fe34922ba173ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Study_ActionPlatformer.PlayerController
-  dashPower: 10
+  dashPower: 9
   dashDuration: 0.3
   dashCooldown: 0.8
   parryCooldown: 2.5
@@ -513,12 +518,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Study_ActionPlatformer.Player
   <HeadUpPivot>k__BackingField: {fileID: 1511040938191158499}
   <Stat>k__BackingField:
-    <MaxHp>k__BackingField: 1000000
+    <MaxHp>k__BackingField: 5000
   hpBar: {fileID: 0}
   hpDelayBar: {fileID: 0}
   maxHpBarScaleX: 2.5
   hpDelayStartTime: 0.4
   hpDelaySpeed: 3
+  hpBarImage: {fileID: 0}
+  healColor: {r: 0, g: 1, b: 0, a: 1}
+  healFlashDuration: 0.5
   staminaBar: {fileID: 0}
   maxStaminaBarScaleX: 2.5
   maxStamina: 100
@@ -573,7 +581,7 @@ MonoBehaviour:
   shadowXOffset: 0.035
   flipXOffsetWithCharacter: 1
   flipReference: {fileID: 7130106607857816216}
-  groundOffset: -0.25
+  groundOffset: -0.27
   minXScale: 0.35
   maxXScale: 1
   fixedYScale: 1
@@ -634,6 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.BuffController
   buffViewController: {fileID: 0}
+  screenEffectController: {fileID: 0}
 --- !u!1 &3191532438956212976
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,6 +945,11 @@ MonoBehaviour:
   projectileController: {fileID: 0}
   allowMultiHit: 0
   multiHitInterval: 0.25
+  useHitStop: 0
+  hitStopController: {fileID: 0}
+  hitStopDuration: 0.06
+  useCameraShake: 0
+  cameraImpulseController: {fileID: 0}
 --- !u!61 &5943447859623294796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6279,6 +6293,11 @@ MonoBehaviour:
   projectileController: {fileID: 0}
   allowMultiHit: 0
   multiHitInterval: 0.25
+  useHitStop: 0
+  hitStopController: {fileID: 0}
+  hitStopDuration: 0.06
+  useCameraShake: 0
+  cameraImpulseController: {fileID: 0}
 --- !u!61 &165717915923768831
 BoxCollider2D:
   m_ObjectHideFlags: 0

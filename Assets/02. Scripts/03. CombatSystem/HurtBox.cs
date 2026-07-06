@@ -49,7 +49,7 @@ namespace Arcanist
         public void PlayHitFx(Vector3 position)
         {
             if (hitFxPrefab == null) return;
-            if (enemyController.isDead) return;
+            if (enemyController != null && enemyController.isDead) return;
             if (Owner == null) return;
 
             Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));

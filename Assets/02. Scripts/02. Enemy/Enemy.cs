@@ -16,7 +16,7 @@ namespace Arcanist
         [field:SerializeField] public BaseStat Stat { get; private set; }
         protected EnemyController EnemyController { get; private set; }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
             instanceMaterial = SpriteRenderer.material;
@@ -30,7 +30,7 @@ namespace Arcanist
 
         }
 
-        protected virtual void OnDestory()
+        protected virtual void OnDestroy()
         {
             if (instanceMaterial != null) Destroy(instanceMaterial);
         }

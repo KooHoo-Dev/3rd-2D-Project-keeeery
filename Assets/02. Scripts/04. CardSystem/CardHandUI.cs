@@ -351,7 +351,7 @@ namespace Arcanist
             RectTransform card = Instantiate(cardPrefab, slot);
 
             card.gameObject.SetActive(false);
-            card.SetAsLastSibling();
+            card.SetAsFirstSibling();
             ResetCardTransform(card);
 
             CardView cardView = card.GetComponent<CardView>();

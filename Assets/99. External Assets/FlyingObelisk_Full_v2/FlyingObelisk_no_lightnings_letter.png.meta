@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: 5963679a5a99d4d25b2e56bec228375c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7936291079345413365
+    second: FlyingObelisk_no_lightnings_letter_0
+  - first:
+      213: 5206228808055633129
+    second: FlyingObelisk_no_lightnings_letter_1
+  - first:
+      213: 3660499141378333907
+    second: FlyingObelisk_no_lightnings_letter_2
+  - first:
+      213: -881055297459598257
+    second: FlyingObelisk_no_lightnings_letter_3
+  - first:
+      213: -5179843756288351312
+    second: FlyingObelisk_no_lightnings_letter_4
+  - first:
+      213: 2902964955913427199
+    second: FlyingObelisk_no_lightnings_letter_5
+  - first:
+      213: -6038722010629701062
+    second: FlyingObelisk_no_lightnings_letter_6
+  - first:
+      213: 3858172758049440714
+    second: FlyingObelisk_no_lightnings_letter_7
+  - first:
+      213: -7675681287331527227
+    second: FlyingObelisk_no_lightnings_letter_8
+  - first:
+      213: -4789406130498686038
+    second: FlyingObelisk_no_lightnings_letter_9
+  - first:
+      213: 3827540821112228637
+    second: FlyingObelisk_no_lightnings_letter_10
+  - first:
+      213: 6669917507287843238
+    second: FlyingObelisk_no_lightnings_letter_11
+  - first:
+      213: -4989233733800332945
+    second: FlyingObelisk_no_lightnings_letter_12
+  - first:
+      213: 7209786347629093462
+    second: FlyingObelisk_no_lightnings_letter_13
+  - first:
+      213: -7262208158367009875
+    second: FlyingObelisk_no_lightnings_letter_14
+  - first:
+      213: 5022617587853190600
+    second: FlyingObelisk_no_lightnings_letter_15
+  - first:
+      213: -1703368579690845094
+    second: FlyingObelisk_no_lightnings_letter_16
+  - first:
+      213: -8624347952576672694
+    second: FlyingObelisk_no_lightnings_letter_17
+  - first:
+      213: 5556995777391974629
+    second: FlyingObelisk_no_lightnings_letter_18
+  - first:
+      213: -4977968949894131635
+    second: FlyingObelisk_no_lightnings_letter_19
+  - first:
+      213: 7362144096018183170
+    second: FlyingObelisk_no_lightnings_letter_20
+  - first:
+      213: -8707426856647436156
+    second: FlyingObelisk_no_lightnings_letter_21
+  - first:
+      213: -8955257665715861238
+    second: FlyingObelisk_no_lightnings_letter_22
+  - first:
+      213: 5503837903818262948
+    second: FlyingObelisk_no_lightnings_letter_23
+  - first:
+      213: -2856581378172642602
+    second: FlyingObelisk_no_lightnings_letter_24
+  - first:
+      213: -5551343355444423972
+    second: FlyingObelisk_no_lightnings_letter_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_0
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 33
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b03e385cf41acd190800000000000000
+      internalID: -7936291079345413365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_1
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 36
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e4bf83648d304840800000000000000
+      internalID: 5206228808055633129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_2
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 42
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dc5a7e2394bcc230800000000000000
+      internalID: 3660499141378333907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_3
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 44
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4cc17fffdcd5c3f0800000000000000
+      internalID: -881055297459598257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_4
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 47
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b368623c8f7d18b0800000000000000
+      internalID: -5179843756288351312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_5
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 51
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff890a03f37694820800000000000000
+      internalID: 2902964955913427199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_6
+      rect:
+        serializedVersion: 2
+        x: 1263
+        y: 53
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a32851b6356223ca0800000000000000
+      internalID: -6038722010629701062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_7
+      rect:
+        serializedVersion: 2
+        x: 1463
+        y: 53
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac340a59eabfa8530800000000000000
+      internalID: 3858172758049440714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_8
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 48
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c5cd7369808a7590800000000000000
+      internalID: -7675681287331527227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_9
+      rect:
+        serializedVersion: 2
+        x: 1864
+        y: 44
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa33c8aef7c988db0800000000000000
+      internalID: -4789406130498686038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_10
+      rect:
+        serializedVersion: 2
+        x: 2064
+        y: 40
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1b83bdf8182e1530800000000000000
+      internalID: 3827540821112228637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_11
+      rect:
+        serializedVersion: 2
+        x: 2263
+        y: 37
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a10d0752ae409c50800000000000000
+      internalID: 6669917507287843238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_12
+      rect:
+        serializedVersion: 2
+        x: 2463
+        y: 33
+        width: 79
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f617f6b6a5ea2cab0800000000000000
+      internalID: -4989233733800332945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_13
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 13
+        width: 63
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 652a4eceb7e4e0460800000000000000
+      internalID: 7209786347629093462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_14
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 13
+        width: 58
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da337932824773b90800000000000000
+      internalID: -7262208158367009875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_15
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 13
+        width: 52
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c56e9ec51ce3b540800000000000000
+      internalID: 5022617587853190600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_16
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 13
+        width: 48
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5c27f53d4b6c58e0800000000000000
+      internalID: -1703368579690845094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_17
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 13
+        width: 46
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4ccc4b1b39205880800000000000000
+      internalID: -8624347952576672694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_18
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 13
+        width: 44
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e85bc1a73a6e1d40800000000000000
+      internalID: 5556995777391974629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_19
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 13
+        width: 42
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d40d2ae4d93baeab0800000000000000
+      internalID: -4977968949894131635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_20
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 13
+        width: 42
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 204376c8c079b2660800000000000000
+      internalID: 7362144096018183170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_21
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 13
+        width: 44
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48855d56861092780800000000000000
+      internalID: -8707426856647436156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_22
+      rect:
+        serializedVersion: 2
+        x: 1879
+        y: 13
+        width: 46
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0989ea999888b380800000000000000
+      internalID: -8955257665715861238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_23
+      rect:
+        serializedVersion: 2
+        x: 2078
+        y: 13
+        width: 48
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a90b66b96f816c40800000000000000
+      internalID: 5503837903818262948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_24
+      rect:
+        serializedVersion: 2
+        x: 2276
+        y: 13
+        width: 52
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da16021f526b58d0800000000000000
+      internalID: -2856581378172642602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_no_lightnings_letter_25
+      rect:
+        serializedVersion: 2
+        x: 2469
+        y: 13
+        width: 63
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd2928861aaa5f2b0800000000000000
+      internalID: -5551343355444423972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FlyingObelisk_no_lightnings_letter_0: -7936291079345413365
+      FlyingObelisk_no_lightnings_letter_1: 5206228808055633129
+      FlyingObelisk_no_lightnings_letter_10: 3827540821112228637
+      FlyingObelisk_no_lightnings_letter_11: 6669917507287843238
+      FlyingObelisk_no_lightnings_letter_12: -4989233733800332945
+      FlyingObelisk_no_lightnings_letter_13: 7209786347629093462
+      FlyingObelisk_no_lightnings_letter_14: -7262208158367009875
+      FlyingObelisk_no_lightnings_letter_15: 5022617587853190600
+      FlyingObelisk_no_lightnings_letter_16: -1703368579690845094
+      FlyingObelisk_no_lightnings_letter_17: -8624347952576672694
+      FlyingObelisk_no_lightnings_letter_18: 5556995777391974629
+      FlyingObelisk_no_lightnings_letter_19: -4977968949894131635
+      FlyingObelisk_no_lightnings_letter_2: 3660499141378333907
+      FlyingObelisk_no_lightnings_letter_20: 7362144096018183170
+      FlyingObelisk_no_lightnings_letter_21: -8707426856647436156
+      FlyingObelisk_no_lightnings_letter_22: -8955257665715861238
+      FlyingObelisk_no_lightnings_letter_23: 5503837903818262948
+      FlyingObelisk_no_lightnings_letter_24: -2856581378172642602
+      FlyingObelisk_no_lightnings_letter_25: -5551343355444423972
+      FlyingObelisk_no_lightnings_letter_3: -881055297459598257
+      FlyingObelisk_no_lightnings_letter_4: -5179843756288351312
+      FlyingObelisk_no_lightnings_letter_5: 2902964955913427199
+      FlyingObelisk_no_lightnings_letter_6: -6038722010629701062
+      FlyingObelisk_no_lightnings_letter_7: 3858172758049440714
+      FlyingObelisk_no_lightnings_letter_8: -7675681287331527227
+      FlyingObelisk_no_lightnings_letter_9: -4789406130498686038
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

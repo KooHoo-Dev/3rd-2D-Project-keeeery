@@ -433,10 +433,15 @@ namespace Arcanist
 
             EnemyController enemyController = target.GetComponentInParent<EnemyController>();
 
-            if (enemyController == null)
-                return false;
+            if (enemyController != null)
+                return enemyController.IsDead == false;
 
-            return enemyController.IsDead == false;
+            BossController bossController = target.GetComponentInParent<BossController>();
+
+            if (bossController != null)
+                return bossController.IsDead == false;
+
+            return false;
         }
 
         private void ShowAnnounceMessage(string message)

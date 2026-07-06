@@ -17,6 +17,7 @@ namespace Arcanist
         [SerializeField] private EnemyRoomController enemyRoomController;
         [SerializeField] private RoomExitController roomExitController;
         [SerializeField] private OverlayController overlayController;
+        [SerializeField] private BossController[] bossControllers;
 
         [Header("Events")]
         [SerializeField] private UnityEvent onRoomStarted;
@@ -45,6 +46,9 @@ namespace Arcanist
             if (overlayController == null)
                 overlayController = FindFirstObjectByType<OverlayController>();
 
+            if (bossControllers == null || bossControllers.Length == 0)
+                bossControllers = FindObjectsByType<BossController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
             if (enemyRoomController != null)
                 enemyRoomController.Initialize(this);
 
@@ -58,6 +62,35 @@ namespace Arcanist
         private void Start()
         {
             StartRoom();
+        }
+
+        private void Update()
+        {
+            if (currentState != RoomState.Combat)
+                return;
+
+            if (HasBossEncounter() == false)
+                return;
+
+            if (AreAllBossesDefeated())
+                OnAllEnemiesDefeated();
+        }
+        private bool HasBossEncounter()
+        {
+            return bossControllers != null && bossControllers.Length > 0;
+        }
+
+        private bool AreAllBossesDefeated()
+        {
+            for (int i = 0; i < bossControllers.Length; i++)
+            {
+                BossController bossController = bossControllers[i];
+
+                if (bossController != null && bossController.IsDead == false)
+                    return false;
+            }
+
+            return true;
         }
 
         private void StartRoom()
@@ -98,7 +131,7 @@ namespace Arcanist
             {
                 if (overlayController == null)
                     overlayController = FindFirstObjectByType<OverlayController>();
-                
+
                 if (overlayController == null) return;
 
                 overlayController.ShowReward();

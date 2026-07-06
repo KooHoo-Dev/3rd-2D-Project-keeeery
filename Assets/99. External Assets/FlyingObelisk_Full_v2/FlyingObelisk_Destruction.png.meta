@@ -1,0 +1,779 @@
+fileFormatVersion: 2
+guid: 7c039dd68bc7248df9eb1c64f0453810
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5257983589273953850
+    second: FlyingObelisk_Destruction_0
+  - first:
+      213: 7685404641539787646
+    second: FlyingObelisk_Destruction_1
+  - first:
+      213: -734611655192125509
+    second: FlyingObelisk_Destruction_2
+  - first:
+      213: 8770800867896222974
+    second: FlyingObelisk_Destruction_3
+  - first:
+      213: 528893162697035963
+    second: FlyingObelisk_Destruction_4
+  - first:
+      213: 487414743819936978
+    second: FlyingObelisk_Destruction_5
+  - first:
+      213: 2441420627583864336
+    second: FlyingObelisk_Destruction_6
+  - first:
+      213: 249944187217027295
+    second: FlyingObelisk_Destruction_7
+  - first:
+      213: 118676795925622679
+    second: FlyingObelisk_Destruction_8
+  - first:
+      213: -1855597757948545235
+    second: FlyingObelisk_Destruction_9
+  - first:
+      213: 7637360332468360445
+    second: FlyingObelisk_Destruction_10
+  - first:
+      213: -5732233271565032680
+    second: FlyingObelisk_Destruction_11
+  - first:
+      213: -1116154225040757387
+    second: FlyingObelisk_Destruction_12
+  - first:
+      213: -8940306574790137011
+    second: FlyingObelisk_Destruction_13
+  - first:
+      213: 3987415298374237356
+    second: FlyingObelisk_Destruction_14
+  - first:
+      213: -7631366272086546279
+    second: FlyingObelisk_Destruction_15
+  - first:
+      213: 4430834994263995058
+    second: FlyingObelisk_Destruction_16
+  - first:
+      213: -3328702070070629867
+    second: FlyingObelisk_Destruction_17
+  - first:
+      213: -1111507106409011873
+    second: FlyingObelisk_Destruction_18
+  - first:
+      213: 4780100768980706537
+    second: FlyingObelisk_Destruction_19
+  - first:
+      213: 4489770416654556654
+    second: FlyingObelisk_Destruction_20
+  - first:
+      213: -3788456439828887507
+    second: FlyingObelisk_Destruction_21
+  - first:
+      213: 6476707975526545988
+    second: FlyingObelisk_Destruction_22
+  - first:
+      213: -2634420671258060281
+    second: FlyingObelisk_Destruction_23
+  - first:
+      213: -1615429739663363917
+    second: FlyingObelisk_Destruction_24
+  - first:
+      213: -2676908837495758298
+    second: FlyingObelisk_Destruction_25
+  - first:
+      213: -1587350281381722948
+    second: FlyingObelisk_Destruction_26
+  - first:
+      213: -9010796896488415654
+    second: FlyingObelisk_Destruction_27
+  - first:
+      213: -3349037014219505043
+    second: FlyingObelisk_Destruction_28
+  - first:
+      213: -8764302623506089391
+    second: FlyingObelisk_Destruction_29
+  - first:
+      213: -5854374237114206521
+    second: FlyingObelisk_Destruction_30
+  - first:
+      213: -2685693811396148179
+    second: FlyingObelisk_Destruction_31
+  - first:
+      213: -1752461163664420786
+    second: FlyingObelisk_Destruction_32
+  - first:
+      213: 3578628294994990956
+    second: FlyingObelisk_Destruction_33
+  - first:
+      213: -3040811626122829581
+    second: FlyingObelisk_Destruction_34
+  - first:
+      213: -6428021962766924524
+    second: FlyingObelisk_Destruction_35
+  - first:
+      213: -1166195753310138183
+    second: FlyingObelisk_Destruction_36
+  - first:
+      213: -6548214238687459866
+    second: FlyingObelisk_Destruction_37
+  - first:
+      213: -5975631575380982476
+    second: FlyingObelisk_Destruction_38
+  - first:
+      213: -987770411352543395
+    second: FlyingObelisk_Destruction_39
+  - first:
+      213: 175744895008918737
+    second: FlyingObelisk_Destruction_40
+  - first:
+      213: -6844332774512711506
+    second: FlyingObelisk_Destruction_41
+  - first:
+      213: 2379285646706007230
+    second: FlyingObelisk_Destruction_42
+  - first:
+      213: 5716056954894577682
+    second: FlyingObelisk_Destruction_43
+  - first:
+      213: 4666408005719731734
+    second: FlyingObelisk_Destruction_44
+  - first:
+      213: 1001363443004126173
+    second: FlyingObelisk_Destruction_45
+  - first:
+      213: 5170473679571558322
+    second: FlyingObelisk_Destruction_46
+  - first:
+      213: 5040304769607250955
+    second: FlyingObelisk_Destruction_47
+  - first:
+      213: 3521823795671134602
+    second: FlyingObelisk_Destruction_48
+  - first:
+      213: -4596024458780165065
+    second: FlyingObelisk_Destruction_49
+  - first:
+      213: 7600998769674723944
+    second: FlyingObelisk_Destruction_50
+  - first:
+      213: 6810377477688915741
+    second: FlyingObelisk_Destruction_51
+  - first:
+      213: 1629828967063673446
+    second: FlyingObelisk_Destruction_52
+  - first:
+      213: 3524833546956588088
+    second: FlyingObelisk_Destruction_53
+  - first:
+      213: 8671987114565280507
+    second: FlyingObelisk_Destruction_54
+  - first:
+      213: -7206648471209361374
+    second: FlyingObelisk_Destruction_55
+  - first:
+      213: -4181299625334007148
+    second: FlyingObelisk_Destruction_56
+  - first:
+      213: 6802578868091855041
+    second: FlyingObelisk_Destruction_57
+  - first:
+      213: -1446289509125372896
+    second: FlyingObelisk_Destruction_58
+  - first:
+      213: -3294152611180515423
+    second: FlyingObelisk_Destruction_59
+  - first:
+      213: -6273849498678149922
+    second: FlyingObelisk_Destruction_60
+  - first:
+      213: -5812357023698238400
+    second: FlyingObelisk_Destruction_61
+  - first:
+      213: 9129214381847752569
+    second: FlyingObelisk_Destruction_62
+  - first:
+      213: -4594494723225794569
+    second: FlyingObelisk_Destruction_63
+  - first:
+      213: -995447732933134636
+    second: FlyingObelisk_Destruction_64
+  - first:
+      213: 1631674973622294846
+    second: FlyingObelisk_Destruction_65
+  - first:
+      213: -2248067208352699970
+    second: FlyingObelisk_Destruction_66
+  - first:
+      213: 3836318150644868741
+    second: FlyingObelisk_Destruction_67
+  - first:
+      213: -5146785609925252156
+    second: FlyingObelisk_Destruction_68
+  - first:
+      213: -1668034296561822454
+    second: FlyingObelisk_Destruction_69
+  - first:
+      213: -3626807582760882745
+    second: FlyingObelisk_Destruction_70
+  - first:
+      213: 8102149764937409124
+    second: FlyingObelisk_Destruction_71
+  - first:
+      213: -5379753692635853448
+    second: FlyingObelisk_Destruction_72
+  - first:
+      213: -4101125706364721364
+    second: FlyingObelisk_Destruction_73
+  - first:
+      213: 187760456194710355
+    second: FlyingObelisk_Destruction_74
+  - first:
+      213: -2075544080880870072
+    second: FlyingObelisk_Destruction_75
+  - first:
+      213: 4664573336543329366
+    second: FlyingObelisk_Destruction_76
+  - first:
+      213: 107420764252735414
+    second: FlyingObelisk_Destruction_77
+  - first:
+      213: -8570022458825404820
+    second: FlyingObelisk_Destruction_78
+  - first:
+      213: -4738720926414370889
+    second: FlyingObelisk_Destruction_79
+  - first:
+      213: 8472790971045319760
+    second: FlyingObelisk_Destruction_80
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a36e189673c18f840800000000000000
+      internalID: 5257983589273953850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7b0e1e6dca08aa60800000000000000
+      internalID: 7685404641539787646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbf596c77922ec5f0800000000000000
+      internalID: -734611655192125509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_3
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef464ae6be428b970800000000000000
+      internalID: 8770800867896222974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb090be7781075700800000000000000
+      internalID: 528893162697035963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_5
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d4eca78025a3c600800000000000000
+      internalID: 487414743819936978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_6
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01e8276202ba1e120800000000000000
+      internalID: 2441420627583864336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_7
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd0aebcf9eaf77300800000000000000
+      internalID: 249944187217027295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_8
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79f6a38caef95a100800000000000000
+      internalID: 118676795925622679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_9
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d273777aba79f36e0800000000000000
+      internalID: -1855597757948545235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_10
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df49f6602ca5df960800000000000000
+      internalID: 7637360332468360445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_11
+      rect:
+        serializedVersion: 2
+        x: 2200
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 813e0bec5340370b0800000000000000
+      internalID: -5732233271565032680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_12
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57de4ed55af9280f0800000000000000
+      internalID: -1116154225040757387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_13
+      rect:
+        serializedVersion: 2
+        x: 2600
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4b6b8ab986ade380800000000000000
+      internalID: -8940306574790137011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_14
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cacfd8f6615265730800000000000000
+      internalID: 3987415298374237356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_15
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9986269eec0f71690800000000000000
+      internalID: -7631366272086546279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyingObelisk_Destruction_16
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 0
+        width: 200
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b2b973a3fc7d7d30800000000000000
+      internalID: 4430834994263995058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: e536c891c48694f10a843c759c22c24e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":200.0,"y":400.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      FlyingObelisk_Destruction_0: 5257983589273953850
+      FlyingObelisk_Destruction_1: 7685404641539787646
+      FlyingObelisk_Destruction_10: 7637360332468360445
+      FlyingObelisk_Destruction_11: -5732233271565032680
+      FlyingObelisk_Destruction_12: -1116154225040757387
+      FlyingObelisk_Destruction_13: -8940306574790137011
+      FlyingObelisk_Destruction_14: 3987415298374237356
+      FlyingObelisk_Destruction_15: -7631366272086546279
+      FlyingObelisk_Destruction_16: 4430834994263995058
+      FlyingObelisk_Destruction_2: -734611655192125509
+      FlyingObelisk_Destruction_3: 8770800867896222974
+      FlyingObelisk_Destruction_4: 528893162697035963
+      FlyingObelisk_Destruction_5: 487414743819936978
+      FlyingObelisk_Destruction_6: 2441420627583864336
+      FlyingObelisk_Destruction_7: 249944187217027295
+      FlyingObelisk_Destruction_8: 118676795925622679
+      FlyingObelisk_Destruction_9: -1855597757948545235
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
