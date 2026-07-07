@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.GolemMeleeState
   meleeHitBox: {fileID: 4675448316527405428}
-  duration: 1.2
+  duration: 1.5
 --- !u!61 &4675448316527405428
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -157,8 +157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.HitBox
   <AttackInfo>k__BackingField:
     Key: 0
-    MinDamage: 100
-    MaxDamage: 120
+    MinDamage: 8
+    MaxDamage: 10
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -192,6 +192,12 @@ MonoBehaviour:
   hitStopDuration: 0.06
   useCameraShake: 0
   cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!1 &3566769177966691499
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +312,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5341597898538695221, guid: 40ee8e931c1f14a84b9ed39bb0f96775, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -400,8 +406,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.HitBox
   <AttackInfo>k__BackingField:
     Key: 0
-    MinDamage: 200
-    MaxDamage: 200
+    MinDamage: 20
+    MaxDamage: 20
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -433,8 +439,14 @@ MonoBehaviour:
   useHitStop: 0
   hitStopController: {fileID: 0}
   hitStopDuration: 0.06
-  useCameraShake: 0
+  useCameraShake: 1
   cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!1 &4171926385577632975
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,6 +486,7 @@ Transform:
   m_Children:
   - {fileID: 7152739998876379155}
   - {fileID: 733553580426117056}
+  - {fileID: 7437589505561104430}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1855815104378972330
@@ -587,8 +600,9 @@ MonoBehaviour:
   startOnStart: 1
   isFacingRight: 1
   grade: 2
-  targetPoint: {fileID: 0}
+  targetPoint: {fileID: 7437589505561104430}
   player: {fileID: 0}
+  bossDeathController: {fileID: 0}
 --- !u!114 &7074668276190079548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,7 +618,7 @@ MonoBehaviour:
   <HeadUpPivot>k__BackingField: {fileID: 733553580426117056}
   hitEffectDuration: 0.2
   <Stat>k__BackingField:
-    <MaxHp>k__BackingField: 2000
+    <MaxHp>k__BackingField: 700
   healthBarUI: {fileID: 0}
 --- !u!114 &3471739049645270667
 MonoBehaviour:
@@ -730,6 +744,37 @@ Transform:
   - {fileID: 9140169615908563388}
   m_Father: {fileID: 3659621659678588286}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6294073300459401683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7437589505561104430}
+  m_Layer: 6
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7437589505561104430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6294073300459401683}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.102, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3659621659678588286}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6732694807154165209
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,7 +851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.GolemIdleState
   waitTime: 1.2
-  meleeRange: 1.5
+  meleeRange: 1
 --- !u!1 &6872749379511394420
 GameObject:
   m_ObjectHideFlags: 0

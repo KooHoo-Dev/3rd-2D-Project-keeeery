@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Arcanist
@@ -12,6 +13,8 @@ namespace Arcanist
 
         private EnemyController enemyController;
         private Collider2D col2D;
+        private bool isRegistered;
+        private Coroutine registerRoutine;
 
         private void Awake()
         {
@@ -29,21 +32,58 @@ namespace Arcanist
         
         private void OnEnable()
         {
+            TryRegister();
+
+            if (!isRegistered && registerRoutine == null)
+                registerRoutine = StartCoroutine(RegisterWhenReadyRoutine());
+        }
+
+        private void Start()
+        {
+            TryRegister();
+        }
+
+        private IEnumerator RegisterWhenReadyRoutine()
+        {
+            while (!isRegistered)
+            {
+                TryRegister();
+                yield return null;
+            }
+
+            registerRoutine = null;
+        }
+
+        private void TryRegister()
+        {
+            if (isRegistered)
+                return;
+
             if (col2D == null)
                 col2D = GetComponent<Collider2D>();
 
-            if (CombatSystem.Instance == null)
+            if (Owner == null)
+                Owner = GetComponentInParent<CombatEntity>();
+
+            if (CombatSystem.Instance == null || col2D == null || Owner == null)
                 return;
 
             CombatSystem.Instance.AddHurtBox(col2D, this);
+            isRegistered = true;
         }
 
         private void OnDisable()
         {
-            if (CombatSystem.Instance == null || col2D == null)
-                return;
+            if (registerRoutine != null)
+            {
+                StopCoroutine(registerRoutine);
+                registerRoutine = null;
+            }
 
-            CombatSystem.Instance.RemoveHurtBox(col2D);
+            if (CombatSystem.Instance != null && col2D != null && isRegistered)
+                CombatSystem.Instance.RemoveHurtBox(col2D);
+
+            isRegistered = false;
         }
 
         public void PlayHitFx(Vector3 position)

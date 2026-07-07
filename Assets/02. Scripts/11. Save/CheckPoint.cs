@@ -13,11 +13,13 @@ namespace Arcanist
         [Header("Option")]
         [SerializeField] private bool saveOnTriggerEnter = true;
         [SerializeField] private bool saveOnce = true;
+        [SerializeField] private bool respawnPlayerOnly;
 
         private bool isSaved;
 
         public string CheckpointId => checkpointId;
         public string RoomId => roomId;
+        public bool RespawnPlayerOnly => respawnPlayerOnly;
         public Vector3 RespawnPosition => respawnPoint != null ? respawnPoint.position : transform.position;
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -49,12 +51,13 @@ namespace Arcanist
                 sceneName,
                 roomId,
                 checkpointId,
-                currentHp
+                currentHp,
+                respawnPlayerOnly
             );
 
             isSaved = true;
 
-            Debug.Log($"[Checkpoint] Saved: {sceneName} / {roomId} / {checkpointId} / HP {currentHp}");
+            Debug.Log($"[Checkpoint] Saved: {sceneName} / {roomId} / {checkpointId} / HP {currentHp} / PlayerOnly {respawnPlayerOnly}");
         }
 
         private int GetPlayerCurrentHp(PlayerController player)

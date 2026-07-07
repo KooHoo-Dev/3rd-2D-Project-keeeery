@@ -17,11 +17,8 @@ namespace Arcanist
         }
 
         private static SaveManager instance;
-
         private const string SAVE_FILE_NAME = "save_data.json";
-
         private SaveData currentData;
-
         private string SavePath => Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
 
         public SaveData CurrentData => currentData;
@@ -85,7 +82,7 @@ namespace Arcanist
             Debug.Log($"[Save] Saved: {SavePath}");
         }
 
-        public void SaveCheckpoint(string sceneName, string roomId, string checkpointId, int currentHp)
+        public void SaveCheckpoint(string sceneName, string roomId, string checkpointId, int currentHp, bool respawnPlayerOnly)
         {
             if (currentData == null) currentData = new SaveData();
 
@@ -93,6 +90,8 @@ namespace Arcanist
             currentData.checkpoint.roomId = roomId;
             currentData.checkpoint.checkpointId = checkpointId;
             currentData.checkpoint.currentHp = currentHp;
+            
+            currentData.checkpoint.respawnPlayerOnly = respawnPlayerOnly;
 
             Save();
         }

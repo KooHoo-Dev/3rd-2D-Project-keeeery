@@ -77,8 +77,21 @@ namespace Arcanist
 
         public HurtBox GetHurtBoxOrNull(Collider2D collder)
         {
-            HurtBoxDic.TryGetValue(collder, out HurtBox reval);
-            return reval;
+            if (collder == null)
+                return null;
+
+            if (HurtBoxDic.TryGetValue(collder, out HurtBox reval))
+                return reval;
+
+            HurtBox hurtBox = collder.GetComponentInParent<HurtBox>();
+            if (hurtBox != null)
+                return hurtBox;
+
+            CombatEntity entity = collder.GetComponentInParent<CombatEntity>();
+            if (entity == null)
+                return null;
+
+            return entity.GetComponentInChildren<HurtBox>();
         }
     }
 }

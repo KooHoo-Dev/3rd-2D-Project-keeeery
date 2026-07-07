@@ -33,6 +33,9 @@ namespace Arcanist
         [SerializeField] private float hurtDuration = 0.15f;
         [SerializeField] private float hurtKnockbackSpeed = 1.5f;
 
+        [Header("Stun")]
+        [SerializeField] private bool canBeStunned = true;
+
         [Header("Patrol")]
         [SerializeField] private Transform patrolPoint;
 
@@ -74,8 +77,10 @@ namespace Arcanist
         private Vector3 originalScale;
         private float nextAttackTime;
         private float hurtEndTime;
+        private float stunEndTime;
         private float stateElapsedTime;
         private bool isHurt;
+        private bool isStunned;
         private bool isMovingToPointB = true;
 
         private void Awake()
@@ -91,7 +96,14 @@ namespace Arcanist
         private void OnEnable()
         {
             isDead = false;
+            isHurt = false;
+            isStunned = false;
+            stunEndTime = 0.0f;
             ChangeState(EnemyState.Idle);
+
+            if (Animator != null)
+                Animator.SetBool(IS_HURT, false);
+
             EnemyManager.Register(this);
         }
 
@@ -103,6 +115,12 @@ namespace Arcanist
         private void Update()
         {
             if (isDead) return;
+
+            if (isStunned)
+            {
+                UpdateStunState();
+                return;
+            }
 
             if (isHurt)
             {
@@ -200,6 +218,15 @@ namespace Arcanist
             if (Time.time < hurtEndTime) return;
 
             EndHurt();
+        }
+
+        private void UpdateStunState()
+        {
+            StopMove();
+
+            if (Time.time < stunEndTime) return;
+
+            EndStun();
         }
 
         private void ChangeState(EnemyState nextState)
@@ -323,13 +350,26 @@ namespace Arcanist
 
         public void Hurt()
         {
-            if (isDead) return;
+            if (isDead || isStunned) return;
 
             isHurt = true;
             hurtEndTime = Time.time + hurtDuration;
             StopMove();
             ApplyHurtKnockback();
             Animator.SetBool(IS_HURT, true);
+        }
+
+        public void Stun(float duration)
+        {
+            if (isDead || !canBeStunned || duration <= 0.0f)
+                return;
+
+            isStunned = true;
+            isHurt = false;
+            stunEndTime = Mathf.Max(stunEndTime, Time.time + duration);
+            StopMove();
+            Animator.SetBool(IS_HURT, true);
+            Animator.SetBool(IS_MOVE, false);
         }
 
         public void FireProjectile()
@@ -388,6 +428,14 @@ namespace Arcanist
             Animator.SetBool(IS_HURT, false);
         }
 
+        private void EndStun()
+        {
+            isStunned = false;
+            StopMove();
+            Animator.SetBool(IS_HURT, false);
+            ChangeState(EnemyState.Idle);
+        }
+
         public void Dead()
         {
             if (isDead) return;
@@ -396,6 +444,7 @@ namespace Arcanist
             EnemyManager.Unregister(this);
             Target = null;
             isHurt = false;
+            isStunned = false;
             StopMove();
             Animator.SetBool(IS_HURT, false);
             Animator.SetTrigger(DIE);

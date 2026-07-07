@@ -15,4 +15,5 @@ MonoBehaviour:
   effectPrefab: {fileID: 4050113788278671481, guid: eb745d242f9bd48eea897533ee1e2bb7, type: 3}
   spawnMode: 0
   spawnOffset: {x: 0.5, y: 0}
-  aimMode: 0
+  aimMode: 2
+  mirrorByFacingDirection: 1

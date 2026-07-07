@@ -1,0 +1,845 @@
+fileFormatVersion: 2
+guid: 51967c97a7d7140308ec8106dd157fc8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -942923766419730009
+    second: BossRoom__Deco_0
+  - first:
+      213: 4335140958610472013
+    second: BossRoom__Deco_1
+  - first:
+      213: 4882068457459070172
+    second: BossRoom__Deco_2
+  - first:
+      213: -2190972682124041651
+    second: BossRoom__Deco_3
+  - first:
+      213: -6863362201224002609
+    second: BossRoom__Deco_4
+  - first:
+      213: -6451428667894743969
+    second: BossRoom__Deco_5
+  - first:
+      213: -5251080002854824785
+    second: BossRoom__Deco_6
+  - first:
+      213: -2858129863424218309
+    second: BossRoom__Deco_7
+  - first:
+      213: -4129525273841367972
+    second: BossRoom__Deco_8
+  - first:
+      213: -3435153286971991209
+    second: BossRoom__Deco_9
+  - first:
+      213: -2031729545838814542
+    second: BossRoom__Deco_10
+  - first:
+      213: 4809483012407155468
+    second: BossRoom__Deco_11
+  - first:
+      213: -958589717707003815
+    second: BossRoom__Deco_12
+  - first:
+      213: -8910606132000620634
+    second: BossRoom__Deco_13
+  - first:
+      213: 5976042187490747103
+    second: BossRoom__Deco_14
+  - first:
+      213: 1639605966714868785
+    second: BossRoom__Deco_15
+  - first:
+      213: -2110961165761711165
+    second: BossRoom__Deco_16
+  - first:
+      213: 7913160547560361601
+    second: BossRoom__Deco_17
+  - first:
+      213: 540680804354369760
+    second: BossRoom__Deco_18
+  - first:
+      213: -2121491929846297173
+    second: BossRoom__Deco_19
+  - first:
+      213: -1523902392015792710
+    second: BossRoom__Deco_20
+  - first:
+      213: -8917057224429117360
+    second: BossRoom__Deco_21
+  - first:
+      213: -5709767446426504831
+    second: BossRoom__Deco_22
+  - first:
+      213: 2606692002182607392
+    second: BossRoom__Deco_23
+  - first:
+      213: 4075566397287659807
+    second: BossRoom__Deco_24
+  - first:
+      213: -7754443600900969986
+    second: BossRoom__Deco_25
+  - first:
+      213: 7997716713351443388
+    second: BossRoom__Deco_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BossRoom__Deco_0
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 630
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a1574c84df0ae2f0800000000000000
+      internalID: -942923766419730009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_1
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 643
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c3939bbb3892c30800000000000000
+      internalID: 4335140958610472013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_2
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 664
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd4bcff456790c340800000000000000
+      internalID: 4882068457459070172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_3
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 660
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d42696134f91891e0800000000000000
+      internalID: -2190972682124041651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_4
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 668
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc3433f017070c0a0800000000000000
+      internalID: -6863362201224002609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_5
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 658
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5cbc54cecbe776a0800000000000000
+      internalID: -6451428667894743969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_6
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 658
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa45eae0f8a6027b0800000000000000
+      internalID: -5251080002854824785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_7
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 668
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3be9a04802e558d0800000000000000
+      internalID: -2858129863424218309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_8
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 660
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5400b184aaf0b6c0800000000000000
+      internalID: -4129525273841367972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_9
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 664
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75bd4052942e350d0800000000000000
+      internalID: -3435153286971991209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_10
+      rect:
+        serializedVersion: 2
+        x: 991
+        y: 658
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ba9c9c1eb8ddc3e0800000000000000
+      internalID: -2031729545838814542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_11
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 668
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0bddcb6157beb240800000000000000
+      internalID: 4809483012407155468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_12
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 660
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9586bb60bb762b2f0800000000000000
+      internalID: -958589717707003815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_13
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 664
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6af7fa0feea275480800000000000000
+      internalID: -8910606132000620634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_14
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 664
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd2622405ba2fe250800000000000000
+      internalID: 5976042187490747103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_15
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 660
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13496a190fc01c610800000000000000
+      internalID: 1639605966714868785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_16
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 668
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c3f02c010c54b2e0800000000000000
+      internalID: -2110961165761711165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_17
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 658
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18e88ff979131dd60800000000000000
+      internalID: 7913160547560361601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_18
+      rect:
+        serializedVersion: 2
+        x: 1183
+        y: 658
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e82a60b352e08700800000000000000
+      internalID: 540680804354369760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_19
+      rect:
+        serializedVersion: 2
+        x: 1217
+        y: 668
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad47a77452fe82e0800000000000000
+      internalID: -2121491929846297173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_20
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 660
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab5d78339d20adae0800000000000000
+      internalID: -1523902392015792710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_21
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 664
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0506210f2bf304480800000000000000
+      internalID: -8917057224429117360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_22
+      rect:
+        serializedVersion: 2
+        x: 1311
+        y: 598
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 181b8a552c4d2c0b0800000000000000
+      internalID: -5709767446426504831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_23
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 511
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02232fca094dc2420800000000000000
+      internalID: 2606692002182607392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_24
+      rect:
+        serializedVersion: 2
+        x: 1318
+        y: 511
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1979d88b025f8830800000000000000
+      internalID: 4075566397287659807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_25
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 383
+        width: 51
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef92f7931aea26490800000000000000
+      internalID: -7754443600900969986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossRoom__Deco_26
+      rect:
+        serializedVersion: 2
+        x: 1194
+        y: 383
+        width: 41
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb374812af89dfe60800000000000000
+      internalID: 7997716713351443388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BossRoom__Deco_0: -942923766419730009
+      BossRoom__Deco_1: 4335140958610472013
+      BossRoom__Deco_10: -2031729545838814542
+      BossRoom__Deco_11: 4809483012407155468
+      BossRoom__Deco_12: -958589717707003815
+      BossRoom__Deco_13: -8910606132000620634
+      BossRoom__Deco_14: 5976042187490747103
+      BossRoom__Deco_15: 1639605966714868785
+      BossRoom__Deco_16: -2110961165761711165
+      BossRoom__Deco_17: 7913160547560361601
+      BossRoom__Deco_18: 540680804354369760
+      BossRoom__Deco_19: -2121491929846297173
+      BossRoom__Deco_2: 4882068457459070172
+      BossRoom__Deco_20: -1523902392015792710
+      BossRoom__Deco_21: -8917057224429117360
+      BossRoom__Deco_22: -5709767446426504831
+      BossRoom__Deco_23: 2606692002182607392
+      BossRoom__Deco_24: 4075566397287659807
+      BossRoom__Deco_25: -7754443600900969986
+      BossRoom__Deco_26: 7997716713351443388
+      BossRoom__Deco_3: -2190972682124041651
+      BossRoom__Deco_4: -6863362201224002609
+      BossRoom__Deco_5: -6451428667894743969
+      BossRoom__Deco_6: -5251080002854824785
+      BossRoom__Deco_7: -2858129863424218309
+      BossRoom__Deco_8: -4129525273841367972
+      BossRoom__Deco_9: -3435153286971991209
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

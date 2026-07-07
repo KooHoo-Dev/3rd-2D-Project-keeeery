@@ -14,15 +14,12 @@ namespace Arcanist
         [Header("Input Prompt")]
         [SerializeField] private InputPromptController inputPromptController;
 
-        [Header("Inventory")]
-        [SerializeField] private OverlayController overlayController;
-        [SerializeField] private InventoryWindow inventoryWindow;
-
         private RoomController roomController;
         private readonly HashSet<Collider2D> playerCollidersInside = new HashSet<Collider2D>();
         private bool isPlayerInside;
         private bool isLocked = true;
         private bool isInteractionConsumed;
+        private bool isUsingExit;
         private Coroutine hidePromptRoutine;
 
         public bool IsPlayerInside => isPlayerInside && !isLocked;
@@ -37,12 +34,6 @@ namespace Arcanist
             if (inputPromptController == null)
                 inputPromptController = FindFirstObjectByType<InputPromptController>();
 
-            if (overlayController == null)
-                overlayController = FindFirstObjectByType<OverlayController>();
-
-            if (inventoryWindow == null)
-                inventoryWindow = FindFirstObjectByType<InventoryWindow>();
-
             RefreshInputPrompt();
         }
 
@@ -50,6 +41,7 @@ namespace Arcanist
         {
             isLocked = locked;
             isInteractionConsumed = false;
+            isUsingExit = false;
             isPlayerInside = playerCollidersInside.Count > 0;
 
             obelisk?.SetActiveState(!isLocked);
@@ -58,7 +50,10 @@ namespace Arcanist
 
         private void Update()
         {
-            if (!isPlayerInside || isLocked || isInteractionConsumed)
+            if (!isPlayerInside || isLocked || isInteractionConsumed || isUsingExit)
+                return;
+
+            if (IsOverlayOpen())
                 return;
 
             if (SimpleInput.GetKeyDown(Key.UpArrow))
@@ -70,33 +65,25 @@ namespace Arcanist
             }
 
             if (SimpleInput.GetKeyDown(Key.DownArrow))
-                TryOpenDeckEditInventory();
+                obelisk?.TryOpenDeckEditInventory();
         }
 
-        public void TryOpenDeckEditInventory()
+        private bool IsOverlayOpen()
         {
-            if (overlayController == null)
-                overlayController = FindFirstObjectByType<OverlayController>(FindObjectsInactive.Include);
-
-            if (inventoryWindow == null)
-                inventoryWindow = FindFirstObjectByType<InventoryWindow>(FindObjectsInactive.Include);
-
-            if (overlayController == null)
-                return;
-
-            if (overlayController.CurrentState != OverlayController.OverlayState.None)
-                return;
-
-            if (inventoryWindow != null)
-                inventoryWindow.SetDeckEditMode(true);
-
-            overlayController.ShowInventory();
+            OverlayController currentOverlayController = FindFirstObjectByType<OverlayController>(FindObjectsInactive.Include);
+            return currentOverlayController != null && currentOverlayController.CurrentState != OverlayController.OverlayState.None;
         }
 
         private void TryUseExit()
         {
+            if (isUsingExit)
+                return;
+
             if (roomController == null)
                 return;
+
+            isUsingExit = true;
+            inputPromptController?.Hide();
 
             if (roomController.CanExit && obelisk != null)
             {
@@ -112,7 +99,7 @@ namespace Arcanist
             if (inputPromptController == null)
                 return;
 
-            bool shouldShow = isPlayerInside && !isLocked && !isInteractionConsumed;
+            bool shouldShow = isPlayerInside && !isLocked && !isInteractionConsumed && !isUsingExit && !IsOverlayOpen();
 
             if (!shouldShow)
             {
@@ -145,7 +132,7 @@ namespace Arcanist
             playerCollidersInside.Remove(other);
             isPlayerInside = playerCollidersInside.Count > 0;
 
-            if (!isPlayerInside)
+            if (!isPlayerInside && !isUsingExit)
                 isInteractionConsumed = false;
 
             if (isPlayerInside) RefreshInputPrompt();
@@ -158,6 +145,7 @@ namespace Arcanist
             playerCollidersInside.Clear();
             isPlayerInside = false;
             isInteractionConsumed = false;
+            isUsingExit = false;
             inputPromptController?.Hide();
         }
 

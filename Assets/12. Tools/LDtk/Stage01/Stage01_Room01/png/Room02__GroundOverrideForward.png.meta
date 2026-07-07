@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: f92516cac69ca47a581530ada1d6bfbe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5233674992940691561
+    second: Room02__GroundOverrideForward_0
+  - first:
+      213: 519858183011569846
+    second: Room02__GroundOverrideForward_1
+  - first:
+      213: -2897389712723309198
+    second: Room02__GroundOverrideForward_2
+  - first:
+      213: 2907888971140641482
+    second: Room02__GroundOverrideForward_3
+  - first:
+      213: 1193470611790750401
+    second: Room02__GroundOverrideForward_4
+  - first:
+      213: 6028559733722671227
+    second: Room02__GroundOverrideForward_5
+  - first:
+      213: 3424325360510361436
+    second: Room02__GroundOverrideForward_6
+  - first:
+      213: 7992949113390646028
+    second: Room02__GroundOverrideForward_7
+  - first:
+      213: 4433998498083609124
+    second: Room02__GroundOverrideForward_8
+  - first:
+      213: 5689374718048814528
+    second: Room02__GroundOverrideForward_9
+  - first:
+      213: 7320253596032447474
+    second: Room02__GroundOverrideForward_10
+  - first:
+      213: 7865143423707045419
+    second: Room02__GroundOverrideForward_11
+  - first:
+      213: 4978635327874245693
+    second: Room02__GroundOverrideForward_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_0
+      rect:
+        serializedVersion: 2
+        x: 1311
+        y: 751
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79fcce7b2504e57b0800000000000000
+      internalID: -5233674992940691561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_1
+      rect:
+        serializedVersion: 2
+        x: 1823
+        y: 719
+        width: 130
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b01cfb5348e63700800000000000000
+      internalID: 519858183011569846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_2
+      rect:
+        serializedVersion: 2
+        x: 3935
+        y: 769
+        width: 34
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27d814548676ac7d0800000000000000
+      internalID: -2897389712723309198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_3
+      rect:
+        serializedVersion: 2
+        x: 3967
+        y: 737
+        width: 66
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac23d13dc95ea5820800000000000000
+      internalID: 2907888971140641482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_4
+      rect:
+        serializedVersion: 2
+        x: 4001
+        y: 495
+        width: 320
+        height: 290
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c2e7a9b23f009010800000000000000
+      internalID: 1193470611790750401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_5
+      rect:
+        serializedVersion: 2
+        x: 5087
+        y: 687
+        width: 674
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7863cb132fb9a350800000000000000
+      internalID: 6028559733722671227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_6
+      rect:
+        serializedVersion: 2
+        x: 5760
+        y: 687
+        width: 32
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5fd494c5c5a58f20800000000000000
+      internalID: 3424325360510361436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_7
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 687
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c034c63ced8acee60800000000000000
+      internalID: 7992949113390646028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_8
+      rect:
+        serializedVersion: 2
+        x: 3039
+        y: 705
+        width: 130
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42a93e4442ab88d30800000000000000
+      internalID: 4433998498083609124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_9
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 463
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c543679928b4fe40800000000000000
+      internalID: 5689374718048814528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_10
+      rect:
+        serializedVersion: 2
+        x: 3167
+        y: 495
+        width: 66
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f33a497cd3c69560800000000000000
+      internalID: 7320253596032447474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_11
+      rect:
+        serializedVersion: 2
+        x: 4415
+        y: 527
+        width: 642
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2ede85c54a962d60800000000000000
+      internalID: 7865143423707045419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room02__GroundOverrideForward_12
+      rect:
+        serializedVersion: 2
+        x: 3167
+        y: 0
+        width: 802
+        height: 501
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d34a728e37aa71540800000000000000
+      internalID: 4978635327874245693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Room02__GroundOverrideForward_0: -5233674992940691561
+      Room02__GroundOverrideForward_1: 519858183011569846
+      Room02__GroundOverrideForward_10: 7320253596032447474
+      Room02__GroundOverrideForward_11: 7865143423707045419
+      Room02__GroundOverrideForward_12: 4978635327874245693
+      Room02__GroundOverrideForward_2: -2897389712723309198
+      Room02__GroundOverrideForward_3: 2907888971140641482
+      Room02__GroundOverrideForward_4: 1193470611790750401
+      Room02__GroundOverrideForward_5: 6028559733722671227
+      Room02__GroundOverrideForward_6: 3424325360510361436
+      Room02__GroundOverrideForward_7: 7992949113390646028
+      Room02__GroundOverrideForward_8: 4433998498083609124
+      Room02__GroundOverrideForward_9: 5689374718048814528
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

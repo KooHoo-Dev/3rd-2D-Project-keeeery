@@ -142,7 +142,7 @@ namespace Arcanist
             if (CanExit == false) return;
 
             onExitRequested?.Invoke();
-            roomManager?.LoadNextRoom();
+            roomManager?.LoadNextRoomWithFade();
         }
     }
 }

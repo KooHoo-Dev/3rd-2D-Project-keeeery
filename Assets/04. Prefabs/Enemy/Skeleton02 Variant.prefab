@@ -10,11 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1292777937788745370, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
       propertyPath: <Stat>k__BackingField.<MaxHp>k__BackingField
-      value: 600
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2870976477559899801, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277125856441771003, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
+      propertyPath: <AttackInfo>k__BackingField.MaxDamage
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277125856441771003, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
+      propertyPath: <AttackInfo>k__BackingField.MinDamage
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3517435846673444198, guid: 3c18c927c4f114bfd864d4a90a95fb7e, type: 3}
       propertyPath: m_FlipX

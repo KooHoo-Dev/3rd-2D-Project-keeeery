@@ -27,6 +27,7 @@ namespace Arcanist
 
         [Header("Aim")]
         [SerializeField] private AimMode aimMode = AimMode.Forward;
+        [SerializeField] private bool mirrorByFacingDirection;
 
         public override bool RequiresTarget => NeedsTarget();
 
@@ -53,6 +54,8 @@ namespace Arcanist
             if (effectObject == null)
                 return;
 
+            ApplyFacingMirror(effectObject, context);
+
             CombatEntity owner = context.Player != null
                 ? context.Player.GetComponent<CombatEntity>()
                 : null;
@@ -71,6 +74,17 @@ namespace Arcanist
 
                 hitBoxes[i].Initialize(owner);
             }
+        }
+
+        private void ApplyFacingMirror(GameObject effectObject, CardEffectContext context)
+        {
+            if (!mirrorByFacingDirection || effectObject == null)
+                return;
+
+            float facingSign = context.FacingDirection < 0 ? -1.0f : 1.0f;
+            Vector3 scale = effectObject.transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * facingSign;
+            effectObject.transform.localScale = scale;
         }
 
         private bool NeedsTarget()

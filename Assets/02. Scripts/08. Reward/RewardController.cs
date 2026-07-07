@@ -18,6 +18,7 @@ namespace Arcanist
         [SerializeField] private CardDatabase cardDatabase;
         [SerializeField] private PlayerInventory playerInventory;
         [SerializeField] private int rewardCount = 3;
+        [SerializeField] private int rewardRoundCount = 2;
         [SerializeField] private CardGrade minimumGrade = CardGrade.Common;
 
         [Header("Grade Weights")]
@@ -38,8 +39,10 @@ namespace Arcanist
         private OverlayController overlayController;
         private RoomController roomController;
         private Coroutine spawnCoroutine;
+        private Coroutine nextRewardRoundCoroutine;
         private RewardCardView selectedRewardCardView;
         private AnnounceMessage announceMessage;
+        private int remainingRewardRounds;
         private bool isSelectingReward;
 
         private void Awake()
@@ -51,6 +54,7 @@ namespace Arcanist
         {
             ResolveReferences();
             ResetTexts();
+            remainingRewardRounds = Mathf.Max(1, rewardRoundCount);
             OpenReward(CreateRewards());
         }
 
@@ -199,10 +203,52 @@ namespace Arcanist
             yield return selectedMotion.PlayExit(centerScale);
 
             GrantReward(selectedView.CardData);
-            HideOverlayOrCloseReward();
 
             if (announceMessage != null)
                 announceMessage.Show("카드가 보유 중인 카드 목록에 추가되었습니다!");
+
+            remainingRewardRounds--;
+
+            if (remainingRewardRounds > 0)
+            {
+                OpenNextRewardRound();
+                yield break;
+            }
+
+            HideOverlayOrCloseReward();
+        }
+
+        private void OpenNextRewardRound()
+        {
+            if (nextRewardRoundCoroutine != null)
+                StopCoroutine(nextRewardRoundCoroutine);
+
+            nextRewardRoundCoroutine = StartCoroutine(OpenNextRewardRoundRoutine());
+        }
+
+        private IEnumerator OpenNextRewardRoundRoutine()
+        {
+            ClearRewardCards();
+            ResetRewardState();
+            ResetTexts();
+
+            if (rewardWindow != null)
+                rewardWindow.SetActive(true);
+
+            Canvas.ForceUpdateCanvases();
+
+            if (rewardContainer != null)
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rewardContainer);
+
+            yield return null;
+
+            Canvas.ForceUpdateCanvases();
+
+            if (rewardContainer != null)
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rewardContainer);
+
+            spawnCoroutine = StartCoroutine(SpawnRewards(CreateRewards()));
+            nextRewardRoundCoroutine = null;
         }
 
         private IEnumerator FadeUnselectedCards(RewardCardView selectedView)
@@ -376,7 +422,7 @@ namespace Arcanist
             ResolveReferences();
 
             if (playerInventory != null)
-                playerInventory.AddCard(selectedCard);
+                playerInventory.AddCard(selectedCard, false);
         }
 
         private void HideOverlayOrCloseReward()
@@ -449,6 +495,12 @@ namespace Arcanist
             {
                 StopCoroutine(spawnCoroutine);
                 spawnCoroutine = null;
+            }
+
+            if (nextRewardRoundCoroutine != null)
+            {
+                StopCoroutine(nextRewardRoundCoroutine);
+                nextRewardRoundCoroutine = null;
             }
 
             StopAllCoroutines();

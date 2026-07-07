@@ -23,11 +23,23 @@ namespace Arcanist
         private Coroutine fadeRoutine;
         private bool isVisible;
         private bool isDownPromptVisible;
+        private bool isQuittingOrDestroyed;
 
         private void Awake()
         {
             Initialize();
             HideImmediate();
+        }
+
+        private void OnDisable()
+        {
+            StopFadeRoutine();
+        }
+
+        private void OnDestroy()
+        {
+            isQuittingOrDestroyed = true;
+            StopFadeRoutine();
         }
 
         public void ShowRewardPrompt()
@@ -48,6 +60,15 @@ namespace Arcanist
                 return;
 
             isVisible = false;
+
+            if (isQuittingOrDestroyed || !isActiveAndEnabled)
+            {
+                StopFadeRoutine();
+                SetPromptAlpha(0.0f);
+                SetPromptInteractable(false);
+                return;
+            }
+
             StartFade(false);
         }
 
@@ -92,11 +113,7 @@ namespace Arcanist
             isVisible = false;
             isDownPromptVisible = false;
 
-            if (fadeRoutine != null)
-            {
-                StopCoroutine(fadeRoutine);
-                fadeRoutine = null;
-            }
+            StopFadeRoutine();
 
             SetPromptActive(true, true);
             SetPromptAlpha(0.0f);
@@ -138,10 +155,24 @@ namespace Arcanist
 
         private void StartFade(bool show)
         {
-            if (fadeRoutine != null)
-                StopCoroutine(fadeRoutine);
+            if (isQuittingOrDestroyed || !isActiveAndEnabled)
+            {
+                SetPromptAlpha(show ? 1.0f : 0.0f);
+                SetPromptInteractable(show);
+                return;
+            }
 
+            StopFadeRoutine();
             fadeRoutine = StartCoroutine(FadeRoutine(show));
+        }
+
+        private void StopFadeRoutine()
+        {
+            if (fadeRoutine == null)
+                return;
+
+            StopCoroutine(fadeRoutine);
+            fadeRoutine = null;
         }
 
         private IEnumerator FadeRoutine(bool show)

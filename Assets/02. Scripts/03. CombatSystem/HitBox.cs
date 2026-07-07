@@ -21,6 +21,16 @@ namespace Arcanist
         [SerializeField] private bool useCameraShake;
         [SerializeField] private CameraImpulseController cameraImpulseController;
 
+        [Header("Knockback")]
+        [SerializeField] private bool useKnockback;
+        [SerializeField] private float knockbackForce = 8.0f;
+        [SerializeField] private bool knockbackFromHitBoxCenter = true;
+        [SerializeField] private bool resetTargetVelocityBeforeKnockback = true;
+
+        [Header("Stun")]
+        [SerializeField] private bool useStun;
+        [SerializeField] private float stunDuration = 2.0f;
+
         private bool impactFeedbackPlayed;
 
         private CombatEntity Owner { get; set; }
@@ -38,6 +48,12 @@ namespace Arcanist
 
         private void OnEnable()
         {
+            if (Owner == null)
+                Owner = GetComponentInParent<CombatEntity>();
+
+            if (projectileController == null)
+                projectileController = GetComponentInParent<ProjectileController>();
+
             checkList.Clear();
             lastHitTimes.Clear();
             impactFeedbackPlayed = false;
@@ -75,6 +91,12 @@ namespace Arcanist
 
         private void TryHit(Collider2D collision)
         {
+            if (CombatSystem.Instance == null)
+                return;
+
+            if (Owner == null)
+                Owner = GetComponentInParent<CombatEntity>();
+
             HurtBox hurtBox = CombatSystem.Instance.GetHurtBoxOrNull(collision);
 
             if (hurtBox == null) return;
@@ -115,9 +137,50 @@ namespace Arcanist
 
             hurtBox.PlayHitFx(@event.Position);
             CombatSystem.Instance.To(sender, receiver, @event);
+            ApplyKnockback(receiver, collision);
+            ApplyStun(receiver);
 
             if (explodeProjectileOnHit && projectileController != null)
                 projectileController.Explode();
+        }
+
+        private void ApplyKnockback(CombatEntity receiver, Collider2D collision)
+        {
+            if (!useKnockback || receiver == null)
+                return;
+
+            Rigidbody2D receiverRigidbody = receiver.GetComponent<Rigidbody2D>();
+
+            if (receiverRigidbody == null)
+                receiverRigidbody = receiver.GetComponentInChildren<Rigidbody2D>();
+
+            if (receiverRigidbody == null)
+                return;
+
+            Vector2 origin = knockbackFromHitBoxCenter
+                ? (Vector2)transform.position
+                : collision.ClosestPoint(transform.position);
+
+            Vector2 targetPosition = receiverRigidbody.position;
+            Vector2 direction = targetPosition - origin;
+
+            if (direction.sqrMagnitude <= 0.0001f)
+                direction = receiver.transform.position.x >= transform.position.x ? Vector2.right : Vector2.left;
+            else
+                direction.Normalize();
+
+            if (resetTargetVelocityBeforeKnockback)
+                receiverRigidbody.linearVelocity = Vector2.zero;
+
+            receiverRigidbody.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+        }
+
+        private void ApplyStun(CombatEntity receiver)
+        {
+            if (!useStun || receiver == null || stunDuration <= 0.0f)
+                return;
+
+            receiver.SendMessage("Stun", stunDuration, SendMessageOptions.DontRequireReceiver);
         }
 
         private bool CanHit(HurtBox hurtBox)

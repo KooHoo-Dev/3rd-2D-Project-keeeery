@@ -323,8 +323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.Hitbox
   <AttackInfo>k__BackingField:
     Key: 0
-    MinDamage: 600
-    MaxDamage: 620
+    MinDamage: 20
+    MaxDamage: 20
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -353,6 +353,17 @@ MonoBehaviour:
   projectileController: {fileID: 0}
   allowMultiHit: 0
   multiHitInterval: 0.25
+  useHitStop: 0
+  hitStopController: {fileID: 0}
+  hitStopDuration: 0.06
+  useCameraShake: 0
+  cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!61 &8387097170103842635
 BoxCollider2D:
   m_ObjectHideFlags: 0

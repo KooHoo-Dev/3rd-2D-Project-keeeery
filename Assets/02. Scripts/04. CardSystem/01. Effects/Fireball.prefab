@@ -222,7 +222,6 @@ MonoBehaviour:
   animator: {fileID: 6148674577154043498}
   hitCollider: {fileID: 4757448039894790493}
   rigidBody: {fileID: 1920665809493204204}
-  hitBox: {fileID: 0}
   explodeTrigger: Explode
 --- !u!114 &9214960747506678389
 MonoBehaviour:
@@ -238,26 +237,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.HitBox
   <AttackInfo>k__BackingField:
     Key: 0
-    MinDamage: 500
-    MaxDamage: 550
+    MinDamage: 25
+    MaxDamage: 25
     damageCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: 2
-        outSlope: 2
-        tangentMode: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.7958374
-        value: 0.7857132
+        time: 1
+        value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -273,6 +272,12 @@ MonoBehaviour:
   hitStopDuration: 0.06
   useCameraShake: 0
   cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!58 &4757448039894790493
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ namespace Utilities
     {
         protected static T instance;
         private static readonly object lockObj = new object();
-        private static bool applicationIsQuitting = false;
+        private static bool applicationIsQuitting;
         private static bool isInitialized = false;
 
         public static bool IsInitialized => isInitialized && instance != null;
@@ -67,13 +67,12 @@ namespace Utilities
 
         protected virtual void OnDestroy()
         {
-            if (instance == this)
-            {
-                OnDispose();
-                instance = null;
-                isInitialized = false;
-                applicationIsQuitting = true;
-            }
+            if (instance != this)
+                return;
+
+            OnDispose();
+            instance = null;
+            isInitialized = false;
         }
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace Utilities
 #endif
                 instance = null;
                 isInitialized = false;
-                applicationIsQuitting = false;
+                // applicationIsQuitting = false;
             }
         }
     }

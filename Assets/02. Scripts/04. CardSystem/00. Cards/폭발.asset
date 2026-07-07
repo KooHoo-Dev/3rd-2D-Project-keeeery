@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8428a9727c6b847b79e38d168e637d33, type: 3}
+  m_Name: "\uD3ED\uBC1C"
+  m_EditorClassIdentifier: Assembly-CSharp::Arcanist.CardData
+  cardId: 
+  cardName: "\uD3ED\uBC1C"
+  icon: {fileID: 21300000, guid: 1061bb1ddc3b44546bb68138462ff17a, type: 3}
+  cardType: 0
+  grade: 1
+  description: "\uC8FC\uBCC0\uC5D0 \uD3ED\uBC1C\uC744 \uC77C\uC73C\uCF1C \uC801\uC911\uD55C
+    \uC801\uC5D0\uAC8C 10\uC758 \uD53C\uD574\uB97C \uC8FC\uACE0 \uB109\uBC31\uC2DC\uD0B5\uB2C8\uB2E4.
+    \uBCF4\uC2A4\uC5D0\uAC8C\uB294 \uC801\uC6A9\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+  animationTrigger: UpCast
+  effect: {fileID: 11400000, guid: 05a5f8a64bffc43cfa397c1bca455705, type: 2}
+  requiresTarget: 0

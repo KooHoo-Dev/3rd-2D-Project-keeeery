@@ -107,8 +107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.Hitbox
   <AttackInfo>k__BackingField:
     Key: 3
-    MinDamage: 200
-    MaxDamage: 230
+    MinDamage: 12
+    MaxDamage: 14
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -142,6 +142,12 @@ MonoBehaviour:
   hitStopDuration: 0.06
   useCameraShake: 0
   cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!61 &3516409619870467734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -483,7 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Study_ActionPlatformer.PlayerController
   dashPower: 9
-  dashDuration: 0.3
+  dashDuration: 0.2
   dashCooldown: 0.8
   parryCooldown: 2.5
   parryLightEffect: {fileID: 4350949043046959774}
@@ -518,18 +524,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Study_ActionPlatformer.Player
   <HeadUpPivot>k__BackingField: {fileID: 1511040938191158499}
   <Stat>k__BackingField:
-    <MaxHp>k__BackingField: 5000
-  hpBar: {fileID: 0}
-  hpDelayBar: {fileID: 0}
-  maxHpBarScaleX: 2.5
-  hpDelayStartTime: 0.4
-  hpDelaySpeed: 3
-  hpBarImage: {fileID: 0}
-  healColor: {r: 0, g: 1, b: 0, a: 1}
-  healFlashDuration: 0.5
+    <MaxHp>k__BackingField: 150
+  healthBarUI: {fileID: 0}
   staminaBar: {fileID: 0}
   maxStaminaBarScaleX: 2.5
   maxStamina: 100
+  parryCooldownRoot: {fileID: 0}
   parryCooldownFill: {fileID: 0}
   AttackInfo:
     Key: 0
@@ -729,7 +729,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: c1c83436b542a437cb321ce59b57858f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -915,8 +915,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.Hitbox
   <AttackInfo>k__BackingField:
     Key: 1
-    MinDamage: 100
-    MaxDamage: 110
+    MinDamage: 8
+    MaxDamage: 10
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -950,6 +950,12 @@ MonoBehaviour:
   hitStopDuration: 0.06
   useCameraShake: 0
   cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!61 &5943447859623294796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6263,8 +6269,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.Hitbox
   <AttackInfo>k__BackingField:
     Key: 2
-    MinDamage: 110
-    MaxDamage: 130
+    MinDamage: 9
+    MaxDamage: 11
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -6298,6 +6304,12 @@ MonoBehaviour:
   hitStopDuration: 0.06
   useCameraShake: 0
   cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!61 &165717915923768831
 BoxCollider2D:
   m_ObjectHideFlags: 0

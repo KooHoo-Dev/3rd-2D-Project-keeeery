@@ -605,9 +605,25 @@ namespace Arcanist
             canUseDeckEdit = false;
             string actionText = string.Empty;
 
-            if (canEditDeck == false)
+           if (canEditDeck == false)
             {
-                guideMessageText.text = "현재 지역에서는 조회만 가능합니다.";
+                StopGuideMessageRoutine();
+                isMinimumDeckWarningVisible = true;
+                guideMessageText.text = "현재 지역에서는 카드 덱 편집이 불가능합니다.";
+                guideMessageText.gameObject.SetActive(true);
+
+                if (guideMessageGroup != null)
+                    guideMessageGroup.alpha = 1.0f;
+            }
+            else if (isMinimumDeckWarningVisible)
+            {
+                isMinimumDeckWarningVisible = false;
+                
+                if (guideMessageGroup != null)
+                    guideMessageGroup.alpha = 0.0f;
+
+                guideMessageText.gameObject.SetActive(false);
+
             }
             else if (selectedCollectionSlot != null)
             {

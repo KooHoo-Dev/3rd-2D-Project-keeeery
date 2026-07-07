@@ -12,8 +12,11 @@ EditorBuildSettings:
     path: Assets/01. Scenes/Intro.unity
     guid: 39a0bf68d82ac4787a1deaf296d1f07d
   - enabled: 1
-    path: Assets/01. Scenes/Stage01_Room01.unity
+    path: Assets/01. Scenes/Stage01_Room.unity
     guid: eafece17ffd534081893946c6740934e
+  - enabled: 1
+    path: Assets/01. Scenes/Stage01_BossRoom.unity
+    guid: 887cb8a1ca5ef4db092142af540e05c1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -1,0 +1,3081 @@
+fileFormatVersion: 2
+guid: 056e5d63dde104118b25aab4e2cbc538
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8666071598424192187
+    second: Room01__Deco_0
+  - first:
+      213: 7409205461146063856
+    second: Room01__Deco_1
+  - first:
+      213: 8531132971915011781
+    second: Room01__Deco_2
+  - first:
+      213: -2359273876605454045
+    second: Room01__Deco_3
+  - first:
+      213: -4376593585386239013
+    second: Room01__Deco_4
+  - first:
+      213: -7351294202093342914
+    second: Room01__Deco_5
+  - first:
+      213: -7959175000647079628
+    second: Room01__Deco_6
+  - first:
+      213: 8866402593798102246
+    second: Room01__Deco_7
+  - first:
+      213: 3931776186040539018
+    second: Room01__Deco_8
+  - first:
+      213: -1031740555133930884
+    second: Room01__Deco_9
+  - first:
+      213: -4953381092222122337
+    second: Room01__Deco_10
+  - first:
+      213: -3724044977319204970
+    second: Room01__Deco_11
+  - first:
+      213: 1162667560290593707
+    second: Room01__Deco_12
+  - first:
+      213: -6722105902893747521
+    second: Room01__Deco_13
+  - first:
+      213: 5936597433163360843
+    second: Room01__Deco_14
+  - first:
+      213: -1848524896877231370
+    second: Room01__Deco_15
+  - first:
+      213: 1187062371103319927
+    second: Room01__Deco_16
+  - first:
+      213: 1796324136864541664
+    second: Room01__Deco_17
+  - first:
+      213: 4848715694269877859
+    second: Room01__Deco_18
+  - first:
+      213: 6353191982133565660
+    second: Room01__Deco_19
+  - first:
+      213: -8911160009803813644
+    second: Room01__Deco_20
+  - first:
+      213: -2364690817421590906
+    second: Room01__Deco_21
+  - first:
+      213: 2231118065509398367
+    second: Room01__Deco_22
+  - first:
+      213: -832113634289199792
+    second: Room01__Deco_23
+  - first:
+      213: -2167688498719699083
+    second: Room01__Deco_24
+  - first:
+      213: 4459931513363087565
+    second: Room01__Deco_25
+  - first:
+      213: 2028953798885660581
+    second: Room01__Deco_26
+  - first:
+      213: 4278079948020068694
+    second: Room01__Deco_27
+  - first:
+      213: -1915957139759506661
+    second: Room01__Deco_28
+  - first:
+      213: 567388777308680726
+    second: Room01__Deco_29
+  - first:
+      213: -1207226359020229819
+    second: Room01__Deco_30
+  - first:
+      213: -4855907309074996776
+    second: Room01__Deco_31
+  - first:
+      213: 6662478746043311899
+    second: Room01__Deco_32
+  - first:
+      213: -5221781317233506329
+    second: Room01__Deco_33
+  - first:
+      213: -3663292042946567449
+    second: Room01__Deco_34
+  - first:
+      213: -4211141629603578525
+    second: Room01__Deco_35
+  - first:
+      213: -2259950635087501829
+    second: Room01__Deco_36
+  - first:
+      213: -4388392252000314915
+    second: Room01__Deco_37
+  - first:
+      213: -6211626726325399910
+    second: Room01__Deco_38
+  - first:
+      213: -2364457592991281262
+    second: Room01__Deco_39
+  - first:
+      213: 7674387004819652767
+    second: Room01__Deco_40
+  - first:
+      213: 1569645075290673331
+    second: Room01__Deco_41
+  - first:
+      213: -152861968455677540
+    second: Room01__Deco_42
+  - first:
+      213: -3408332336497609589
+    second: Room01__Deco_43
+  - first:
+      213: 4166806343832577029
+    second: Room01__Deco_44
+  - first:
+      213: -2902759178868308695
+    second: Room01__Deco_45
+  - first:
+      213: 3151245479487727356
+    second: Room01__Deco_46
+  - first:
+      213: -8411759824008381062
+    second: Room01__Deco_47
+  - first:
+      213: -7889189111673636346
+    second: Room01__Deco_48
+  - first:
+      213: 1842248662914800485
+    second: Room01__Deco_49
+  - first:
+      213: 3892903057954707725
+    second: Room01__Deco_50
+  - first:
+      213: 6166517249255657188
+    second: Room01__Deco_51
+  - first:
+      213: -1576414528864805192
+    second: Room01__Deco_52
+  - first:
+      213: -1443329229342004525
+    second: Room01__Deco_53
+  - first:
+      213: 7235097157687709526
+    second: Room01__Deco_54
+  - first:
+      213: -9010429198830604837
+    second: Room01__Deco_55
+  - first:
+      213: -2314142873487978636
+    second: Room01__Deco_56
+  - first:
+      213: 4920310247507711078
+    second: Room01__Deco_57
+  - first:
+      213: 3633337136478305058
+    second: Room01__Deco_58
+  - first:
+      213: -6630940622502550445
+    second: Room01__Deco_59
+  - first:
+      213: 5593598510979904456
+    second: Room01__Deco_60
+  - first:
+      213: -4713914424356625939
+    second: Room01__Deco_61
+  - first:
+      213: -3936990442114590173
+    second: Room01__Deco_62
+  - first:
+      213: -4723229860400008424
+    second: Room01__Deco_63
+  - first:
+      213: -5929312392339506693
+    second: Room01__Deco_64
+  - first:
+      213: -3671285305201771763
+    second: Room01__Deco_65
+  - first:
+      213: 9168648721237175353
+    second: Room01__Deco_66
+  - first:
+      213: -2896220786207804579
+    second: Room01__Deco_67
+  - first:
+      213: -5424659974691076786
+    second: Room01__Deco_68
+  - first:
+      213: -4084492446942532287
+    second: Room01__Deco_69
+  - first:
+      213: 4728447419077130659
+    second: Room01__Deco_70
+  - first:
+      213: 3569875007781248323
+    second: Room01__Deco_71
+  - first:
+      213: 382952134725512938
+    second: Room01__Deco_72
+  - first:
+      213: -3363413890029611240
+    second: Room01__Deco_73
+  - first:
+      213: -10012523486290687
+    second: Room01__Deco_74
+  - first:
+      213: 7413511935325872655
+    second: Room01__Deco_75
+  - first:
+      213: -2527100698160151378
+    second: Room01__Deco_76
+  - first:
+      213: -3615134892279333156
+    second: Room01__Deco_77
+  - first:
+      213: -8828988069516129866
+    second: Room01__Deco_78
+  - first:
+      213: -3294530804242166136
+    second: Room01__Deco_79
+  - first:
+      213: -4494560460729325165
+    second: Room01__Deco_80
+  - first:
+      213: 2596138784857701021
+    second: Room01__Deco_81
+  - first:
+      213: -988836542611785040
+    second: Room01__Deco_82
+  - first:
+      213: -7028864820744028563
+    second: Room01__Deco_83
+  - first:
+      213: 6748447423893255813
+    second: Room01__Deco_84
+  - first:
+      213: -3974163266372203014
+    second: Room01__Deco_85
+  - first:
+      213: -6520052167978235500
+    second: Room01__Deco_86
+  - first:
+      213: 5286214941360286663
+    second: Room01__Deco_87
+  - first:
+      213: -1310390654199756212
+    second: Room01__Deco_88
+  - first:
+      213: -7424545141476470137
+    second: Room01__Deco_89
+  - first:
+      213: -8410639419570482758
+    second: Room01__Deco_90
+  - first:
+      213: 1548558383811325441
+    second: Room01__Deco_91
+  - first:
+      213: -5759417718959329551
+    second: Room01__Deco_92
+  - first:
+      213: 5342916462961501701
+    second: Room01__Deco_93
+  - first:
+      213: -6046010021001325444
+    second: Room01__Deco_94
+  - first:
+      213: -5813475501503316354
+    second: Room01__Deco_95
+  - first:
+      213: 1529589730041730920
+    second: Room01__Deco_96
+  - first:
+      213: -7815941897853560393
+    second: Room01__Deco_97
+  - first:
+      213: 8716563715837014763
+    second: Room01__Deco_98
+  - first:
+      213: 4430613476772363299
+    second: Room01__Deco_99
+  - first:
+      213: -3675914834842215643
+    second: Room01__Deco_100
+  - first:
+      213: -6143384904708423500
+    second: Room01__Deco_101
+  - first:
+      213: 5652454697199503258
+    second: Room01__Deco_102
+  - first:
+      213: 1042479922297406940
+    second: Room01__Deco_103
+  - first:
+      213: -4220217206385676068
+    second: Room01__Deco_104
+  - first:
+      213: -179534291576044487
+    second: Room01__Deco_105
+  - first:
+      213: 5521740483507301929
+    second: Room01__Deco_106
+  - first:
+      213: -6888408055881220397
+    second: Room01__Deco_107
+  - first:
+      213: -3433633154086730282
+    second: Room01__Deco_108
+  - first:
+      213: -4950922588538158496
+    second: Room01__Deco_109
+  - first:
+      213: 8563670346870484908
+    second: Room01__Deco_110
+  - first:
+      213: -761083998554569732
+    second: Room01__Deco_111
+  - first:
+      213: -1906774944484570909
+    second: Room01__Deco_112
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Room01__Deco_0
+      rect:
+        serializedVersion: 2
+        x: 4864
+        y: 915
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54b03d9cbcdebb780800000000000000
+      internalID: -8666071598424192187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_1
+      rect:
+        serializedVersion: 2
+        x: 4898
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f3de7b7c19c2d660800000000000000
+      internalID: 7409205461146063856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_2
+      rect:
+        serializedVersion: 2
+        x: 4903
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c6ed92fc3ca46670800000000000000
+      internalID: 8531132971915011781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_3
+      rect:
+        serializedVersion: 2
+        x: 4919
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 329b211c8ec224fd0800000000000000
+      internalID: -2359273876605454045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_4
+      rect:
+        serializedVersion: 2
+        x: 4927
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdbccc082573343c0800000000000000
+      internalID: -4376593585386239013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_5
+      rect:
+        serializedVersion: 2
+        x: 5023
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3f66dc3fd4faf990800000000000000
+      internalID: -7351294202093342914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_6
+      rect:
+        serializedVersion: 2
+        x: 5057
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 439e245a1845b8190800000000000000
+      internalID: -7959175000647079628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_7
+      rect:
+        serializedVersion: 2
+        x: 5062
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ec10fece2acb0b70800000000000000
+      internalID: 8866402593798102246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_8
+      rect:
+        serializedVersion: 2
+        x: 5080
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8759491c99709630800000000000000
+      internalID: 3931776186040539018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_9
+      rect:
+        serializedVersion: 2
+        x: 5090
+        y: 915
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c72b0e67e658ea1f0800000000000000
+      internalID: -1031740555133930884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_10
+      rect:
+        serializedVersion: 2
+        x: 5186
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f96c6f8042e024bb0800000000000000
+      internalID: -4953381092222122337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_11
+      rect:
+        serializedVersion: 2
+        x: 5191
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 697af4fe2d8815cc0800000000000000
+      internalID: -3724044977319204970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_12
+      rect:
+        serializedVersion: 2
+        x: 5207
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: babadfa6cff922010800000000000000
+      internalID: 1162667560290593707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_13
+      rect:
+        serializedVersion: 2
+        x: 5215
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb2367beb4846b2a0800000000000000
+      internalID: -6722105902893747521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_14
+      rect:
+        serializedVersion: 2
+        x: 5250
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4aa23a79e7036250800000000000000
+      internalID: 5936597433163360843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_15
+      rect:
+        serializedVersion: 2
+        x: 5255
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f2ca237668b856e0800000000000000
+      internalID: -1848524896877231370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_16
+      rect:
+        serializedVersion: 2
+        x: 5271
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 777a8dbefea497010800000000000000
+      internalID: 1187062371103319927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_17
+      rect:
+        serializedVersion: 2
+        x: 5279
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eb654ff843dde810800000000000000
+      internalID: 1796324136864541664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_18
+      rect:
+        serializedVersion: 2
+        x: 5314
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36e41ddfb391a4340800000000000000
+      internalID: 4848715694269877859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_19
+      rect:
+        serializedVersion: 2
+        x: 5319
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd85ee472721b2850800000000000000
+      internalID: 6353191982133565660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_20
+      rect:
+        serializedVersion: 2
+        x: 5335
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fc2af63f23355480800000000000000
+      internalID: -8911160009803813644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_21
+      rect:
+        serializedVersion: 2
+        x: 5343
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68e35ffea3eee2fd0800000000000000
+      internalID: -2364690817421590906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_22
+      rect:
+        serializedVersion: 2
+        x: 5474
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f57f4a24f0686fe10800000000000000
+      internalID: 2231118065509398367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_23
+      rect:
+        serializedVersion: 2
+        x: 5479
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 055de6fee0db374f0800000000000000
+      internalID: -832113634289199792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_24
+      rect:
+        serializedVersion: 2
+        x: 5495
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57fcc1a9bc2dae1e0800000000000000
+      internalID: -2167688498719699083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_25
+      rect:
+        serializedVersion: 2
+        x: 5503
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc0c398e41cd4ed30800000000000000
+      internalID: 4459931513363087565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_26
+      rect:
+        serializedVersion: 2
+        x: 5536
+        y: 915
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a75240faba482c10800000000000000
+      internalID: 2028953798885660581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_27
+      rect:
+        serializedVersion: 2
+        x: 5570
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6513576eb0bce5b30800000000000000
+      internalID: 4278079948020068694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_28
+      rect:
+        serializedVersion: 2
+        x: 5575
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1bd2cfe1272965e0800000000000000
+      internalID: -1915957139759506661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_29
+      rect:
+        serializedVersion: 2
+        x: 5591
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 612f6093615cfd700800000000000000
+      internalID: 567388777308680726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_30
+      rect:
+        serializedVersion: 2
+        x: 5599
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54b6c1bc5021f3fe0800000000000000
+      internalID: -1207226359020229819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_31
+      rect:
+        serializedVersion: 2
+        x: 5695
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d1ac54b70a5c9cb0800000000000000
+      internalID: -4855907309074996776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_32
+      rect:
+        serializedVersion: 2
+        x: 5729
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b176085ce11e57c50800000000000000
+      internalID: 6662478746043311899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_33
+      rect:
+        serializedVersion: 2
+        x: 5734
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e78683ee818887b0800000000000000
+      internalID: -5221781317233506329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_34
+      rect:
+        serializedVersion: 2
+        x: 5752
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e2a7afbb4f592dc0800000000000000
+      internalID: -3663292042946567449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_35
+      rect:
+        serializedVersion: 2
+        x: 5762
+        y: 915
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36d7e9cdff40f85c0800000000000000
+      internalID: -4211141629603578525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_36
+      rect:
+        serializedVersion: 2
+        x: 5823
+        y: 930
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf5e0b10fda03a0e0800000000000000
+      internalID: -2259950635087501829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_37
+      rect:
+        serializedVersion: 2
+        x: 5857
+        y: 940
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd9d17c5f7c4913c0800000000000000
+      internalID: -4388392252000314915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_38
+      rect:
+        serializedVersion: 2
+        x: 5862
+        y: 932
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9e4d0c276edbc9a0800000000000000
+      internalID: -6211626726325399910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_39
+      rect:
+        serializedVersion: 2
+        x: 5880
+        y: 936
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29f874bb852cf2fd0800000000000000
+      internalID: -2364457592991281262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_40
+      rect:
+        serializedVersion: 2
+        x: 5890
+        y: 915
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f90462bf156e08a60800000000000000
+      internalID: 7674387004819652767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_41
+      rect:
+        serializedVersion: 2
+        x: 5919
+        y: 902
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0542031ef78c510800000000000000
+      internalID: 1569645075290673331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_42
+      rect:
+        serializedVersion: 2
+        x: 1873
+        y: 710
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c99488e79dce0edf0800000000000000
+      internalID: -152861968455677540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_43
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 723
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b84359e4ccb23b0d0800000000000000
+      internalID: -3408332336497609589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_44
+      rect:
+        serializedVersion: 2
+        x: 1954
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5042cf30b4873d930800000000000000
+      internalID: 4166806343832577029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_45
+      rect:
+        serializedVersion: 2
+        x: 1959
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 925cc0308e357b7d0800000000000000
+      internalID: -2902759178868308695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_46
+      rect:
+        serializedVersion: 2
+        x: 1975
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf6ebec41197bbb20800000000000000
+      internalID: 3151245479487727356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_47
+      rect:
+        serializedVersion: 2
+        x: 1983
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7df31ae10d634b80800000000000000
+      internalID: -8411759824008381062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_48
+      rect:
+        serializedVersion: 2
+        x: 2082
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60a30d83d48f38290800000000000000
+      internalID: -7889189111673636346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_49
+      rect:
+        serializedVersion: 2
+        x: 2087
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b99f4f56bf09910800000000000000
+      internalID: 1842248662914800485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_50
+      rect:
+        serializedVersion: 2
+        x: 2103
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d091c6aa4be560630800000000000000
+      internalID: 3892903057954707725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_51
+      rect:
+        serializedVersion: 2
+        x: 2111
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eec33f34ced39550800000000000000
+      internalID: 6166517249255657188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_52
+      rect:
+        serializedVersion: 2
+        x: 2207
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8be9f3496537f1ae0800000000000000
+      internalID: -1576414528864805192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_53
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3daa12786b348fbe0800000000000000
+      internalID: -1443329229342004525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_54
+      rect:
+        serializedVersion: 2
+        x: 2246
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65f0a6f188a386460800000000000000
+      internalID: 7235097157687709526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_55
+      rect:
+        serializedVersion: 2
+        x: 2264
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdde4e9026684f280800000000000000
+      internalID: -9010429198830604837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_56
+      rect:
+        serializedVersion: 2
+        x: 2272
+        y: 723
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47f4f32415382efd0800000000000000
+      internalID: -2314142873487978636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_57
+      rect:
+        serializedVersion: 2
+        x: 2306
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6645967e914784440800000000000000
+      internalID: 4920310247507711078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_58
+      rect:
+        serializedVersion: 2
+        x: 2311
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22b360910e43c6230800000000000000
+      internalID: 3633337136478305058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_59
+      rect:
+        serializedVersion: 2
+        x: 2327
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3542705d2aa2af3a0800000000000000
+      internalID: -6630940622502550445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_60
+      rect:
+        serializedVersion: 2
+        x: 2335
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c37c17a53470ad40800000000000000
+      internalID: 5593598510979904456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_61
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de122a27ecfc49eb0800000000000000
+      internalID: -4713914424356625939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_62
+      rect:
+        serializedVersion: 2
+        x: 2465
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32ad6ad4d000d59c0800000000000000
+      internalID: -3936990442114590173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_63
+      rect:
+        serializedVersion: 2
+        x: 2470
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 813f65a7777b37eb0800000000000000
+      internalID: -4723229860400008424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_64
+      rect:
+        serializedVersion: 2
+        x: 2488
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf938444bc9d6bda0800000000000000
+      internalID: -5929312392339506693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_65
+      rect:
+        serializedVersion: 2
+        x: 2498
+        y: 723
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0b365a5779fc0dc0800000000000000
+      internalID: -3671285305201771763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_66
+      rect:
+        serializedVersion: 2
+        x: 2626
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93c6ea33f659d3f70800000000000000
+      internalID: 9168648721237175353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_67
+      rect:
+        serializedVersion: 2
+        x: 2631
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d533bfe2a8e8ec7d0800000000000000
+      internalID: -2896220786207804579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_68
+      rect:
+        serializedVersion: 2
+        x: 2647
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e45424d7e7cb7b4b0800000000000000
+      internalID: -5424659974691076786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_69
+      rect:
+        serializedVersion: 2
+        x: 2655
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14d693492c7f057c0800000000000000
+      internalID: -4084492446942532287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_70
+      rect:
+        serializedVersion: 2
+        x: 2751
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a9743110e1de9140800000000000000
+      internalID: 4728447419077130659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_71
+      rect:
+        serializedVersion: 2
+        x: 2785
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34d9853d76eba8130800000000000000
+      internalID: 3569875007781248323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_72
+      rect:
+        serializedVersion: 2
+        x: 2790
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeeaa4400f4805500800000000000000
+      internalID: 382952134725512938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_73
+      rect:
+        serializedVersion: 2
+        x: 2808
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8179b2c13e0c251d0800000000000000
+      internalID: -3363413890029611240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_74
+      rect:
+        serializedVersion: 2
+        x: 2815
+        y: 738
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10d5b46b9ad6cdff0800000000000000
+      internalID: -10012523486290687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_75
+      rect:
+        serializedVersion: 2
+        x: 2849
+        y: 748
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f02a733a3d512e660800000000000000
+      internalID: 7413511935325872655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_76
+      rect:
+        serializedVersion: 2
+        x: 2854
+        y: 740
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea4c58edd4fedecd0800000000000000
+      internalID: -2527100698160151378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_77
+      rect:
+        serializedVersion: 2
+        x: 2872
+        y: 744
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdef19228f574ddc0800000000000000
+      internalID: -3615134892279333156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_78
+      rect:
+        serializedVersion: 2
+        x: 2882
+        y: 723
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b94456f022297580800000000000000
+      internalID: -8828988069516129866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_79
+      rect:
+        serializedVersion: 2
+        x: 2911
+        y: 710
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88e409f40b97742d0800000000000000
+      internalID: -3294530804242166136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_80
+      rect:
+        serializedVersion: 2
+        x: 4966
+        y: 687
+        width: 51
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39966bcf21d10a1c0800000000000000
+      internalID: -4494560460729325165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_81
+      rect:
+        serializedVersion: 2
+        x: 5222
+        y: 687
+        width: 19
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9abe0b4876570420800000000000000
+      internalID: 2596138784857701021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_82
+      rect:
+        serializedVersion: 2
+        x: 5382
+        y: 687
+        width: 19
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0baf2b05762f642f0800000000000000
+      internalID: -988836542611785040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_83
+      rect:
+        serializedVersion: 2
+        x: 5607
+        y: 687
+        width: 51
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6eff41afa4747e90800000000000000
+      internalID: -7028864820744028563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_84
+      rect:
+        serializedVersion: 2
+        x: 5770
+        y: 687
+        width: 41
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 586be8e5d2d47ad50800000000000000
+      internalID: 6748447423893255813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_85
+      rect:
+        serializedVersion: 2
+        x: 1558
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afd8a74b09fe8d8c0800000000000000
+      internalID: -3974163266372203014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_86
+      rect:
+        serializedVersion: 2
+        x: 1686
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49944a2191f1485a0800000000000000
+      internalID: -6520052167978235500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_87
+      rect:
+        serializedVersion: 2
+        x: 1814
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cb642a4b786c5940800000000000000
+      internalID: 5286214941360286663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_88
+      rect:
+        serializedVersion: 2
+        x: 1942
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4a8e6b84ae80dde0800000000000000
+      internalID: -1310390654199756212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_89
+      rect:
+        serializedVersion: 2
+        x: 2070
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 782517fd787b6f890800000000000000
+      internalID: -7424545141476470137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_90
+      rect:
+        serializedVersion: 2
+        x: 2198
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab19a966208674b80800000000000000
+      internalID: -8410639419570482758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_91
+      rect:
+        serializedVersion: 2
+        x: 2454
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10ee60d35a59d7510800000000000000
+      internalID: 1548558383811325441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_92
+      rect:
+        serializedVersion: 2
+        x: 2582
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fea65c69107210b0800000000000000
+      internalID: -5759417718959329551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_93
+      rect:
+        serializedVersion: 2
+        x: 2710
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 506286f073ad52a40800000000000000
+      internalID: 5342916462961501701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_94
+      rect:
+        serializedVersion: 2
+        x: 2838
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7493c54be1481ca0800000000000000
+      internalID: -6046010021001325444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_95
+      rect:
+        serializedVersion: 2
+        x: 2966
+        y: 591
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7e757e15d2625fa0800000000000000
+      internalID: -5813475501503316354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_96
+      rect:
+        serializedVersion: 2
+        x: 3263
+        y: 495
+        width: 113
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 867193f51c13a3510800000000000000
+      internalID: 1529589730041730920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_97
+      rect:
+        serializedVersion: 2
+        x: 3775
+        y: 495
+        width: 98
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b998592142388390800000000000000
+      internalID: -7815941897853560393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_98
+      rect:
+        serializedVersion: 2
+        x: 1926
+        y: 527
+        width: 51
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be23688648477f870800000000000000
+      internalID: 8716563715837014763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_99
+      rect:
+        serializedVersion: 2
+        x: 2695
+        y: 527
+        width: 51
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32c33149b73bc7d30800000000000000
+      internalID: 4430613476772363299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_100
+      rect:
+        serializedVersion: 2
+        x: 2954
+        y: 527
+        width: 41
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52b14acfee68cfcc0800000000000000
+      internalID: -3675914834842215643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_101
+      rect:
+        serializedVersion: 2
+        x: 3903
+        y: 495
+        width: 98
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b08b5c6aff4ebaa0800000000000000
+      internalID: -6143384904708423500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_102
+      rect:
+        serializedVersion: 2
+        x: 1315
+        y: 495
+        width: 86
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a97809f599d817e40800000000000000
+      internalID: 5652454697199503258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_103
+      rect:
+        serializedVersion: 2
+        x: 3167
+        y: 495
+        width: 130
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd5830e47f1a77e00800000000000000
+      internalID: 1042479922297406940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_104
+      rect:
+        serializedVersion: 2
+        x: 3374
+        y: 495
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd0f36a7fc6ce65c0800000000000000
+      internalID: -4220217206385676068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_105
+      rect:
+        serializedVersion: 2
+        x: 3381
+        y: 495
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 934cb95538a228df0800000000000000
+      internalID: -179534291576044487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_106
+      rect:
+        serializedVersion: 2
+        x: 3387
+        y: 495
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92ea85dd6b921ac40800000000000000
+      internalID: 5521740483507301929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_107
+      rect:
+        serializedVersion: 2
+        x: 3391
+        y: 495
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3deb2499e557760a0800000000000000
+      internalID: -6888408055881220397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_108
+      rect:
+        serializedVersion: 2
+        x: 3397
+        y: 495
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d508a9a6d84950d0800000000000000
+      internalID: -3433633154086730282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_109
+      rect:
+        serializedVersion: 2
+        x: 3410
+        y: 495
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 062c9b7032aca4bb0800000000000000
+      internalID: -4950922588538158496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_110
+      rect:
+        serializedVersion: 2
+        x: 3423
+        y: 495
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cafe2c6eec448d670800000000000000
+      internalID: 8563670346870484908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_111
+      rect:
+        serializedVersion: 2
+        x: 3430
+        y: 495
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf3cbedb2261075f0800000000000000
+      internalID: -761083998554569732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room01__Deco_112
+      rect:
+        serializedVersion: 2
+        x: 3436
+        y: 495
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e8c16f5a46c985e0800000000000000
+      internalID: -1906774944484570909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Room01__Deco_0: -8666071598424192187
+      Room01__Deco_1: 7409205461146063856
+      Room01__Deco_10: -4953381092222122337
+      Room01__Deco_100: -3675914834842215643
+      Room01__Deco_101: -6143384904708423500
+      Room01__Deco_102: 5652454697199503258
+      Room01__Deco_103: 1042479922297406940
+      Room01__Deco_104: -4220217206385676068
+      Room01__Deco_105: -179534291576044487
+      Room01__Deco_106: 5521740483507301929
+      Room01__Deco_107: -6888408055881220397
+      Room01__Deco_108: -3433633154086730282
+      Room01__Deco_109: -4950922588538158496
+      Room01__Deco_11: -3724044977319204970
+      Room01__Deco_110: 8563670346870484908
+      Room01__Deco_111: -761083998554569732
+      Room01__Deco_112: -1906774944484570909
+      Room01__Deco_12: 1162667560290593707
+      Room01__Deco_13: -6722105902893747521
+      Room01__Deco_14: 5936597433163360843
+      Room01__Deco_15: -1848524896877231370
+      Room01__Deco_16: 1187062371103319927
+      Room01__Deco_17: 1796324136864541664
+      Room01__Deco_18: 4848715694269877859
+      Room01__Deco_19: 6353191982133565660
+      Room01__Deco_2: 8531132971915011781
+      Room01__Deco_20: -8911160009803813644
+      Room01__Deco_21: -2364690817421590906
+      Room01__Deco_22: 2231118065509398367
+      Room01__Deco_23: -832113634289199792
+      Room01__Deco_24: -2167688498719699083
+      Room01__Deco_25: 4459931513363087565
+      Room01__Deco_26: 2028953798885660581
+      Room01__Deco_27: 4278079948020068694
+      Room01__Deco_28: -1915957139759506661
+      Room01__Deco_29: 567388777308680726
+      Room01__Deco_3: -2359273876605454045
+      Room01__Deco_30: -1207226359020229819
+      Room01__Deco_31: -4855907309074996776
+      Room01__Deco_32: 6662478746043311899
+      Room01__Deco_33: -5221781317233506329
+      Room01__Deco_34: -3663292042946567449
+      Room01__Deco_35: -4211141629603578525
+      Room01__Deco_36: -2259950635087501829
+      Room01__Deco_37: -4388392252000314915
+      Room01__Deco_38: -6211626726325399910
+      Room01__Deco_39: -2364457592991281262
+      Room01__Deco_4: -4376593585386239013
+      Room01__Deco_40: 7674387004819652767
+      Room01__Deco_41: 1569645075290673331
+      Room01__Deco_42: -152861968455677540
+      Room01__Deco_43: -3408332336497609589
+      Room01__Deco_44: 4166806343832577029
+      Room01__Deco_45: -2902759178868308695
+      Room01__Deco_46: 3151245479487727356
+      Room01__Deco_47: -8411759824008381062
+      Room01__Deco_48: -7889189111673636346
+      Room01__Deco_49: 1842248662914800485
+      Room01__Deco_5: -7351294202093342914
+      Room01__Deco_50: 3892903057954707725
+      Room01__Deco_51: 6166517249255657188
+      Room01__Deco_52: -1576414528864805192
+      Room01__Deco_53: -1443329229342004525
+      Room01__Deco_54: 7235097157687709526
+      Room01__Deco_55: -9010429198830604837
+      Room01__Deco_56: -2314142873487978636
+      Room01__Deco_57: 4920310247507711078
+      Room01__Deco_58: 3633337136478305058
+      Room01__Deco_59: -6630940622502550445
+      Room01__Deco_6: -7959175000647079628
+      Room01__Deco_60: 5593598510979904456
+      Room01__Deco_61: -4713914424356625939
+      Room01__Deco_62: -3936990442114590173
+      Room01__Deco_63: -4723229860400008424
+      Room01__Deco_64: -5929312392339506693
+      Room01__Deco_65: -3671285305201771763
+      Room01__Deco_66: 9168648721237175353
+      Room01__Deco_67: -2896220786207804579
+      Room01__Deco_68: -5424659974691076786
+      Room01__Deco_69: -4084492446942532287
+      Room01__Deco_7: 8866402593798102246
+      Room01__Deco_70: 4728447419077130659
+      Room01__Deco_71: 3569875007781248323
+      Room01__Deco_72: 382952134725512938
+      Room01__Deco_73: -3363413890029611240
+      Room01__Deco_74: -10012523486290687
+      Room01__Deco_75: 7413511935325872655
+      Room01__Deco_76: -2527100698160151378
+      Room01__Deco_77: -3615134892279333156
+      Room01__Deco_78: -8828988069516129866
+      Room01__Deco_79: -3294530804242166136
+      Room01__Deco_8: 3931776186040539018
+      Room01__Deco_80: -4494560460729325165
+      Room01__Deco_81: 2596138784857701021
+      Room01__Deco_82: -988836542611785040
+      Room01__Deco_83: -7028864820744028563
+      Room01__Deco_84: 6748447423893255813
+      Room01__Deco_85: -3974163266372203014
+      Room01__Deco_86: -6520052167978235500
+      Room01__Deco_87: 5286214941360286663
+      Room01__Deco_88: -1310390654199756212
+      Room01__Deco_89: -7424545141476470137
+      Room01__Deco_9: -1031740555133930884
+      Room01__Deco_90: -8410639419570482758
+      Room01__Deco_91: 1548558383811325441
+      Room01__Deco_92: -5759417718959329551
+      Room01__Deco_93: 5342916462961501701
+      Room01__Deco_94: -6046010021001325444
+      Room01__Deco_95: -5813475501503316354
+      Room01__Deco_96: 1529589730041730920
+      Room01__Deco_97: -7815941897853560393
+      Room01__Deco_98: 8716563715837014763
+      Room01__Deco_99: 4430613476772363299
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

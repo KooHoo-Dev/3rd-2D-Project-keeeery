@@ -19,6 +19,7 @@ namespace Arcanist
 
         [SerializeField] private ButtonType buttonType;
         [SerializeField] private float hoverScaleMultiplier = 1.1f;
+        [SerializeField] private MainMenuOverlayController overlayController;
 
         private Vector3 originalScale;
         private TMP_Text text;
@@ -105,6 +106,13 @@ namespace Arcanist
                     }
 
                     SceneManager.LoadScene(checkpointData.sceneName);
+                    break;
+
+                case ButtonType.Option:
+                    if (overlayController != null)
+                        overlayController.OpenOption();
+                    else
+                        Debug.LogWarning("[Title] MainMenuOverlayController is not assigned.");
                     break;
 
                 case ButtonType.Quit:

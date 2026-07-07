@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace Arcanist
@@ -250,40 +251,52 @@ namespace Arcanist
             if (isRespawning)
                 return;
 
-            if (playerController == null)
-                playerController = FindFirstObjectByType<PlayerController>();
-
-            if (playerController == null)
-            {
-                Debug.LogWarning("[Checkpoint] PlayerController is missing.");
-                return;
-            }
-
             if (!SaveManager.Instance.TryGetCheckpoint(out CheckpointSaveData data))
             {
                 Debug.LogWarning("[Checkpoint] No checkpoint data.");
                 return;
             }
 
+            StartCoroutine(ReturnToCheckpointRoutine(data));
+        }
+
+        private IEnumerator ReturnToCheckpointRoutine(CheckpointSaveData data)
+        {
+            isRespawning = true;
+
+            yield return RespawnFadeRoutine(() => { });
+
+            string targetSceneName = data.sceneName;
+            bool shouldLoadScene = !string.IsNullOrEmpty(targetSceneName)
+                && targetSceneName != SceneManager.GetActiveScene().name;
+
+            if (shouldLoadScene)
+            {
+                AsyncOperation loadOperation = SceneManager.LoadSceneAsync(targetSceneName);
+
+                while (loadOperation != null && !loadOperation.isDone)
+                    yield return null;
+
+                yield return null;
+            }
+
+            if (playerController == null)
+                playerController = FindFirstObjectByType<PlayerController>();
+
+            if (playerCameraController == null)
+                playerCameraController = FindFirstObjectByType<PlayerCameraController>();
+
             Checkpoint checkpoint = CheckpointFinder.Find(data.roomId, data.checkpointId);
 
             if (checkpoint == null)
             {
                 Debug.LogWarning($"[Checkpoint] Checkpoint not found: {data.roomId} / {data.checkpointId}");
-                return;
+                isRespawning = false;
+                yield break;
             }
 
-            StartCoroutine(ReturnToCheckpointRoutine(checkpoint, data));
-        }
-
-        private IEnumerator ReturnToCheckpointRoutine(Checkpoint checkpoint, CheckpointSaveData data)
-        {
-            isRespawning = true;
-
-            yield return RespawnFadeRoutine(() =>
+            if (!data.respawnPlayerOnly)
             {
-                Debug.Log("[Checkpoint] On black screen callback");
-
                 RoomManager roomManager = RoomManager.Instance;
 
                 if (roomManager == null)
@@ -293,15 +306,18 @@ namespace Arcanist
                     roomManager.ResetCurrentRoom();
                 else
                     Debug.LogWarning("[Checkpoint] RoomManager is missing. Room was not reset.");
+            }
 
-                Checkpoint reloadedCheckpoint = CheckpointFinder.Find(data.roomId, data.checkpointId);
-                Vector3 respawnPosition = reloadedCheckpoint != null
-                    ? reloadedCheckpoint.RespawnPosition
-                    : checkpoint.RespawnPosition;
+            if (playerController == null)
+            {
+                Debug.LogWarning("[Checkpoint] PlayerController is missing.");
+                isRespawning = false;
+                yield break;
+            }
 
-                playerController.Respawn(respawnPosition, data.currentHp);
-                Debug.Log($"[Checkpoint] Returned to {respawnPosition}");
-            });
+            Vector3 respawnPosition = checkpoint.RespawnPosition;
+            playerController.Respawn(respawnPosition, data.currentHp);
+            Debug.Log($"[Checkpoint] Returned to {respawnPosition}");
 
             isRespawning = false;
         }

@@ -707,6 +707,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC5EC\uC815 \uC2DC\uC791\uD558\uAE30"
       objectReference: {fileID: 0}
+    - target: {fileID: 8941423908221541141, guid: 46baf09d29372437991714021e47411e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3458353323414804869, guid: 171a50e6656c64f08ba87a6ec5a00e3b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -869,7 +873,7 @@ MonoBehaviour:
   fadeDuration: 1
   displayDuration: 2.75
   introBlackScreenDuration: 0.75
-  nextSceneName: Stage01_Room01
+  nextSceneName: Stage01_Room
 --- !u!4 &1776810324
 Transform:
   m_ObjectHideFlags: 0

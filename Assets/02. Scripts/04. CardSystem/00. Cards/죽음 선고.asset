@@ -17,7 +17,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 746f3190b4968ff44bbb8214086ea0d6, type: 3}
   cardType: 0
   grade: 3
-  description: 
+  description: "\uB113\uC740 \uBC94\uC704 \uB0B4\uC758 \uBAA8\uB4E0 \uC801\uC5D0\uAC8C
+    120\uC758 \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   animationTrigger: UpCast
   effect: {fileID: 11400000, guid: bbc2a9d1e2a044348a5d19396f30251f, type: 2}
   requiresTarget: 0

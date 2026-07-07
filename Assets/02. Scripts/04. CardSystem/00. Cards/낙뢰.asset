@@ -18,7 +18,7 @@ MonoBehaviour:
   cardType: 0
   grade: 0
   description: "\uBC94\uC704 \uB0B4\uC758 \uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uC801
-    \uC704\uCE58\uC5D0 \uB099\uB8B0\uB97C \uB5A8\uC5B4\uB728\uB824 n\uC758 \uD53C\uD574\uB97C
+    \uC704\uCE58\uC5D0 \uB099\uB8B0\uB97C \uB5A8\uC5B4\uB728\uB824 20\uC758 \uD53C\uD574\uB97C
     \uC90D\uB2C8\uB2E4."
   animationTrigger: UpCast
   effect: {fileID: 11400000, guid: 4358dddaca1154eefa3782f7d1f34b39, type: 2}

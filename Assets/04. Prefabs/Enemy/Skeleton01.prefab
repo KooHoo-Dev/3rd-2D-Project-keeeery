@@ -118,12 +118,14 @@ MonoBehaviour:
   attackCooldown: 2
   hurtDuration: 0.2
   hurtKnockbackSpeed: 1
+  canBeStunned: 1
   patrolPoint: {fileID: 2870976477559899801}
   isFacingRight: 1
   grade: 0
   targetPoint: {fileID: 0}
+  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
   <Target>k__BackingField: {fileID: 0}
-  isDead: 0
 --- !u!114 &1292777937788745370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +141,7 @@ MonoBehaviour:
   <HeadUpPivot>k__BackingField: {fileID: 6053784147961823679}
   hitEffectDuration: 0.2
   <Stat>k__BackingField:
-    <MaxHp>k__BackingField: 500
+    <MaxHp>k__BackingField: 45
 --- !u!1 &8675951228584960273
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +294,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.074444264, y: 0.3603497}
+  m_Offset: {x: -0.074444264, y: 0.3642822}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -302,7 +304,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.40560013, y: 0.720448}
+  m_Size: {x: 0.40560013, y: 0.71258307}
   m_EdgeRadius: 0
 --- !u!114 &8710229684538076155
 MonoBehaviour:
@@ -452,9 +454,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.Hitbox
   <AttackInfo>k__BackingField:
-    Key: 3
-    MinDamage: 200
-    MaxDamage: 230
+    Key: 0
+    MinDamage: 10
+    MaxDamage: 10
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -483,6 +485,17 @@ MonoBehaviour:
   projectileController: {fileID: 0}
   allowMultiHit: 0
   multiHitInterval: 0.25
+  useHitStop: 0
+  hitStopController: {fileID: 0}
+  hitStopDuration: 0.06
+  useCameraShake: 0
+  cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!61 &8639885469304045307
 BoxCollider2D:
   m_ObjectHideFlags: 0

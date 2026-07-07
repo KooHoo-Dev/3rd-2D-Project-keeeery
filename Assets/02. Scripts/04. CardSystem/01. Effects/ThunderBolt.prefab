@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 1322070253507925932}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0902, y: -0.0149, z: 0}
-  m_LocalScale: {x: 1.6601807, y: 0.84083545, z: 1}
+  m_LocalPosition: {x: -0.0761, y: -0.0149, z: 0}
+  m_LocalScale: {x: 1.6884037, y: 0.84083545, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1278491334187928565}
@@ -107,8 +107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.Hitbox
   <AttackInfo>k__BackingField:
     Key: 0
-    MinDamage: 50
-    MaxDamage: 60
+    MinDamage: 4
+    MaxDamage: 4
     damageCurve:
       serializedVersion: 2
       m_Curve:
@@ -137,6 +137,17 @@ MonoBehaviour:
   projectileController: {fileID: 0}
   allowMultiHit: 1
   multiHitInterval: 0.1
+  useHitStop: 0
+  hitStopController: {fileID: 0}
+  hitStopDuration: 0.06
+  useCameraShake: 0
+  cameraImpulseController: {fileID: 0}
+  useKnockback: 0
+  knockbackForce: 8
+  knockbackFromHitBoxCenter: 1
+  resetTargetVelocityBeforeKnockback: 1
+  useStun: 0
+  stunDuration: 2
 --- !u!61 &632514934067832742
 BoxCollider2D:
   m_ObjectHideFlags: 0
