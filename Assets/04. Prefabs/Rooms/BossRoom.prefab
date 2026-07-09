@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80fd3758ea10406190e65a9a436d8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.RoomController
+  roomId: Room_01
   enemyRoomController: {fileID: 0}
   roomExitController: {fileID: 2870000958407040082}
   overlayController: {fileID: 0}
@@ -1527,7 +1528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee2be87438644eb9a745113d5a2541e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.RoomExitController
-  obelisk: {fileID: 0}
+  obelisk: {fileID: 5158800460895967126}
   inputPromptController: {fileID: 0}
 --- !u!114 &5158800460895967126
 MonoBehaviour:

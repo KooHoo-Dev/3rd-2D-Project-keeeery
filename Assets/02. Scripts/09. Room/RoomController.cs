@@ -100,9 +100,10 @@ namespace Arcanist
 
         private void StartRoom()
         {
+            bool hasBossEncounter = HasBossEncounter();
             bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.gameObject.activeInHierarchy;
 
-            if (!hasActiveEnemyRoom)
+            if (!hasActiveEnemyRoom && !hasBossEncounter)
             {
                 currentState = RoomState.Cleared;
                 roomExitController?.SetLocked(false);
@@ -112,7 +113,10 @@ namespace Arcanist
 
             currentState = RoomState.Combat;
             roomExitController?.SetLocked(true);
-            enemyRoomController.SpawnEnemies();
+
+            if (hasActiveEnemyRoom)
+                enemyRoomController.SpawnEnemies();
+
             onRoomStarted?.Invoke();
         }
 

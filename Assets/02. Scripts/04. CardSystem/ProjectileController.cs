@@ -57,7 +57,7 @@ namespace Arcanist
 
             if (lifeTimer >= lifeTime)
             {
-                Explode();
+                DestroySelf();
                 return;
             }
         }
