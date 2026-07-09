@@ -28,16 +28,16 @@ namespace Arcanist
         [SerializeField] private BossDeathController bossDeathController;
 
         public Animator Animator { get; private set; }
-        public Rigidbody2D Rigidbody { get; private set; }
+        private Rigidbody2D Rigidbody { get; set; }
         public Boss Boss { get; private set; }
         public Transform Player => Target != null ? Target : player;
-        public Transform Target { get; private set; }
+        private Transform Target { get; set; }
         public EnemyGrade Grade => grade;
         public Transform TargetPoint => targetPoint != null ? targetPoint : ActorTransform;
         public bool IsDead { get; private set; }
 
         private Transform ActorTransform => Rigidbody != null ? Rigidbody.transform : transform;
-        private Vector3 CurrentPosition => Rigidbody != null ? (Vector3)Rigidbody.position : transform.position;
+        private Vector3 CurrentPosition => Rigidbody != null ? Rigidbody.position : transform.position;
 
         private void Awake()
         {

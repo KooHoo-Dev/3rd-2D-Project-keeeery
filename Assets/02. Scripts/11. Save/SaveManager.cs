@@ -50,13 +50,12 @@ namespace Arcanist
 
         public bool HasCheckpoint()
         {
-            return currentData != null
-                && currentData.checkpoint != null
-                && !string.IsNullOrEmpty(currentData.checkpoint.sceneName)
-                && !string.IsNullOrEmpty(currentData.checkpoint.checkpointId);
+            return currentData is { checkpoint: not null }
+                   && !string.IsNullOrEmpty(currentData.checkpoint.sceneName)
+                   && !string.IsNullOrEmpty(currentData.checkpoint.checkpointId);
         }
 
-        public void LoadOrCreate()
+        private void LoadOrCreate()
         {
             if (File.Exists(SavePath))
             {
@@ -72,9 +71,9 @@ namespace Arcanist
             Debug.Log($"[Save] Created New Save Data: {SavePath}");
         }
 
-        public void Save()
+        private void Save()
         {
-            if (currentData == null) currentData = new SaveData();
+            currentData ??= new SaveData();
 
             string json = JsonUtility.ToJson(currentData, true);
             File.WriteAllText(SavePath, json);
@@ -82,9 +81,9 @@ namespace Arcanist
             Debug.Log($"[Save] Saved: {SavePath}");
         }
 
-        public void SaveCheckpoint(string sceneName, string roomId, string checkpointId, int currentHp, bool respawnPlayerOnly)
+        public void SaveCheckpoint(string sceneName, string roomId, string checkpointId, int currentHp, bool respawnPlayerOnly, bool roomCleared)
         {
-            if (currentData == null) currentData = new SaveData();
+            currentData ??= new SaveData();
 
             currentData.checkpoint.sceneName = sceneName;
             currentData.checkpoint.roomId = roomId;
@@ -92,13 +91,14 @@ namespace Arcanist
             currentData.checkpoint.currentHp = currentHp;
             
             currentData.checkpoint.respawnPlayerOnly = respawnPlayerOnly;
+            currentData.checkpoint.roomCleared = roomCleared;
 
             Save();
         }
 
         public void SaveInventory(InventorySaveData inventoryData)
         {
-            if (currentData == null) currentData = new SaveData();
+            currentData ??= new SaveData();
 
             currentData.inventory = inventoryData;
 

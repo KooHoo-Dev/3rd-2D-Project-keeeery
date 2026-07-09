@@ -15,6 +15,8 @@ namespace Arcanist
         [SerializeField] private bool saveOnce = true;
         [SerializeField] private bool respawnPlayerOnly;
 
+        private static float saveBlockEndTime;
+
         private bool isSaved;
 
         public string CheckpointId => checkpointId;
@@ -22,10 +24,21 @@ namespace Arcanist
         public bool RespawnPlayerOnly => respawnPlayerOnly;
         public Vector3 RespawnPosition => respawnPoint != null ? respawnPoint.position : transform.position;
 
+        public static void BlockSaveForSeconds(float duration)
+        {
+            saveBlockEndTime = Mathf.Max(saveBlockEndTime, Time.time + Mathf.Max(0.0f, duration));
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!saveOnTriggerEnter)
                 return;
+
+            if (Time.time < saveBlockEndTime)
+            {
+                Debug.Log($"[Checkpoint] Save Blocked: {roomId} / {checkpointId}");
+                return;
+            }
 
             if (saveOnce && isSaved)
                 return;
@@ -36,7 +49,7 @@ namespace Arcanist
             Save(player);
         }
 
-        public void Save(PlayerController player)
+        private void Save(PlayerController player)
         {
             if (SaveManager.Instance == null)
             {
@@ -47,17 +60,24 @@ namespace Arcanist
             int currentHp = GetPlayerCurrentHp(player);
             string sceneName = SceneManager.GetActiveScene().name;
 
+            bool roomCleared = false;
+
+            RoomController roomController = GetComponentInParent<RoomController>();
+            if (roomController != null)
+                roomCleared = roomController.IsRoomCleared;
+
             SaveManager.Instance.SaveCheckpoint(
                 sceneName,
                 roomId,
                 checkpointId,
                 currentHp,
-                respawnPlayerOnly
+                respawnPlayerOnly,
+                roomCleared
             );
 
             isSaved = true;
 
-            Debug.Log($"[Checkpoint] Saved: {sceneName} / {roomId} / {checkpointId} / HP {currentHp} / PlayerOnly {respawnPlayerOnly}");
+            Debug.Log($"[Checkpoint] Saved: {sceneName} / {roomId} / {checkpointId} / HP {currentHp} / PlayerOnly {respawnPlayerOnly} / RoomCleared {roomCleared}");
         }
 
         private int GetPlayerCurrentHp(PlayerController player)

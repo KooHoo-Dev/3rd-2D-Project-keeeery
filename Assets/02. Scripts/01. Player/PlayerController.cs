@@ -81,10 +81,10 @@ namespace Arcanist
         private bool isHurt;
         private bool isCastingSkill;
         private bool isDead;
-        private Dictionary<int, PlayerAnimStateBase> StateDic { get; set; } = new();
+        private Dictionary<int, PlayerAnimStateBase> StateDic { get; } = new();
 
-        public bool IsParrying { get; set; } = false;
-        public bool IsParryWindowOpen { get; private set; } = false;
+        public bool IsParrying { get; set; }
+        public bool IsParryWindowOpen { get; private set; }
 
         private PlayerAnimStateBase defaultState;
         private PlayerAnimStateBase currentState;
@@ -126,8 +126,7 @@ namespace Arcanist
         {
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
 
-            if (StateDic.TryGetValue(stateInfo.tagHash, out PlayerAnimStateBase nextState) == false)
-                nextState = defaultState;
+            PlayerAnimStateBase nextState = StateDic.GetValueOrDefault(stateInfo.tagHash, defaultState);
             
             if (currentState != nextState)
             {
@@ -333,6 +332,7 @@ namespace Arcanist
 
         public void Respawn(Vector3 position, int hp)
         {
+            Checkpoint.BlockSaveForSeconds(1.0f);
             transform.position = position;
 
             isDead = false;
@@ -373,9 +373,7 @@ namespace Arcanist
             isSprint = false;
 
             Player.LocalPlayer?.RestoreHealthTo(hp);
-
-            if(TryGetComponent(out CardSystem cardSystem))
-                cardSystem.ResetRuntimeCardsForRespawn();
+            cardSystem?.ResetRuntimeCardsForRespawn();
                 
             Debug.Log($"[Player] Respawned at {position} / HP {hp}");
         }
@@ -536,7 +534,7 @@ namespace Arcanist
             fx.transform.localScale = scale;
         }
 
-        private bool prevIsGrounded = false;
+        private bool prevIsGrounded;
 
         private void UpdateGroundedAnimation()
         {
@@ -552,12 +550,7 @@ namespace Arcanist
             }
 
             if (prevIsGrounded && isGrounded == false)
-            {
-                if (Controller2D.VerticalVelocity > 0.0f)
-                    Animator.SetTrigger(JUMP);
-                else 
-                    Animator.SetTrigger(DESCENDING);
-            }
+                Animator.SetTrigger(Controller2D.VerticalVelocity > 0.0f ? JUMP : DESCENDING);
 
             prevIsGrounded = isGrounded;
         }

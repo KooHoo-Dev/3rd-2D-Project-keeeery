@@ -6,12 +6,12 @@ namespace Arcanist
 {
     public class CombatSystem : SingletonBase<CombatSystem>
     {
-        private List<ICombatObserver> observerList = new List<ICombatObserver>();
+        private readonly List<ICombatObserver> observerList = new();
 
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-        }
+        // protected override void OnInitialize()
+        // {
+        //     base.OnInitialize();
+        // }
 
         public void Subscribe(ICombatObserver observer)
         {
@@ -64,30 +64,29 @@ namespace Arcanist
 
         private Dictionary<Collider2D, HurtBox> HurtBoxDic { get; set; } = new();
 
-        public void AddHurtBox(Collider2D collder, HurtBox hurtBox)
+        public void AddHurtBox(Collider2D collider, HurtBox hurtBox)
         {
-            HurtBoxDic.TryAdd(collder, hurtBox);
+            HurtBoxDic.TryAdd(collider, hurtBox);
         }
 
-        public void RemoveHurtBox(Collider2D collder)
+        public void RemoveHurtBox(Collider2D collider)
         {
-            if (HurtBoxDic.ContainsKey(collder) == false) return;
-            HurtBoxDic.Remove(collder);
+            if (HurtBoxDic.Remove(collider) == false) return;
         }
 
-        public HurtBox GetHurtBoxOrNull(Collider2D collder)
+        public HurtBox GetHurtBoxOrNull(Collider2D collider)
         {
-            if (collder == null)
+            if (collider == null)
                 return null;
 
-            if (HurtBoxDic.TryGetValue(collder, out HurtBox reval))
+            if (HurtBoxDic.TryGetValue(collider, out HurtBox reval))
                 return reval;
 
-            HurtBox hurtBox = collder.GetComponentInParent<HurtBox>();
+            HurtBox hurtBox = collider.GetComponentInParent<HurtBox>();
             if (hurtBox != null)
                 return hurtBox;
 
-            CombatEntity entity = collder.GetComponentInParent<CombatEntity>();
+            CombatEntity entity = collider.GetComponentInParent<CombatEntity>();
             if (entity == null)
                 return null;
 

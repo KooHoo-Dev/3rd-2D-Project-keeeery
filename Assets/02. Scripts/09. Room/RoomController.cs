@@ -13,6 +13,9 @@ namespace Arcanist
             Cleared
         }
 
+        [Header("Room")]
+        [SerializeField] private string roomId = "Room_01";
+
         [Header("References")]
         [SerializeField] private EnemyRoomController enemyRoomController;
         [SerializeField] private RoomExitController roomExitController;
@@ -27,6 +30,8 @@ namespace Arcanist
         private RoomManager roomManager;
         private RoomState currentState = RoomState.Ready;
 
+        public string RoomId => roomId;
+        public bool IsRoomCleared => currentState is RoomState.Reward or RoomState.Cleared;
         public bool CanExit => currentState == RoomState.Cleared;
         public bool CanOpenReward => currentState == RoomState.Reward;
 
@@ -77,7 +82,7 @@ namespace Arcanist
         }
         private bool HasBossEncounter()
         {
-            return bossControllers != null && bossControllers.Length > 0;
+            return bossControllers is { Length: > 0 };
         }
 
         private bool AreAllBossesDefeated()
@@ -95,17 +100,36 @@ namespace Arcanist
 
         private void StartRoom()
         {
+            bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.gameObject.activeInHierarchy;
+
+            if (!hasActiveEnemyRoom)
+            {
+                currentState = RoomState.Cleared;
+                roomExitController?.SetLocked(false);
+                onRoomCleared?.Invoke();
+                return;
+            }
+
             currentState = RoomState.Combat;
             roomExitController?.SetLocked(true);
-            enemyRoomController?.SpawnEnemies();
+            enemyRoomController.SpawnEnemies();
             onRoomStarted?.Invoke();
         }
 
         public void ResetRoomForRespawn()
         {
+            bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.gameObject.activeInHierarchy;
+
+            if (!hasActiveEnemyRoom)
+            {
+                currentState = RoomState.Cleared;
+                roomExitController?.SetLocked(false);
+                return;
+            }
+
             currentState = RoomState.Combat;
             roomExitController?.SetLocked(true);
-            enemyRoomController?.ResetEnemiesForRespawn();
+            enemyRoomController.ResetEnemiesForRespawn();
         }
 
         public void OnAllEnemiesDefeated()

@@ -12,7 +12,7 @@ namespace Arcanist
 
     public class Player : CombatEntity
     {
-        public static Player LocalPlayer { get; set; }
+        public static Player LocalPlayer { get; private set; }
 
         public override BaseStat BaseStat => Stat;
 
@@ -42,7 +42,7 @@ namespace Arcanist
         private Material instanceMaterial;
         private float currentStamina;
 
-        protected PlayerController PlayerController { get; private set; }
+        private PlayerController PlayerController { get; set; }
 
         private void Awake()
         {

@@ -32,7 +32,6 @@ namespace Arcanist
         private CardData cardData;
         private int deckIndex = -1;
         private bool isOwned;
-        private bool isSelected;
         private InventoryCardSlotArea slotArea;
 
         public CardData CardData => cardData;
@@ -57,7 +56,6 @@ namespace Arcanist
             this.slotArea = slotArea;
             this.isOwned = isOwned;
             this.deckIndex = deckIndex;
-            isSelected = false;
 
             RefreshVisual(isNew);
             SendTooltipData();
@@ -65,8 +63,6 @@ namespace Arcanist
 
         public void SetSelected(bool selected)
         {
-            isSelected = selected;
-
             if (slotFrame != null)
                 slotFrame.color = selected ? selectedFrameColor : defaultFrameColor;
         }

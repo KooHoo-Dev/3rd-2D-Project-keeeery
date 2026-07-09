@@ -10,11 +10,11 @@ namespace Arcanist
         [SerializeField] private float hitEffectDuration = 0.2f;
         private const float HIT_EFFECT_VALUE = 0.75f;
 
-        protected SpriteRenderer SpriteRenderer { get; private set; }
-        protected Material instanceMaterial { get; set; }
+        private SpriteRenderer SpriteRenderer { get; set; }
+        private Material instanceMaterial { get; set; }
 
         [field:SerializeField] public BaseStat Stat { get; private set; }
-        protected EnemyController EnemyController { get; private set; }
+        private EnemyController EnemyController { get; set; }
 
         protected virtual void Awake()
         {

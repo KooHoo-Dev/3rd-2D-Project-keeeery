@@ -153,11 +153,9 @@ namespace Arcanist
 
                 SetAnchoredPosition(card, Vector2.LerpUnclamped(startPos, endPos, eased));
 
-                float scale;
-                if (n < 0.35f)
-                    scale = Mathf.Lerp(1f, useScaleUp, n / 0.35f);
-                else
-                    scale = Mathf.Lerp(useScaleUp, useEndScale, (n - 0.35f) / 0.65f);
+                float scale = n < 0.35f 
+                    ? Mathf.Lerp(1f, useScaleUp, n / 0.35f) 
+                    : Mathf.Lerp(useScaleUp, useEndScale, (n - 0.35f) / 0.65f);
 
                 float yRotation = Mathf.Lerp(0f, useYSpin, eased);
                 float zRotation = Mathf.Lerp(0f, useZRotation, eased);
@@ -375,7 +373,7 @@ namespace Arcanist
             onCompleted?.Invoke();
         }
 
-        public IEnumerator PlayDrawMotion(RectTransform card)
+        private IEnumerator PlayDrawMotion(RectTransform card)
         {
             Vector2 endPos = Vector2.zero;
             Vector2 startPos = endPos + Vector2.down * cardRiseDistance;

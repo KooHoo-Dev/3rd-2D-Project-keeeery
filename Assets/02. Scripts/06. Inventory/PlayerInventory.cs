@@ -94,7 +94,7 @@ namespace Arcanist
             return GetDeckManaCost() + cardData.Cost > maxDeckManaCost;
         }
 
-        public int GetDeckManaCost()
+        private int GetDeckManaCost()
         {
             int totalCost = 0;
 

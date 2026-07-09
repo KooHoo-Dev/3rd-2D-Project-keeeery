@@ -156,7 +156,7 @@ namespace Arcanist
             RefreshButtonState();
         }
 
-        public void Refresh()
+        private void Refresh()
         {
             ResolveReferences();
 
@@ -511,6 +511,7 @@ namespace Arcanist
 
             guideMessageText.text = GetDeckConditionWarningMessage();
             guideMessageText.gameObject.SetActive(true);
+
 
             if (guideMessageGroup != null)
                 guideMessageGroup.alpha = 1.0f;

@@ -20,7 +20,6 @@ namespace Arcanist
         [SerializeField] private string playerSpawnPointName = "PlayerSpawnPoint";
 
         [Header("Transition")]
-        [SerializeField] private CanvasGroup transitionFadeGroup;
         [SerializeField] private float fadeOutDuration = 0.35f;
         [SerializeField] private float fadeInDuration = 0.35f;
         [SerializeField] private float blackScreenHoldDuration = 0.08f;
@@ -35,7 +34,6 @@ namespace Arcanist
         private void Awake()
         {
             Instance = this;
-            InitializeTransitionFadeGroup();
         }
 
         private void Start()
@@ -56,7 +54,47 @@ namespace Arcanist
             StartCoroutine(LoadNextRoomWithFadeRoutine());
         }
 
-        public bool HasNextRoom()
+        public bool TryLoadRoomById(string roomId)
+        {
+            return TryLoadRoomById(roomId, false);
+        }
+
+        public bool TryLoadRoomById(string roomId, bool skipEnemySpawn)
+        {
+            if (string.IsNullOrEmpty(roomId))
+                return false;
+
+            int roomIndex = FindRoomIndexById(roomId);
+
+            if (roomIndex < 0)
+            {
+                Debug.LogWarning($"[RoomManager] Room id not found: {roomId}", this);
+                return false;
+            }
+
+            LoadRoom(roomIndex, skipEnemySpawn);
+            return true;
+        }
+
+        private int FindRoomIndexById(string roomId)
+        {
+            for (int i = 0; i < roomPrefabs.Count; i++)
+            {
+                GameObject roomPrefab = roomPrefabs[i];
+
+                if (roomPrefab == null)
+                    continue;
+
+                RoomController roomController = roomPrefab.GetComponentInChildren<RoomController>(true);
+
+                if (roomController != null && roomController.RoomId == roomId)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private bool HasNextRoom()
         {
             return currentRoomIndex + 1 < roomPrefabs.Count;
         }
@@ -65,13 +103,14 @@ namespace Arcanist
         {
             isTransitioning = true;
 
-            yield return FadeTransition(1.0f, fadeOutDuration);
-            yield return new WaitForSecondsRealtime(blackScreenHoldDuration);
-
             if (HasNextRoom())
             {
+                yield return ScreenFadeManager.Instance.FadeToBlackRoutine(fadeOutDuration);
+                yield return new WaitForSecondsRealtime(blackScreenHoldDuration);
+
                 LoadRoom(currentRoomIndex + 1);
-                yield return FadeTransition(0.0f, fadeInDuration);
+
+                yield return ScreenFadeManager.Instance.FadeFromBlackRoutine(fadeInDuration);
                 isTransitioning = false;
                 yield break;
             }
@@ -83,7 +122,7 @@ namespace Arcanist
         {
             if (!string.IsNullOrEmpty(nextSceneName))
             {
-                SceneManager.LoadScene(nextSceneName);
+                ScreenFadeManager.Instance.LoadSceneWithFade(nextSceneName, fadeOutDuration);
                 return;
             }
 
@@ -91,12 +130,13 @@ namespace Arcanist
 
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
             {
-                SceneManager.LoadScene(nextSceneIndex);
+                string nextScenePath = SceneUtility.GetScenePathByBuildIndex(nextSceneIndex);
+                ScreenFadeManager.Instance.LoadSceneWithFade(nextScenePath, fadeOutDuration);
                 return;
             }
 
             Debug.LogWarning("[RoomManager] Next room and next scene are both missing.", this);
-            StartCoroutine(FadeTransition(0.0f, fadeInDuration));
+            StartCoroutine(ScreenFadeManager.Instance.FadeFromBlackRoutine(fadeInDuration));
             isTransitioning = false;
         }
 
@@ -123,48 +163,15 @@ namespace Arcanist
             LoadRoom(currentRoomIndex);
         }
 
-        private IEnumerator FadeTransition(float targetAlpha, float duration)
-        {
-            if (transitionFadeGroup == null)
-                yield break;
-
-            transitionFadeGroup.blocksRaycasts = true;
-            transitionFadeGroup.interactable = true;
-
-            float startAlpha = transitionFadeGroup.alpha;
-            float elapsedTime = 0.0f;
-
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.unscaledDeltaTime;
-                float t = duration <= 0.0f ? 1.0f : elapsedTime / duration;
-                transitionFadeGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-                yield return null;
-            }
-
-            transitionFadeGroup.alpha = targetAlpha;
-
-            bool isVisible = transitionFadeGroup.alpha > 0.0f;
-            transitionFadeGroup.blocksRaycasts = isVisible;
-            transitionFadeGroup.interactable = isVisible;
-        }
-
-        private void InitializeTransitionFadeGroup()
-        {
-            if (transitionFadeGroup == null)
-                return;
-
-            transitionFadeGroup.alpha = 0.0f;
-            transitionFadeGroup.blocksRaycasts = false;
-            transitionFadeGroup.interactable = false;
-        }
-
         private void LoadRoom(int roomIndex)
         {
+            LoadRoom(roomIndex, false);
+        }
+
+        private void LoadRoom(int roomIndex, bool skipEnemySpawn)
+        {
             if (roomIndex < 0 || roomIndex >= roomPrefabs.Count)
-            {
                 return;
-            }
 
             if (roomPrefabs[roomIndex] == null)
             {
@@ -173,30 +180,28 @@ namespace Arcanist
             }
 
             if (currentRoom != null)
-            {
                 Destroy(currentRoom);
-            }
 
             if (roomRoot == null)
-            {
                 roomRoot = transform;
-            }
 
             currentRoomIndex = roomIndex;
             currentRoom = Instantiate(roomPrefabs[currentRoomIndex], roomRoot, false);
             currentRoom.transform.localPosition = roomSpawnPosition;
 
             AlignRoomToPlayerSpawnPoint();
+
+            if (skipEnemySpawn)
+                DisableEnemyRoomController();
+
             InitializeRoomController();
             MovePlayerToSpawnPoint();
         }
 
         private void AlignRoomToPlayerSpawnPoint()
         {
-            if (!alignRoomToPlayerSpawnPoint || player == null || currentRoom == null)
-            {
+            if (alignRoomToPlayerSpawnPoint == false || player == null || currentRoom == null)
                 return;
-            }
 
             Transform spawnPoint = FindChildByName(currentRoom.transform, playerSpawnPointName);
 
@@ -209,6 +214,20 @@ namespace Arcanist
             Vector3 offset = player.position - spawnPoint.position;
             offset.z = 0.0f;
             currentRoom.transform.position += offset;
+        }
+
+        private void DisableEnemyRoomController()
+        {
+            if (currentRoom == null)
+                return;
+
+            EnemyRoomController enemyRoomController = currentRoom.GetComponentInChildren<EnemyRoomController>(true);
+
+            if (enemyRoomController == null)
+                return;
+
+            enemyRoomController.gameObject.SetActive(false);
+            Debug.Log("[RoomManager] Enemy room controller disabled for cleared checkpoint room.", currentRoom);
         }
 
         private void InitializeRoomController()

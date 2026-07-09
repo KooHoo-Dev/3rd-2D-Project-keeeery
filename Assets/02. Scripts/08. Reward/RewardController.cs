@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,7 +57,7 @@ namespace Arcanist
             OpenReward(CreateRewards());
         }
 
-        public void OpenReward(List<CardData> rewards)
+        private void OpenReward(List<CardData> rewards)
         {
             ResetRewardState();
             ResetTexts();
@@ -366,7 +365,7 @@ namespace Arcanist
                     return candidates[i];
             }
 
-            return candidates[candidates.Count - 1];
+            return candidates[^1];
         }
 
         private List<CardData> GetAvailableCards(HashSet<CardData> excludedCards)

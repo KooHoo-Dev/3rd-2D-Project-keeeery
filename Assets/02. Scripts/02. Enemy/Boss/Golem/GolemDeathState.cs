@@ -1,6 +1,3 @@
-using System.Collections;
-using UnityEngine;
-
 namespace Arcanist
 {
     public class GolemDeathState : BossBaseState

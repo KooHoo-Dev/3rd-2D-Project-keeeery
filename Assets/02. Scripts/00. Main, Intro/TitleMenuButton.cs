@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 namespace Arcanist
@@ -88,7 +87,7 @@ namespace Arcanist
             switch (buttonType)
             {
                 case ButtonType.NewGame:
-                    SceneManager.LoadScene("Intro");
+                    ScreenFadeManager.Instance.LoadSceneWithFade("Intro", 0.35f);
                     break;
 
                 case ButtonType.Continue:
@@ -105,7 +104,7 @@ namespace Arcanist
                         break;
                     }
 
-                    SceneManager.LoadScene(checkpointData.sceneName);
+                    ScreenFadeManager.Instance.LoadSceneWithFade(checkpointData.sceneName, 0.35f);
                     break;
 
                 case ButtonType.Option:

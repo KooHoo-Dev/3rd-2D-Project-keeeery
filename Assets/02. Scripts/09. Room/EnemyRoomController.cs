@@ -102,14 +102,14 @@ namespace Arcanist
 
         private void EnablePhysics(GameObject enemy)
         {
-            Rigidbody2D rigidbody = enemy.GetComponentInChildren<Rigidbody2D>();
+            Rigidbody2D rBody = enemy.GetComponentInChildren<Rigidbody2D>();
 
-            if (rigidbody != null)
+            if (rBody != null)
             {
-                rigidbody.bodyType = RigidbodyType2D.Dynamic;
-                rigidbody.simulated = true;
-                rigidbody.linearVelocity = Vector2.zero;
-                rigidbody.WakeUp();
+                rBody.bodyType = RigidbodyType2D.Dynamic;
+                rBody.simulated = true;
+                rBody.linearVelocity = Vector2.zero;
+                rBody.WakeUp();
             }
 
             Collider2D[] colliders = enemy.GetComponentsInChildren<Collider2D>(true);

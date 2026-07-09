@@ -442,7 +442,7 @@ Transform:
   m_GameObject: {fileID: 3545808354901163507}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 179.98, y: 28.44, z: 0}
+  m_LocalPosition: {x: 188.41, y: 28.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1612,7 +1612,7 @@ Transform:
   m_GameObject: {fileID: 7359979758252791151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.88, y: 0.51, z: 0}
+  m_LocalPosition: {x: -2.88, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2351,7 +2351,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80fd3758ea10406190e65a9a436d8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.RoomController
-  enemyRoomController: {fileID: 0}
+  roomId: Room_01
+  enemyRoomController: {fileID: 7113899448155153102}
   roomExitController: {fileID: 4318175467764692519}
   overlayController: {fileID: 0}
   bossControllers: []
@@ -2519,7 +2520,7 @@ Transform:
   m_GameObject: {fileID: 8872687421633691547}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 164.27, y: 28.17, z: 0}
+  m_LocalPosition: {x: 168.69, y: 28.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

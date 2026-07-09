@@ -357,7 +357,7 @@ MonoBehaviour:
   respawnPoint: {fileID: 3608355873147804158}
   saveOnTriggerEnter: 1
   saveOnce: 1
-  respawnPlayerOnly: 0
+  respawnPlayerOnly: 1
 --- !u!114 &4007396496961783528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1802,7 +1802,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80fd3758ea10406190e65a9a436d8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.RoomController
-  enemyRoomController: {fileID: 0}
+  roomId: Room_02
+  enemyRoomController: {fileID: 4610830373254024321}
   roomExitController: {fileID: 6525639549132733598}
   overlayController: {fileID: 0}
   bossControllers: []
@@ -2009,7 +2010,7 @@ Transform:
   m_GameObject: {fileID: 7435460889521702754}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 130.93, y: 20.68, z: 0}
+  m_LocalPosition: {x: 128.54, y: 20.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2183,7 +2184,7 @@ Transform:
   m_GameObject: {fileID: 8152274792639004842}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 152.48, y: 20.62, z: 0}
+  m_LocalPosition: {x: 149.3, y: 20.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

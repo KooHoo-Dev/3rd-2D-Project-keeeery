@@ -37,7 +37,7 @@ namespace Arcanist
                 laserObject.SetActive(true);
         }
 
-        public void StopLaser()
+        private void StopLaser()
         {
             if (laserObject != null)
                 laserObject.SetActive(false);

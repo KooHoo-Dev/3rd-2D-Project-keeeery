@@ -489,7 +489,8 @@ namespace Arcanist
 
             for (int i = 0; i < parameters.Length; i++)
             {
-                if (parameters[i].type == AnimatorControllerParameterType.Trigger && parameters[i].name == triggerName)
+                if (parameters[i].type == AnimatorControllerParameterType.Trigger && 
+                    parameters[i].name == triggerName)
                     return true;
             }
 
@@ -507,9 +508,8 @@ namespace Arcanist
 
             Transform castPoint = GetCastPointTransform();
             int facingDirection = playerController != null ? playerController.FacingDirection : 1;
-            Transform target = null;
 
-            if (TryResolveTargetForCard(card, castPoint.position, out target) == false)
+            if (TryResolveTargetForCard(card, castPoint.position, out Transform target) == false)
             {
                 ShowAnnounceMessage(noTargetAnnounceMessage);
                 playerController?.EndCardSkill();

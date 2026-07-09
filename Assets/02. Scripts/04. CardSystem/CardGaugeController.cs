@@ -13,7 +13,6 @@ namespace Arcanist
         [SerializeField] private float secondsPerCell = 1f;
 
         private int currentCell;
-        private bool isCharging;
         private bool isGaugeFull;
         private Coroutine chargeCoroutine;
 
@@ -52,8 +51,6 @@ namespace Arcanist
 
         private IEnumerator ChargeLoop()
         {
-            isCharging = true;
-
             while (currentCell < gaugeCells.Length)
             {
                 float finalSecondsPerCell = secondsPerCell;
@@ -69,7 +66,6 @@ namespace Arcanist
                 currentCell++;
             }
 
-            isCharging = false;
             isGaugeFull = true;
 
             if (cardSystem != null)
@@ -79,7 +75,6 @@ namespace Arcanist
         private void ResetGaugeOnly()
         {
             currentCell = 0;
-            isCharging = false;
             isGaugeFull = false;
 
             foreach (GameObject cell in gaugeCells)
@@ -125,7 +120,6 @@ namespace Arcanist
             currentCell = gaugeCells.Length;
             RefreshGaugeCells();
 
-            isCharging = false;
             isGaugeFull = true;
 
             if (cardSystem != null)

@@ -21,12 +21,7 @@ namespace Arcanist
             ResetMessage();
         }
 
-        public void Show(string message)
-        {
-            Show(message, true);
-        }
-
-        public void Show(string message, bool useFadeIn)
+        public void Show(string message, bool useFadeIn = true)
         {
             if (CanvasGroup == null || messageText == null)
                 return;

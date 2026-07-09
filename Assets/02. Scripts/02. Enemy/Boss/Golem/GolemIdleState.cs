@@ -50,10 +50,7 @@ namespace Arcanist
 
             int random = Random.Range(0, 2);
 
-            if (random == 0)
-                BossController.ChangeState(typeof(GolemLaserState));
-            else
-                BossController.ChangeState(typeof(GolemShootState));
+            BossController.ChangeState(random == 0 ? typeof(GolemLaserState) : typeof(GolemShootState));
         }
     }
 }

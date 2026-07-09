@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace Arcanist
@@ -12,7 +11,7 @@ namespace Arcanist
         [Header("Root")]
         [SerializeField] private GameObject overlayRoot;
         [SerializeField] private CanvasGroup overlayGroup;
-
+        
         [Header("Windows")]
         [SerializeField] private GameObject pauseWindow;
         [SerializeField] private GameObject optionWindow;
@@ -58,7 +57,6 @@ namespace Arcanist
         public OverlayState CurrentState { get; private set; }
 
         private Coroutine fadeRoutine;
-        private bool isRespawning;
 
         private void Awake()
         {
@@ -122,7 +120,9 @@ namespace Arcanist
             Vector3 promptPosition = promptTargetPivot.position;
             promptPosition.x += 0.05f * playerController.FacingDirection;
             reviveInputPrompt.position = promptPosition;
+
             deathWindow.SetActive(true);
+            reviveInputPrompt.gameObject.SetActive(true);
         }
 
         public void ShowDeath()
@@ -248,79 +248,11 @@ namespace Arcanist
 
         public void ReturnToCheckpoint()
         {
-            if (isRespawning)
-                return;
-
-            if (!SaveManager.Instance.TryGetCheckpoint(out CheckpointSaveData data))
-            {
-                Debug.LogWarning("[Checkpoint] No checkpoint data.");
-                return;
-            }
-
-            StartCoroutine(ReturnToCheckpointRoutine(data));
+            CheckPointManager.Instance.ReturnToCheckpoint();
         }
 
-        private IEnumerator ReturnToCheckpointRoutine(CheckpointSaveData data)
-        {
-            isRespawning = true;
 
-            yield return RespawnFadeRoutine(() => { });
-
-            string targetSceneName = data.sceneName;
-            bool shouldLoadScene = !string.IsNullOrEmpty(targetSceneName)
-                && targetSceneName != SceneManager.GetActiveScene().name;
-
-            if (shouldLoadScene)
-            {
-                AsyncOperation loadOperation = SceneManager.LoadSceneAsync(targetSceneName);
-
-                while (loadOperation != null && !loadOperation.isDone)
-                    yield return null;
-
-                yield return null;
-            }
-
-            if (playerController == null)
-                playerController = FindFirstObjectByType<PlayerController>();
-
-            if (playerCameraController == null)
-                playerCameraController = FindFirstObjectByType<PlayerCameraController>();
-
-            Checkpoint checkpoint = CheckpointFinder.Find(data.roomId, data.checkpointId);
-
-            if (checkpoint == null)
-            {
-                Debug.LogWarning($"[Checkpoint] Checkpoint not found: {data.roomId} / {data.checkpointId}");
-                isRespawning = false;
-                yield break;
-            }
-
-            if (!data.respawnPlayerOnly)
-            {
-                RoomManager roomManager = RoomManager.Instance;
-
-                if (roomManager == null)
-                    roomManager = FindFirstObjectByType<RoomManager>();
-
-                if (roomManager != null)
-                    roomManager.ResetCurrentRoom();
-                else
-                    Debug.LogWarning("[Checkpoint] RoomManager is missing. Room was not reset.");
-            }
-
-            if (playerController == null)
-            {
-                Debug.LogWarning("[Checkpoint] PlayerController is missing.");
-                isRespawning = false;
-                yield break;
-            }
-
-            Vector3 respawnPosition = checkpoint.RespawnPosition;
-            playerController.Respawn(respawnPosition, data.currentHp);
-            Debug.Log($"[Checkpoint] Returned to {respawnPosition}");
-
-            isRespawning = false;
-        }
+        
 
         private IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration)
         {

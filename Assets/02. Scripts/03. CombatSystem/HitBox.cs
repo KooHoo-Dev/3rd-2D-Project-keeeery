@@ -158,7 +158,7 @@ namespace Arcanist
                 return;
 
             Vector2 origin = knockbackFromHitBoxCenter
-                ? (Vector2)transform.position
+                ? transform.position
                 : collision.ClosestPoint(transform.position);
 
             Vector2 targetPosition = receiverRigidbody.position;

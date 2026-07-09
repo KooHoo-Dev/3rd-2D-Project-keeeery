@@ -18,6 +18,7 @@ namespace Arcanist
         public string checkpointId;
         public int currentHp;
         public bool respawnPlayerOnly;
+        public bool roomCleared;
     }
 
     [Serializable]

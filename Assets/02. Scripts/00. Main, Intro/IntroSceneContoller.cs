@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using Utilities;
@@ -53,7 +52,7 @@ namespace Arcanist
         {
             if (isWaitingForContinue)
             {
-                if (SimpleInput.GetKeyDown(Key.Space))
+                if (SimpleInput.GetKeyDown(Key.UpArrow))
                 {
                     isWaitingForContinue = false;
                     StartCoroutine(FadeOutAndLoadNextScene());
@@ -155,11 +154,11 @@ namespace Arcanist
 
         private IEnumerator FadeOutAndLoadNextScene()
         {
-            continuePrompt.SetActive(false); 
+            continuePrompt.SetActive(false);
             continuePromptCanvasGroup.alpha = 0f;
 
-            yield return Fade(0f, 1f);
             LoadNextScene();
+            yield break;
         }
 
         private void SkipToLastCut()
@@ -203,7 +202,7 @@ namespace Arcanist
 
         private void LoadNextScene()
         {
-            SceneManager.LoadScene(nextSceneName);
+            ScreenFadeManager.Instance.LoadSceneWithFade(nextSceneName, fadeDuration);
         }
     }
 }

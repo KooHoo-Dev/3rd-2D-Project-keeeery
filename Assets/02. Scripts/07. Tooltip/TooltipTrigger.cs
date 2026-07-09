@@ -8,7 +8,7 @@ namespace Arcanist
         private CardData cardData;
         private bool isObtained = true;
 
-        public void SetCard(CardData newCardData, bool obtained = true)
+        public void SetCard(CardData newCardData, bool obtained)
         {
             cardData = newCardData;
             isObtained = obtained;

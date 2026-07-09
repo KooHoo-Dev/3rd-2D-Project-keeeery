@@ -9,7 +9,7 @@ namespace Arcanist
         [SerializeField] private Image iconImage;
         [SerializeField] private TooltipTrigger tooltipTrigger;
 
-        public CardData CardData { get; private set; }
+        private CardData CardData { get; set; }
 
         private void Awake()
         {
@@ -31,7 +31,7 @@ namespace Arcanist
             SetTooltip(CardData);
         }
 
-        public void Clear()
+        private void Clear()
         {
             CardData = null;
             SetIcon(null);

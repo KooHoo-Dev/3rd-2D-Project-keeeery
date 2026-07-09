@@ -71,7 +71,7 @@ namespace Arcanist
         public Vector3 GoalPoint { get; private set; }
 
         private Transform ActorTransform => Rigidbody != null ? Rigidbody.transform : transform;
-        private Vector3 CurrentPosition => Rigidbody != null ? (Vector3)Rigidbody.position : transform.position;
+        private Vector3 CurrentPosition => Rigidbody != null ? Rigidbody.position : transform.position;
 
         private EnemyState currentState = EnemyState.Idle;
         private Vector3 originalScale;
