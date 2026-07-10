@@ -122,9 +122,10 @@ namespace Arcanist
 
         public void ResetRoomForRespawn()
         {
+            bool hasBossEncounter = HasBossEncounter();
             bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.gameObject.activeInHierarchy;
 
-            if (!hasActiveEnemyRoom)
+            if (!hasActiveEnemyRoom && !hasBossEncounter)
             {
                 currentState = RoomState.Cleared;
                 roomExitController?.SetLocked(false);
@@ -133,7 +134,9 @@ namespace Arcanist
 
             currentState = RoomState.Combat;
             roomExitController?.SetLocked(true);
-            enemyRoomController.ResetEnemiesForRespawn();
+
+            if (hasActiveEnemyRoom)
+                enemyRoomController.ResetEnemiesForRespawn();
         }
 
         public void OnAllEnemiesDefeated()

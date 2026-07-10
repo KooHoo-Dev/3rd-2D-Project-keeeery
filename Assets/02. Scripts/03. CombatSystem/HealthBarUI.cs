@@ -52,8 +52,7 @@ namespace Arcanist
 
         public void UpdateHpBar(int currentHp, int maxHp)
         {
-            if (hpBar == null)
-                return;
+            if (hpBar == null) return;
 
             float hpRatio = GetHpRatio(currentHp, maxHp);
 
@@ -64,8 +63,7 @@ namespace Arcanist
 
         private void UpdateDelayBar(int currentHp, int maxHp)
         {
-            if (hpDelayBar == null)
-                return;
+            if (hpDelayBar == null) return;
 
             float hpRatio = GetHpRatio(currentHp, maxHp);
 
@@ -76,8 +74,7 @@ namespace Arcanist
 
         private void PlayDamageBarEffect(float beforeRatio, float afterRatio)
         {
-            if (hpDelayBar == null)
-                return;
+            if (hpDelayBar == null) return;
 
             if (hpDelayCoroutine != null)
                 StopCoroutine(hpDelayCoroutine);
@@ -109,8 +106,7 @@ namespace Arcanist
 
         private void PlayHealEffect()
         {
-            if (hpBarImage == null)
-                return;
+            if (hpBarImage == null) return;
 
             if (healFlashCoroutine != null)
                 StopCoroutine(healFlashCoroutine);
@@ -142,8 +138,7 @@ namespace Arcanist
 
         private float GetHpRatio(int currentHp, int maxHp)
         {
-            if (maxHp <= 0)
-                return 0.0f;
+            if (maxHp <= 0) return 0.0f;
 
             return Mathf.Clamp01((float)currentHp / maxHp);
         }
