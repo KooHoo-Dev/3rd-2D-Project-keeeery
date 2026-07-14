@@ -19,6 +19,7 @@ namespace Arcanist
         public int currentHp;
         public bool respawnPlayerOnly;
         public bool roomCleared;
+        public bool rewardObtained;
     }
 
     [Serializable]

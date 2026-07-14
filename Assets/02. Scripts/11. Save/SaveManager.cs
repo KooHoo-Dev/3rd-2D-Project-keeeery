@@ -81,7 +81,7 @@ namespace Arcanist
             Debug.Log($"[Save] Saved: {SavePath}");
         }
 
-        public void SaveCheckpoint(string sceneName, string roomId, string checkpointId, int currentHp, bool respawnPlayerOnly, bool roomCleared)
+        public void SaveCheckpoint(string sceneName, string roomId, string checkpointId, int currentHp, bool respawnPlayerOnly, bool roomCleared, bool rewardObtained)
         {
             currentData ??= new SaveData();
 
@@ -89,11 +89,30 @@ namespace Arcanist
             currentData.checkpoint.roomId = roomId;
             currentData.checkpoint.checkpointId = checkpointId;
             currentData.checkpoint.currentHp = currentHp;
-            
+
             currentData.checkpoint.respawnPlayerOnly = respawnPlayerOnly;
             currentData.checkpoint.roomCleared = roomCleared;
+            currentData.checkpoint.rewardObtained = rewardObtained;
 
             Save();
+        }
+
+        public bool MarkCheckpointRewardObtained(string sceneName, string roomId)
+        {
+            if (!HasCheckpoint())
+                return false;
+
+            CheckpointSaveData checkpoint = currentData.checkpoint;
+
+            if (checkpoint.sceneName != sceneName || checkpoint.roomId != roomId)
+                return false;
+
+            checkpoint.roomCleared = true;
+            checkpoint.rewardObtained = true;
+            Save();
+
+            Debug.Log($"[Checkpoint] Reward obtained state saved: {sceneName} / {roomId} / {checkpoint.checkpointId}");
+            return true;
         }
 
         public void SaveInventory(InventorySaveData inventoryData)

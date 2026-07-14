@@ -3461,7 +3461,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
   - {fileID: 11400000, guid: 97eef108c855a4939b35970b9be30788, type: 2}
   - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
-  - {fileID: 11400000, guid: db45cd152b8634662a02259403e647cf, type: 2}
   deckCards:
   - {fileID: 11400000, guid: a826c587056c64d40b78943d33b987af, type: 2}
   - {fileID: 11400000, guid: 0a6054fa34e6241c995b49aeeb127d97, type: 2}
@@ -3469,7 +3468,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9926bcb2dec448ebaf2d0992c63b6ea, type: 2}
   - {fileID: 11400000, guid: 97eef108c855a4939b35970b9be30788, type: 2}
   - {fileID: 11400000, guid: 4ab72e184fba0436f906966bc004367f, type: 2}
-  - {fileID: 11400000, guid: db45cd152b8634662a02259403e647cf, type: 2}
   minDeckCardCount: 6
   minDeckManaCost: 8
   maxDeckManaCost: 14

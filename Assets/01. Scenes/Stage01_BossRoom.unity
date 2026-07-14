@@ -898,7 +898,7 @@ MonoBehaviour:
   fadeOutDuration: 0.35
   fadeInDuration: 0.35
   blackScreenHoldDuration: 0.08
-  nextSceneName: 
+  nextSceneName: Main
 --- !u!4 &330468893
 Transform:
   m_ObjectHideFlags: 0
@@ -3460,8 +3460,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.InitialAnimController
   animator: {fileID: 1217425808}
-  alwaysPlay: 1
-  finalStateObject: {fileID: 0}
 --- !u!1 &1250472683
 GameObject:
   m_ObjectHideFlags: 0

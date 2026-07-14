@@ -98,12 +98,9 @@ namespace Arcanist
         {
             int totalCost = 0;
 
-            for (int i = 0; i < deckCards.Count; i++)
+            foreach (var cardData in deckCards)
             {
-                CardData cardData = deckCards[i];
-
-                if (cardData == null)
-                    continue;
+                if (cardData == null) continue;
 
                 totalCost += cardData.Cost;
             }

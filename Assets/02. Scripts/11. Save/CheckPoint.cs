@@ -19,6 +19,7 @@ namespace Arcanist
 
         private bool isSaved;
         private bool savedRoomCleared;
+        private bool savedRewardObtained;
 
         public string CheckpointId => checkpointId;
         public string RoomId => roomId;
@@ -41,7 +42,7 @@ namespace Arcanist
                 return;
             }
 
-            if (saveOnce && isSaved && savedRoomCleared)
+            if (saveOnce && isSaved && savedRewardObtained)
                 return;
 
             if (!other.TryGetComponent(out PlayerController player))
@@ -58,7 +59,7 @@ namespace Arcanist
             if (Time.time < saveBlockEndTime)
                 return;
 
-            if (savedRoomCleared)
+            if (savedRewardObtained)
                 return;
 
             if (!IsCurrentRoomCleared())
@@ -82,6 +83,7 @@ namespace Arcanist
             string sceneName = SceneManager.GetActiveScene().name;
 
             bool roomCleared = IsCurrentRoomCleared();
+            bool rewardObtained = IsCurrentRewardObtained();
 
             SaveManager.Instance.SaveCheckpoint(
                 sceneName,
@@ -89,16 +91,32 @@ namespace Arcanist
                 checkpointId,
                 currentHp,
                 respawnPlayerOnly,
-                roomCleared
+                roomCleared,
+                rewardObtained
             );
 
             isSaved = true;
             savedRoomCleared = roomCleared;
+            savedRewardObtained = rewardObtained;
 
-            Debug.Log($"[Checkpoint] Saved: {sceneName} / {roomId} / {checkpointId} / HP {currentHp} / PlayerOnly {respawnPlayerOnly} / RoomCleared {roomCleared}");
+            Debug.Log($"[Checkpoint] Saved: {sceneName} / {roomId} / {checkpointId} / HP {currentHp} / PlayerOnly {respawnPlayerOnly} / RoomCleared {roomCleared} / RewardObtained {rewardObtained}");
         }
 
         private bool IsCurrentRoomCleared()
+        {
+            RoomController roomController = FindCurrentRoomController();
+
+            return roomController != null && roomController.IsRoomCleared;
+        }
+
+        private bool IsCurrentRewardObtained()
+        {
+            RoomController roomController = FindCurrentRoomController();
+
+            return roomController != null && roomController.IsRewardObtained;
+        }
+
+        private RoomController FindCurrentRoomController()
         {
             RoomController roomController = GetComponentInParent<RoomController>();
 
@@ -126,7 +144,7 @@ namespace Arcanist
                 }
             }
 
-            return roomController != null && roomController.IsRoomCleared;
+            return roomController;
         }
 
         private int GetPlayerCurrentHp(PlayerController player)

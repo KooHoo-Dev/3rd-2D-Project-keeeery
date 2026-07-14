@@ -87,7 +87,7 @@ namespace Arcanist
             ApplyGrade(cardData.Grade, cardData.GradeText);
         }
 
-        public void Show(Sprite icon, string itemName, string itemType, string description)
+        private void Show(Sprite icon, string itemName, string itemType, string description)
         {
             if (canvasGroup == null || tooltipRect == null)
                 return;

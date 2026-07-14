@@ -12,7 +12,7 @@ namespace Arcanist
         IPointerUpHandler,
         IPointerClickHandler
     {
-        public enum ButtonType
+        private enum ButtonType
         {
             Resume, Inventory, ReturnToCheckPoint, Option, MainMenu
         }

@@ -108,12 +108,7 @@ namespace Arcanist
                 screenInvertMaterial.SetFloat("_Blend", 0.0f);
         }
 
-        private void PlayGlow(Color color, float maxAlpha, float fadeInDuration, float fadeOutDuration)
-        {
-            PlayGlow(color, maxAlpha, fadeInDuration, fadeOutDuration, 0.0f);
-        }
-
-        private void PlayGlow(Color color, float maxAlpha, float fadeInDuration, float fadeOutDuration, float holdDuration)
+        private void PlayGlow(Color color, float maxAlpha, float fadeInDuration, float fadeOutDuration, float holdDuration = 0.0f)
         {
             if (vignetteImage == null) return;
 

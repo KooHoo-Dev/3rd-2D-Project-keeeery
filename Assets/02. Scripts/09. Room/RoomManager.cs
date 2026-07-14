@@ -54,12 +54,7 @@ namespace Arcanist
             StartCoroutine(LoadNextRoomWithFadeRoutine());
         }
 
-        public bool TryLoadRoomById(string roomId)
-        {
-            return TryLoadRoomById(roomId, false);
-        }
-
-        public bool TryLoadRoomById(string roomId, bool skipEnemySpawn)
+        public bool TryLoadRoomById(string roomId, bool skipEnemySpawn = false, bool rewardObtained = false)
         {
             if (string.IsNullOrEmpty(roomId))
                 return false;
@@ -72,7 +67,7 @@ namespace Arcanist
                 return false;
             }
 
-            LoadRoom(roomIndex, skipEnemySpawn);
+            LoadRoom(roomIndex, skipEnemySpawn, rewardObtained);
             return true;
         }
 
@@ -165,10 +160,10 @@ namespace Arcanist
 
         private void LoadRoom(int roomIndex)
         {
-            LoadRoom(roomIndex, false);
+            LoadRoom(roomIndex, false, false);
         }
 
-        private void LoadRoom(int roomIndex, bool skipEnemySpawn)
+        private void LoadRoom(int roomIndex, bool skipEnemySpawn, bool rewardObtained)
         {
             if (roomIndex < 0 || roomIndex >= roomPrefabs.Count)
                 return;
@@ -194,7 +189,7 @@ namespace Arcanist
             if (skipEnemySpawn)
                 DisableEnemyRoomController();
 
-            InitializeRoomController();
+            InitializeRoomController(skipEnemySpawn, rewardObtained);
             MovePlayerToSpawnPoint();
         }
 
@@ -230,14 +225,11 @@ namespace Arcanist
             Debug.Log("[RoomManager] Enemy room controller disabled for cleared checkpoint room.", currentRoom);
         }
 
-        private void InitializeRoomController()
+        private void InitializeRoomController(bool startCleared, bool rewardObtained)
         {
             RoomController roomController = currentRoom.GetComponentInChildren<RoomController>();
 
-            if (roomController != null)
-            {
-                roomController.Initialize(this);
-            }
+            roomController?.Initialize(this, startCleared, rewardObtained);
         }
 
         private void MovePlayerToSpawnPoint()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Arcanist
 {
@@ -29,15 +30,20 @@ namespace Arcanist
 
         private RoomManager roomManager;
         private RoomState currentState = RoomState.Ready;
+        private bool startCleared;
+        private bool startRewardObtained;
 
         public string RoomId => roomId;
         public bool IsRoomCleared => currentState is RoomState.Reward or RoomState.Cleared;
+        public bool IsRewardObtained => currentState == RoomState.Cleared;
         public bool CanExit => currentState == RoomState.Cleared;
         public bool CanOpenReward => currentState == RoomState.Reward;
 
-        public void Initialize(RoomManager manager)
+        public void Initialize(RoomManager manager, bool startCleared, bool rewardObtained = false)
         {
             roomManager = manager;
+            this.startCleared = startCleared;
+            startRewardObtained = rewardObtained;
         }
 
         private void Awake()
@@ -103,6 +109,17 @@ namespace Arcanist
             bool hasBossEncounter = HasBossEncounter();
             bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.gameObject.activeInHierarchy;
 
+            if (startCleared)
+            {
+                currentState = startRewardObtained ? RoomState.Cleared : RoomState.Reward;
+                roomExitController?.SetLocked(false);
+
+                if (startRewardObtained)
+                    onRoomCleared?.Invoke();
+
+                return;
+            }
+
             if (!hasActiveEnemyRoom && !hasBossEncounter)
             {
                 currentState = RoomState.Cleared;
@@ -154,6 +171,11 @@ namespace Arcanist
 
             currentState = RoomState.Cleared;
             roomExitController?.SetLocked(false);
+
+            SaveManager.Instance?.MarkCheckpointRewardObtained(
+                SceneManager.GetActiveScene().name,
+                roomId
+            );
         }
 
         public void TryExitRoom()

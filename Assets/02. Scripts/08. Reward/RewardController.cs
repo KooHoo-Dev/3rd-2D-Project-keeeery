@@ -132,16 +132,16 @@ namespace Arcanist
                 yield return new WaitForSecondsRealtime(cardSpawnDelay);
             }
 
-            for (int i = 0; i < layoutElements.Count; i++)
-                layoutElements[i].ignoreLayout = false;
+            foreach (var t in layoutElements)
+                t.ignoreLayout = false;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(rewardContainer);
             spawnCoroutine = null;
 
-            for (int i = 0; i < rewardCardViews.Count; i++)
+            foreach (var t in rewardCardViews)
             {
-                rewardCardViews[i].RefreshDefaultScale();
-                rewardCardViews[i].SetInteractable(true);
+                t.RefreshDefaultScale();
+                t.SetInteractable(true);
             }
         }
 
@@ -321,8 +321,8 @@ namespace Arcanist
 
             if (playerInventory != null)
             {
-                for (int i = 0; i < playerInventory.OwnedCards.Count; i++)
-                    excludedCards.Add(playerInventory.OwnedCards[i]);
+                foreach (var t in playerInventory.OwnedCards)
+                    excludedCards.Add(t);
             }
 
             for (int i = 0; i < rewardCount; i++)
@@ -348,8 +348,8 @@ namespace Arcanist
 
             int totalWeight = 0;
 
-            for (int i = 0; i < candidates.Count; i++)
-                totalWeight += GetGradeWeight(candidates[i].Grade);
+            foreach (var t in candidates)
+                totalWeight += GetGradeWeight(t.Grade);
 
             if (totalWeight <= 0)
                 return candidates[Random.Range(0, candidates.Count)];
@@ -472,10 +472,10 @@ namespace Arcanist
 
         private void SetCardsInteractable(bool value)
         {
-            for (int i = 0; i < rewardCardViews.Count; i++)
+            foreach (var t in rewardCardViews)
             {
-                if (rewardCardViews[i] != null)
-                    rewardCardViews[i].SetInteractable(value);
+                if (t != null)
+                    t.SetInteractable(value);
             }
         }
 

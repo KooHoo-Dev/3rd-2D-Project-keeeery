@@ -147,7 +147,7 @@ namespace Arcanist
                 ? PlayerPrefs.GetInt(RESOLUTION_INDEX_KEY)
                 : defaultResolutionIndex;
 
-            int maxIndex = resolutions != null && resolutions.Length > 0 ? resolutions.Length - 1 : 0;
+            int maxIndex = resolutions is { Length: > 0 } ? resolutions.Length - 1 : 0;
             resolutionIndex = Mathf.Clamp(savedResolutionIndex, 0, maxIndex);
         }
 

@@ -290,8 +290,8 @@ namespace Arcanist
         {
             PauseMenuButton[] buttons = overlayRoot.GetComponentsInChildren<PauseMenuButton>(true);
 
-            for (int i = 0; i < buttons.Length; i++)
-                buttons[i].Initialize(this);
+            foreach (var t in buttons)
+                t.Initialize(this);
         }
 
         private void HideAllWindows()

@@ -80,10 +80,11 @@ namespace Arcanist
                 checkpointId = data.checkpointId,
                 currentHp = data.currentHp,
                 respawnPlayerOnly = data.respawnPlayerOnly,
-                roomCleared = data.roomCleared
+                roomCleared = data.roomCleared,
+                rewardObtained = data.rewardObtained
             };
 
-            Debug.Log($"[Checkpoint] TryGetCheckpoint Result: {snapshot.sceneName} / {snapshot.roomId} / {snapshot.checkpointId} / HP {snapshot.currentHp} / PlayerOnly {snapshot.respawnPlayerOnly} / RoomCleared {snapshot.roomCleared}");
+            Debug.Log($"[Checkpoint] TryGetCheckpoint Result: {snapshot.sceneName} / {snapshot.roomId} / {snapshot.checkpointId} / HP {snapshot.currentHp} / PlayerOnly {snapshot.respawnPlayerOnly} / RoomCleared {snapshot.roomCleared} / RewardObtained {snapshot.rewardObtained}");
             StartCoroutine(ReturnToCheckpointRoutine(snapshot));
         }
 
@@ -125,12 +126,12 @@ namespace Arcanist
                 roomManager = FindFirstObjectByType<RoomManager>();
 
             Debug.Log($"[Checkpoint] References: player={(playerController != null ? playerController.name : "null")}, camera={(playerCameraController != null ? playerCameraController.name : "null")}, roomManager={(roomManager != null ? roomManager.name : "null")}");
-            Debug.Log($"[Checkpoint] Restore Target: {data.sceneName} / {data.roomId} / {data.checkpointId} / HP {data.currentHp} / PlayerOnly {data.respawnPlayerOnly} / RoomCleared {data.roomCleared}");
+            Debug.Log($"[Checkpoint] Restore Target: {data.sceneName} / {data.roomId} / {data.checkpointId} / HP {data.currentHp} / PlayerOnly {data.respawnPlayerOnly} / RoomCleared {data.roomCleared} / RewardObtained {data.rewardObtained}");
 
             if (roomManager != null)
             {
                 bool skipEnemySpawn = data.respawnPlayerOnly && data.roomCleared;
-                bool loadedRoom = roomManager.TryLoadRoomById(data.roomId, skipEnemySpawn);
+                bool loadedRoom = roomManager.TryLoadRoomById(data.roomId, skipEnemySpawn, data.rewardObtained);
                 Debug.Log($"[Checkpoint] Load Room By Id Result: {data.roomId} / {loadedRoom} / SkipEnemySpawn {skipEnemySpawn}");
                 yield return null;
             }

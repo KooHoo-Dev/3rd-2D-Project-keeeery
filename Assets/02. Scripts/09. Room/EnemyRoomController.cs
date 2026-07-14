@@ -114,8 +114,8 @@ namespace Arcanist
 
             Collider2D[] colliders = enemy.GetComponentsInChildren<Collider2D>(true);
 
-            for (int i = 0; i < colliders.Length; i++)
-                colliders[i].enabled = true;
+            foreach (var t in colliders)
+                t.enabled = true;
         }
 
         private GameObject GetRandomNormalEnemyPrefab()
