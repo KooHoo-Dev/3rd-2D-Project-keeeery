@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Arcanist
@@ -14,11 +14,17 @@ namespace Arcanist
         [Header("Message Text")]
         [SerializeField] private TMPro.TMP_Text messageText;
 
-        private Coroutine showCoroutine;
+        private Sequence showSequence;
 
         private void Awake()
         {
             ResetMessage();
+        }
+
+        private void OnDisable()
+        {
+            showSequence?.Kill();
+            showSequence = null;
         }
 
         public void Show(string message, bool useFadeIn = true)
@@ -28,45 +34,26 @@ namespace Arcanist
 
             messageText.text = message;
 
-            if (showCoroutine != null)
-                StopCoroutine(showCoroutine);
+            showSequence?.Kill();
 
-            showCoroutine = StartCoroutine(ShowRoutine(useFadeIn));
-        }
-
-        private IEnumerator ShowRoutine(bool useFadeIn)
-        {
-            if (useFadeIn)
-                yield return FadeCanvasGroup(1.0f, fadeInDuration);
-            else
+            if (!useFadeIn)
                 CanvasGroup.alpha = 1.0f;
 
+            showSequence = DOTween.Sequence().SetUpdate(true);
+
+            if (useFadeIn)
+                showSequence.Append(CanvasGroup
+                    .DOFade(1.0f, Mathf.Max(0.01f, fadeInDuration))
+                    .SetEase(Ease.InOutSine));
+
             if (holdDuration > 0.0f)
-                yield return new WaitForSecondsRealtime(holdDuration);
+                showSequence.AppendInterval(holdDuration);
 
-            yield return FadeCanvasGroup(0.0f, fadeOutDuration);
-
-            showCoroutine = null;
-        }
-
-        private IEnumerator FadeCanvasGroup(float targetAlpha, float duration)
-        {
-            float startAlpha = CanvasGroup.alpha;
-            float safeDuration = Mathf.Max(0.01f, duration);
-            float elapsed = 0.0f;
-
-            while (elapsed < safeDuration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-
-                float t = Mathf.Clamp01(elapsed / safeDuration);
-                float eased = t * t * (3.0f - 2.0f * t);
-                CanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, eased);
-
-                yield return null;
-            }
-
-            CanvasGroup.alpha = targetAlpha;
+            showSequence
+                .Append(CanvasGroup
+                    .DOFade(0.0f, Mathf.Max(0.01f, fadeOutDuration))
+                    .SetEase(Ease.InOutSine))
+                .OnComplete(() => showSequence = null);
         }
 
         private void ResetMessage()

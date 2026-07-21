@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Arcanist
@@ -12,6 +12,7 @@ namespace Arcanist
 
         private SpriteRenderer SpriteRenderer { get; set; }
         private Material instanceMaterial { get; set; }
+        private Tween hitEffectTween;
 
         [field:SerializeField] public BaseStat Stat { get; private set; }
         private EnemyController EnemyController { get; set; }
@@ -32,6 +33,8 @@ namespace Arcanist
 
         protected virtual void OnDestroy()
         {
+            hitEffectTween?.Kill();
+
             if (instanceMaterial != null) Destroy(instanceMaterial);
         }
 
@@ -45,26 +48,23 @@ namespace Arcanist
             
             EnemyController.Hurt();
 
-            StartCoroutine(HitEffectCoroutine());
+            PlayHitEffect();
         }
 
-        protected IEnumerator HitEffectCoroutine()
+        protected void PlayHitEffect()
         {
-            float waitTime = 0.0f;
+            if (instanceMaterial == null)
+                return;
 
-            while(true)
-            {
-                if (waitTime > hitEffectDuration) break;
-
-                float blendValue = Mathf.Lerp(HIT_EFFECT_VALUE, 0.0f, waitTime / hitEffectDuration);
-                
-                instanceMaterial.SetFloat(HIT_EFFECT_BLEND, blendValue);
-
-                yield return null; // 한프레임 대기
-                waitTime += Time.deltaTime; // 대기한만큼 시간 더해줌
-            }
-
-            instanceMaterial.SetFloat(HIT_EFFECT_BLEND, 0.0f);
+            hitEffectTween?.Kill();
+            instanceMaterial.SetFloat(HIT_EFFECT_BLEND, HIT_EFFECT_VALUE);
+            hitEffectTween = DOTween.To(
+                    () => instanceMaterial.GetFloat(HIT_EFFECT_BLEND),
+                    value => instanceMaterial.SetFloat(HIT_EFFECT_BLEND, value),
+                    0.0f,
+                    Mathf.Max(0.01f, hitEffectDuration))
+                .SetEase(Ease.Linear)
+                .OnComplete(() => hitEffectTween = null);
         }
     }
 }

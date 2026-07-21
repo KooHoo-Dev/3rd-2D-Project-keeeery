@@ -32,7 +32,7 @@ namespace Arcanist
             if (healthBarUI != null)
                 healthBarUI.ApplyDamage(beforeHp, Stat.Hp, Stat.MaxHp);
 
-            StartCoroutine(HitEffectCoroutine());
+            PlayHitEffect();
         }
 
         public override void TakeHeal(int heal)

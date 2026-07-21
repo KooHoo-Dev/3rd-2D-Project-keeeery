@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -32,12 +32,18 @@ namespace Arcanist
         [SerializeField] private float burstInTime = 0.04f;
         [SerializeField] private float burstOutTime = 0.18f;
 
-        private Coroutine effectRoutine;
+        private Sequence effectSequence;
+        private Tween cameraShakeTween;
+
+        private void OnDisable()
+        {
+            KillTweens();
+            ResetLight();
+        }
 
         public void Play()
         {
-            if (effectRoutine != null)
-                StopCoroutine(effectRoutine);
+            KillTweens();
 
             if (parryParticle != null)
                 parryParticle.Play();
@@ -48,14 +54,20 @@ namespace Arcanist
                 hitStopController.Play(hitStopDuration);
 
             if (cameraImpulseController != null)
-                StartCoroutine(PlayCameraShakeDelay());
+            {
+                cameraShakeTween = DOVirtual.DelayedCall(
+                        Mathf.Max(0.0f, cameraShakeDelay),
+                        cameraImpulseController.Play,
+                        true)
+                    .OnComplete(() => cameraShakeTween = null);
+            }
 
-            effectRoutine = StartCoroutine(PlayRoutine());
+            PlayLightSequence();
         }
 
         private void PlayParryGaugeFx()
         {
-            if (parryGaugeFxPrefab == null || parryGaugeFxStart == null)
+            if (parryGaugeFxPrefab == null || parryGaugeFxStart == null || parryGaugeFxTarget == null)
                 return;
 
             Transform parent = parryGaugeFxParent != null ? parryGaugeFxParent : parryGaugeFxStart.parent;
@@ -70,36 +82,53 @@ namespace Arcanist
             Destroy(gaugeFx.gameObject, parryGaugeFxDestroyDelay);
         }
         
-        private IEnumerator PlayRoutine()
+        private void PlayLightSequence()
         {
-            yield return LerpLight(defaultIntensity, burstIntensity, defaultRadius, burstRadius, burstInTime);
-            yield return LerpLight(burstIntensity, defaultIntensity, burstRadius, defaultRadius, burstOutTime);
+            if (parryLight == null)
+                return;
+
+            ResetLight();
+            effectSequence = DOTween.Sequence().SetUpdate(true);
+            effectSequence.Append(CreateLightTween(burstIntensity, burstRadius, burstInTime));
+            effectSequence.Append(CreateLightTween(defaultIntensity, defaultRadius, burstOutTime));
+            effectSequence.OnComplete(() =>
+            {
+                effectSequence = null;
+                ResetLight();
+            });
+        }
+
+        private Tween CreateLightTween(float intensity, float radius, float duration)
+        {
+            float safeDuration = Mathf.Max(0.01f, duration);
+            return DOTween.Sequence()
+                .Join(DOTween.To(
+                    () => parryLight.intensity,
+                    value => parryLight.intensity = value,
+                    intensity,
+                    safeDuration))
+                .Join(DOTween.To(
+                    () => parryLight.pointLightOuterRadius,
+                    value => parryLight.pointLightOuterRadius = value,
+                    radius,
+                    safeDuration));
+        }
+
+        private void KillTweens()
+        {
+            effectSequence?.Kill();
+            cameraShakeTween?.Kill();
+            effectSequence = null;
+            cameraShakeTween = null;
+        }
+
+        private void ResetLight()
+        {
+            if (parryLight == null)
+                return;
 
             parryLight.intensity = defaultIntensity;
             parryLight.pointLightOuterRadius = defaultRadius;
-            effectRoutine = null;
-        }
-        
-        private IEnumerator PlayCameraShakeDelay()
-        {
-            yield return new WaitForSecondsRealtime(cameraShakeDelay);
-            cameraImpulseController.Play();
-        }
-
-        private IEnumerator LerpLight(float fromIntensity, float toIntensity, float fromRadius, float toRadius, float duration)
-        {
-            float timer = 0.0f;
-
-            while (timer < duration)
-            {
-                timer += Time.unscaledDeltaTime;
-                float t = Mathf.Clamp01(timer / duration);
-
-                parryLight.intensity = Mathf.Lerp(fromIntensity, toIntensity, t);
-                parryLight.pointLightOuterRadius = Mathf.Lerp(fromRadius, toRadius, t);
-
-                yield return null;
-            }
         }
     }
 }

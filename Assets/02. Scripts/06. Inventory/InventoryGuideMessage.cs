@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -15,8 +15,8 @@ namespace Arcanist
         private RectTransform messageRect;
         private CanvasGroup canvasGroup;
         private Vector2 defaultPosition;
-        private Coroutine displayRoutine;
-        private Coroutine shakeRoutine;
+        private Sequence displaySequence;
+        private Tween shakeTween;
 
         public void Configure(
             TMP_Text text,
@@ -43,7 +43,7 @@ namespace Arcanist
 
         private void OnDisable()
         {
-            StopRoutines();
+            KillTweens();
 
             if (messageRect != null)
                 messageRect.anchoredPosition = defaultPosition;
@@ -71,7 +71,15 @@ namespace Arcanist
 
             StopDisplayRoutine();
             SetVisible(message);
-            displayRoutine = StartCoroutine(ShowTemporaryRoutine());
+            displaySequence = DOTween.Sequence()
+                .SetUpdate(true)
+                .AppendInterval(Mathf.Max(0.0f, displayDuration))
+                .Append(canvasGroup.DOFade(0.0f, Mathf.Max(0.01f, fadeOutDuration)))
+                .OnComplete(() =>
+                {
+                    displaySequence = null;
+                    HideImmediate();
+                });
         }
 
         public void ShowPersistent(string message)
@@ -91,7 +99,16 @@ namespace Arcanist
             StopDisplayRoutine();
 
             if (animated && gameObject.activeInHierarchy)
-                displayRoutine = StartCoroutine(FadeOutRoutine());
+            {
+                displaySequence = DOTween.Sequence()
+                    .SetUpdate(true)
+                    .Append(canvasGroup.DOFade(0.0f, Mathf.Max(0.01f, fadeOutDuration)))
+                    .OnComplete(() =>
+                    {
+                        displaySequence = null;
+                        HideImmediate();
+                    });
+            }
             else
                 HideImmediate();
         }
@@ -101,10 +118,28 @@ namespace Arcanist
             if (messageRect == null || !gameObject.activeInHierarchy)
                 return;
 
-            if (shakeRoutine != null)
-                StopCoroutine(shakeRoutine);
+            shakeTween?.Kill();
+            float duration = Mathf.Max(0.01f, shakeDuration);
+            float distance = Mathf.Max(0.0f, shakeDistance);
 
-            shakeRoutine = StartCoroutine(ShakeRoutine());
+            shakeTween = DOTween.To(
+                    () => 0.0f,
+                    progress =>
+                    {
+                        float offsetX = Mathf.Sin(progress * Mathf.PI * 8.0f)
+                            * distance
+                            * (1.0f - progress);
+                        messageRect.anchoredPosition = defaultPosition + Vector2.right * offsetX;
+                    },
+                    1.0f,
+                    duration)
+                .SetEase(Ease.Linear)
+                .SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    messageRect.anchoredPosition = defaultPosition;
+                    shakeTween = null;
+                });
         }
 
         private bool CanShow()
@@ -114,48 +149,6 @@ namespace Arcanist
 
             CacheComponents();
             return messageText != null && canvasGroup != null;
-        }
-
-        private IEnumerator ShowTemporaryRoutine()
-        {
-            yield return new WaitForSecondsRealtime(displayDuration);
-            yield return FadeOutRoutine();
-        }
-
-        private IEnumerator FadeOutRoutine()
-        {
-            float startAlpha = canvasGroup.alpha;
-            float duration = Mathf.Max(0.01f, fadeOutDuration);
-            float elapsedTime = 0.0f;
-
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.unscaledDeltaTime;
-                canvasGroup.alpha = Mathf.Lerp(startAlpha, 0.0f, elapsedTime / duration);
-                yield return null;
-            }
-
-            HideImmediate();
-            displayRoutine = null;
-        }
-
-        private IEnumerator ShakeRoutine()
-        {
-            float duration = Mathf.Max(0.01f, shakeDuration);
-            float distance = Mathf.Max(0.0f, shakeDistance);
-            float elapsedTime = 0.0f;
-
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.unscaledDeltaTime;
-                float progress = Mathf.Clamp01(elapsedTime / duration);
-                float offsetX = Mathf.Sin(progress * Mathf.PI * 8.0f) * distance * (1.0f - progress);
-                messageRect.anchoredPosition = defaultPosition + Vector2.right * offsetX;
-                yield return null;
-            }
-
-            messageRect.anchoredPosition = defaultPosition;
-            shakeRoutine = null;
         }
 
         private void SetVisible(string message)
@@ -175,22 +168,15 @@ namespace Arcanist
 
         private void StopDisplayRoutine()
         {
-            if (displayRoutine == null)
-                return;
-
-            StopCoroutine(displayRoutine);
-            displayRoutine = null;
+            displaySequence?.Kill();
+            displaySequence = null;
         }
 
-        private void StopRoutines()
+        private void KillTweens()
         {
             StopDisplayRoutine();
-
-            if (shakeRoutine == null)
-                return;
-
-            StopCoroutine(shakeRoutine);
-            shakeRoutine = null;
+            shakeTween?.Kill();
+            shakeTween = null;
         }
     }
 }

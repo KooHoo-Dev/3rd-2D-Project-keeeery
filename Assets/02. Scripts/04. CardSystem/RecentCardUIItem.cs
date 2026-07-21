@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +20,7 @@ namespace Arcanist
         [SerializeField] private Vector2 showStartOffset = new(24.0f, 0.0f);
         [SerializeField] private Vector2 hideEndOffset = new(-24.0f, 0.0f);
 
-        private Coroutine animationRoutine;
+        private Sequence animationSequence;
         private Vector2 baseAnchoredPosition;
 
         private void Awake()
@@ -33,6 +33,11 @@ namespace Arcanist
 
             if (rectTransform != null)
                 baseAnchoredPosition = rectTransform.anchoredPosition;
+        }
+
+        private void OnDisable()
+        {
+            KillAnimation();
         }
 
         public void Initialize(CardData cardData)
@@ -56,10 +61,30 @@ namespace Arcanist
         {
             gameObject.SetActive(true);
 
-            if (animationRoutine != null)
-                StopCoroutine(animationRoutine);
+            KillAnimation();
 
-            animationRoutine = StartCoroutine(ShowRoutine());
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0.0f;
+                canvasGroup.blocksRaycasts = false;
+                canvasGroup.interactable = false;
+            }
+
+            if (rectTransform != null)
+                rectTransform.anchoredPosition = baseAnchoredPosition + showStartOffset;
+
+            animationSequence = DOTween.Sequence().SetUpdate(true);
+
+            if (canvasGroup != null)
+                animationSequence.Join(canvasGroup
+                    .DOFade(1.0f, Mathf.Max(0.01f, showDuration))
+                    .SetEase(Ease.OutCubic));
+            if (rectTransform != null)
+                animationSequence.Join(rectTransform
+                    .DOAnchorPos(baseAnchoredPosition, Mathf.Max(0.01f, showDuration))
+                    .SetEase(Ease.OutCubic));
+
+            animationSequence.OnComplete(() => animationSequence = null);
         }
 
         public void PlayHide(Action onComplete = null)
@@ -71,19 +96,29 @@ namespace Arcanist
                 return;
             }
 
-            if (animationRoutine != null)
-                StopCoroutine(animationRoutine);
+            KillAnimation();
+            animationSequence = DOTween.Sequence().SetUpdate(true);
 
-            animationRoutine = StartCoroutine(HideRoutine(onComplete));
+            if (canvasGroup != null)
+                animationSequence.Join(canvasGroup
+                    .DOFade(0.0f, Mathf.Max(0.01f, hideDuration))
+                    .SetEase(Ease.OutCubic));
+            if (rectTransform != null)
+                animationSequence.Join(rectTransform
+                    .DOAnchorPos(baseAnchoredPosition + hideEndOffset, Mathf.Max(0.01f, hideDuration))
+                    .SetEase(Ease.OutCubic));
+
+            animationSequence.OnComplete(() =>
+            {
+                animationSequence = null;
+                HideImmediate();
+                onComplete?.Invoke();
+            });
         }
 
         public void HideImmediate()
         {
-            if (animationRoutine != null)
-            {
-                StopCoroutine(animationRoutine);
-                animationRoutine = null;
-            }
+            KillAnimation();
 
             if (canvasGroup != null)
             {
@@ -98,75 +133,10 @@ namespace Arcanist
             gameObject.SetActive(false);
         }
 
-        private IEnumerator ShowRoutine()
+        private void KillAnimation()
         {
-            float elapsed = 0.0f;
-
-            if (canvasGroup != null)
-            {
-                canvasGroup.alpha = 0.0f;
-                canvasGroup.blocksRaycasts = false;
-                canvasGroup.interactable = false;
-            }
-
-            Vector2 startPosition = baseAnchoredPosition + showStartOffset;
-
-            if (rectTransform != null)
-                rectTransform.anchoredPosition = startPosition;
-
-            while (elapsed < showDuration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-                float t = showDuration <= 0.0f ? 1.0f : Mathf.Clamp01(elapsed / showDuration);
-                float eased = EaseOutCubic(t);
-
-                if (canvasGroup != null)
-                    canvasGroup.alpha = eased;
-
-                if (rectTransform != null)
-                    rectTransform.anchoredPosition = Vector2.LerpUnclamped(startPosition, baseAnchoredPosition, eased);
-
-                yield return null;
-            }
-
-            if (canvasGroup != null)
-                canvasGroup.alpha = 1.0f;
-
-            if (rectTransform != null)
-                rectTransform.anchoredPosition = baseAnchoredPosition;
-
-            animationRoutine = null;
-        }
-
-        private IEnumerator HideRoutine(Action onComplete)
-        {
-            float elapsed = 0.0f;
-            Vector2 startPosition = rectTransform != null ? rectTransform.anchoredPosition : baseAnchoredPosition;
-            Vector2 endPosition = baseAnchoredPosition + hideEndOffset;
-
-            while (elapsed < hideDuration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-                float t = hideDuration <= 0.0f ? 1.0f : Mathf.Clamp01(elapsed / hideDuration);
-                float eased = EaseOutCubic(t);
-
-                if (canvasGroup != null)
-                    canvasGroup.alpha = Mathf.Lerp(1.0f, 0.0f, eased);
-
-                if (rectTransform != null)
-                    rectTransform.anchoredPosition = Vector2.LerpUnclamped(startPosition, endPosition, eased);
-
-                yield return null;
-            }
-
-            HideImmediate();
-            onComplete?.Invoke();
-        }
-
-        private static float EaseOutCubic(float t)
-        {
-            t = Mathf.Clamp01(t);
-            return 1.0f - Mathf.Pow(1.0f - t, 3.0f);
+            animationSequence?.Kill();
+            animationSequence = null;
         }
     }
 }

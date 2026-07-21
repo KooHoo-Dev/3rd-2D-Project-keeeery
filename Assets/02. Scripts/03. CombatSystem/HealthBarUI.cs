@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +19,8 @@ namespace Arcanist
         [SerializeField] private float healFlashDuration = 0.5f;
 
         private Color defaultHpBarColor;
-        private Coroutine hpDelayCoroutine;
-        private Coroutine healFlashCoroutine;
+        private Sequence hpDelaySequence;
+        private Tween healFlashTween;
 
         private void Awake()
         {
@@ -28,8 +28,14 @@ namespace Arcanist
                 defaultHpBarColor = hpBarImage.color;
         }
 
+        private void OnDisable()
+        {
+            KillTweens();
+        }
+
         public void Initialize(int currentHp, int maxHp)
         {
+            KillTweens();
             UpdateHpBar(currentHp, maxHp);
             UpdateDelayBar(currentHp, maxHp);
         }
@@ -45,6 +51,8 @@ namespace Arcanist
 
         public void ApplyHeal(int currentHp, int maxHp)
         {
+            hpDelaySequence?.Kill();
+            hpDelaySequence = null;
             UpdateHpBar(currentHp, maxHp);
             UpdateDelayBar(currentHp, maxHp);
             PlayHealEffect();
@@ -76,64 +84,45 @@ namespace Arcanist
         {
             if (hpDelayBar == null) return;
 
-            if (hpDelayCoroutine != null)
-                StopCoroutine(hpDelayCoroutine);
+            hpDelaySequence?.Kill();
 
             Vector3 scale = hpDelayBar.localScale;
             scale.x = beforeRatio * maxHpBarScaleX;
             hpDelayBar.localScale = scale;
 
-            hpDelayCoroutine = StartCoroutine(DelayHpBarCoroutine(afterRatio));
-        }
+            float targetScale = afterRatio * maxHpBarScaleX;
+            float distance = Mathf.Abs(scale.x - targetScale);
+            float duration = hpDelaySpeed <= 0.0f
+                ? 0.01f
+                : Mathf.Max(0.01f, distance / hpDelaySpeed);
 
-        private IEnumerator DelayHpBarCoroutine(float targetRatio)
-        {
-            yield return new WaitForSeconds(hpDelayStartTime);
-
-            float targetScale = targetRatio * maxHpBarScaleX;
-
-            while (hpDelayBar != null && hpDelayBar.localScale.x > targetScale)
-            {
-                Vector3 scale = hpDelayBar.localScale;
-                scale.x = Mathf.MoveTowards(scale.x, targetScale, hpDelaySpeed * Time.deltaTime);
-                hpDelayBar.localScale = scale;
-
-                yield return null;
-            }
-
-            hpDelayCoroutine = null;
+            hpDelaySequence = DOTween.Sequence()
+                .AppendInterval(Mathf.Max(0.0f, hpDelayStartTime))
+                .Append(hpDelayBar.DOScaleX(targetScale, duration).SetEase(Ease.Linear))
+                .OnComplete(() => hpDelaySequence = null);
         }
 
         private void PlayHealEffect()
         {
             if (hpBarImage == null) return;
 
-            if (healFlashCoroutine != null)
-                StopCoroutine(healFlashCoroutine);
-
-            healFlashCoroutine = StartCoroutine(HealBarFlashCoroutine());
+            healFlashTween?.Kill();
+            hpBarImage.color = healColor;
+            healFlashTween = hpBarImage
+                .DOColor(defaultHpBarColor, Mathf.Max(0.01f, healFlashDuration))
+                .SetEase(Ease.Linear)
+                .OnComplete(() => healFlashTween = null);
         }
 
-        private IEnumerator HealBarFlashCoroutine()
+        private void KillTweens()
         {
-            hpBarImage.color = healColor;
+            hpDelaySequence?.Kill();
+            healFlashTween?.Kill();
+            hpDelaySequence = null;
+            healFlashTween = null;
 
-            float elapsedTime = 0.0f;
-
-            while (elapsedTime < healFlashDuration)
-            {
-                float normalizedTime = healFlashDuration <= 0.0f
-                    ? 1.0f
-                    : elapsedTime / healFlashDuration;
-
-                hpBarImage.color = Color.Lerp(healColor, defaultHpBarColor, normalizedTime);
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            hpBarImage.color = defaultHpBarColor;
-            healFlashCoroutine = null;
+            if (hpBarImage != null)
+                hpBarImage.color = defaultHpBarColor;
         }
 
         private float GetHpRatio(int currentHp, int maxHp)

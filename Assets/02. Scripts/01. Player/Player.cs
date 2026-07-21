@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,6 +40,7 @@ namespace Arcanist
 
         private SpriteRenderer spriteRenderer;
         private Material instanceMaterial;
+        private Tween hitEffectTween;
         private float currentStamina;
 
         private PlayerController PlayerController { get; set; }
@@ -83,25 +84,31 @@ namespace Arcanist
             if (healthBarUI != null)
                 healthBarUI.ApplyDamage(beforeHp, Stat.Hp, Stat.MaxHp);
 
-            StartCoroutine(HitEffectCoroutine());
+            PlayHitEffect();
         }
 
-        private IEnumerator HitEffectCoroutine()
+        private void OnDestroy()
         {
-            float waitTime = 0.0f;
+            hitEffectTween?.Kill();
 
-            while (true)
-            {
-                if (waitTime > hitEffectDuration) break;
+            if (instanceMaterial != null)
+                Destroy(instanceMaterial);
+        }
 
-                float blendValue = Mathf.Lerp(HIT_EFFECT_VALUE, 0.0f, waitTime / hitEffectDuration);
-                instanceMaterial.SetFloat(HIT_EFFECT_BLEND, blendValue);
+        private void PlayHitEffect()
+        {
+            if (instanceMaterial == null)
+                return;
 
-                yield return null;
-                waitTime += Time.deltaTime;
-            }
-
-            instanceMaterial.SetFloat(HIT_EFFECT_BLEND, 0.0f);
+            hitEffectTween?.Kill();
+            instanceMaterial.SetFloat(HIT_EFFECT_BLEND, HIT_EFFECT_VALUE);
+            hitEffectTween = DOTween.To(
+                    () => instanceMaterial.GetFloat(HIT_EFFECT_BLEND),
+                    value => instanceMaterial.SetFloat(HIT_EFFECT_BLEND, value),
+                    0.0f,
+                    Mathf.Max(0.01f, hitEffectDuration))
+                .SetEase(Ease.Linear)
+                .OnComplete(() => hitEffectTween = null);
         }
 
         public bool HasStamina(float amount)

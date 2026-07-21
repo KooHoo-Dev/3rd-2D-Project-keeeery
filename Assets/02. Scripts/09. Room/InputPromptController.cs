@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ namespace Arcanist
 
         private CanvasGroup upPromptGroup;
         private CanvasGroup downPromptGroup;
-        private Coroutine fadeRoutine;
+        private Tween fadeTween;
         private bool isVisible;
         private bool isDownPromptVisible;
         private bool isQuittingOrDestroyed;
@@ -33,13 +33,13 @@ namespace Arcanist
 
         private void OnDisable()
         {
-            StopFadeRoutine();
+            KillFadeTween();
         }
 
         private void OnDestroy()
         {
             isQuittingOrDestroyed = true;
-            StopFadeRoutine();
+            KillFadeTween();
         }
 
         public void ShowRewardPrompt()
@@ -63,7 +63,7 @@ namespace Arcanist
 
             if (isQuittingOrDestroyed || !isActiveAndEnabled)
             {
-                StopFadeRoutine();
+                KillFadeTween();
                 SetPromptAlpha(0.0f);
                 SetPromptInteractable(false);
                 return;
@@ -113,7 +113,7 @@ namespace Arcanist
             isVisible = false;
             isDownPromptVisible = false;
 
-            StopFadeRoutine();
+            KillFadeTween();
 
             SetPromptActive(true, true);
             SetPromptAlpha(0.0f);
@@ -162,46 +162,35 @@ namespace Arcanist
                 return;
             }
 
-            StopFadeRoutine();
-            fadeRoutine = StartCoroutine(FadeRoutine(show));
-        }
-
-        private void StopFadeRoutine()
-        {
-            if (fadeRoutine == null)
-                return;
-
-            StopCoroutine(fadeRoutine);
-            fadeRoutine = null;
-        }
-
-        private IEnumerator FadeRoutine(bool show)
-        {
+            KillFadeTween();
             SetPromptActive(true, show && isDownPromptVisible);
             SetPromptInteractable(show);
 
-            float startAlpha = upPromptGroup != null ? upPromptGroup.alpha : 0.0f;
             float targetAlpha = show ? 1.0f : 0.0f;
-            float time = 0.0f;
+            float startAlpha = upPromptGroup != null ? upPromptGroup.alpha : 0.0f;
 
-            while (time < fadeDuration)
-            {
-                time += Time.unscaledDeltaTime;
+            fadeTween = DOTween.To(
+                    () => startAlpha,
+                    SetPromptAlpha,
+                    targetAlpha,
+                    Mathf.Max(0.0f, fadeDuration))
+                .SetEase(Ease.Linear)
+                .SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    SetPromptAlpha(targetAlpha);
 
-                float t = fadeDuration <= 0.0f
-                    ? 1.0f
-                    : Mathf.Clamp01(time / fadeDuration);
+                    if (!show)
+                        SetPromptInteractable(false);
 
-                SetPromptAlpha(Mathf.Lerp(startAlpha, targetAlpha, t));
-                yield return null;
-            }
+                    fadeTween = null;
+                });
+        }
 
-            SetPromptAlpha(targetAlpha);
-
-            if (!show)
-                SetPromptInteractable(false);
-
-            fadeRoutine = null;
+        private void KillFadeTween()
+        {
+            fadeTween?.Kill();
+            fadeTween = null;
         }
 
         private void SetPromptAlpha(float alpha)
