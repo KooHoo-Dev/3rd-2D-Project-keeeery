@@ -248,11 +248,24 @@ namespace Arcanist
 
         public void ReturnToCheckpoint()
         {
-            CheckPointManager.Instance.ReturnToCheckpoint();
+            CheckPointManager.Instance.ReturnToCheckpoint(HideOverlayForRespawn);
         }
 
+        private void HideOverlayForRespawn()
+        {
+            CurrentState = OverlayState.None;
 
-        
+            if (fadeRoutine != null)
+            {
+                StopCoroutine(fadeRoutine);
+                fadeRoutine = null;
+            }
+
+            HideAllWindows();
+            overlayGroup.alpha = 0.0f;
+            overlayRoot.SetActive(false);
+            globalLight.intensity = normalLightIntensity;
+        }
 
         private IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration)
         {

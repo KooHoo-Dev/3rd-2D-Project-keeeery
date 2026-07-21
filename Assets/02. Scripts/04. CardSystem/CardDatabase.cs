@@ -16,6 +16,8 @@ namespace Arcanist
 
         private Dictionary<string, CardData> cardLookup;
 
+        public IReadOnlyList<CardData> AllCards => allCards;
+
         private void OnDestroy()
         {
             if (instance == this)
@@ -72,9 +74,5 @@ namespace Arcanist
             return card;
         }
 
-        public List<CardData> GetAllCards()
-        {
-            return new List<CardData>(allCards);
-        }
     }
 }

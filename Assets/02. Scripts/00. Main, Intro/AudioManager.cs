@@ -6,10 +6,22 @@ namespace Arcanist
 {
     public class AudioManager : SingletonBase<AudioManager>
     {
+        private const string MASTER_VOLUME_KEY = "Option.MasterVolume";
+
         [SerializeField] private AudioSource bgmSource;
         [SerializeField] private float fadeDuration = 1.0f;
 
         private Coroutine bgmRoutine;
+
+        public float MasterVolume => AudioListener.volume;
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            float savedVolume = PlayerPrefs.GetFloat(MASTER_VOLUME_KEY, 1.0f);
+            ApplyMasterVolume(savedVolume);
+        }
 
         protected override void Awake()
         {
@@ -19,6 +31,20 @@ namespace Arcanist
 
             transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
+        }
+
+        public void SetMasterVolume(float value)
+        {
+            float clampedValue = Mathf.Clamp01(value);
+            ApplyMasterVolume(clampedValue);
+
+            PlayerPrefs.SetFloat(MASTER_VOLUME_KEY, clampedValue);
+            PlayerPrefs.Save();
+        }
+
+        private void ApplyMasterVolume(float value)
+        {
+            AudioListener.volume = value;
         }
 
         public void PlayBGM(AudioClip clip)

@@ -1,4 +1,3 @@
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -86,14 +85,6 @@ namespace Arcanist
                 owner.ToggleSelectedCardDeck();
         }
 
-        public void HandleDropped(PointerEventData eventData)
-        {
-            if (cardData == null)
-                return;
-
-            owner.HandleCardDropped(this, eventData);
-        }
-
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (cardData == null)
@@ -106,7 +97,7 @@ namespace Arcanist
         {
             if (cardIcon != null)
             {
-                Sprite icon = GetCardIcon(cardData);
+                Sprite icon = cardData != null ? cardData.Icon : null;
                 cardIcon.sprite = icon;
                 cardIcon.color = cardData == null ? emptyColor : isOwned ? normalColor : lockedColor;
                 cardIcon.enabled = cardData != null && icon != null;
@@ -151,26 +142,5 @@ namespace Arcanist
             tooltipTrigger.SetCard(cardData, isOwned);
         }
 
-        private Sprite GetCardIcon(CardData data)
-        {
-            if (data == null)
-                return null;
-
-            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            string[] memberNames = { "Icon", "CardIcon", "Sprite", "cardIcon", "icon", "sprite" };
-
-            foreach (string memberName in memberNames)
-            {
-                PropertyInfo property = data.GetType().GetProperty(memberName, flags);
-                if (property != null && typeof(Sprite).IsAssignableFrom(property.PropertyType))
-                    return property.GetValue(data) as Sprite;
-
-                FieldInfo field = data.GetType().GetField(memberName, flags);
-                if (field != null && typeof(Sprite).IsAssignableFrom(field.FieldType))
-                    return field.GetValue(data) as Sprite;
-            }
-
-            return null;
-        }
     }
 }

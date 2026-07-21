@@ -30,10 +30,17 @@ namespace Arcanist
         private GameObject currentRoom;
         private int currentRoomIndex = -1;
         private bool isTransitioning;
+        private RoomFactory roomFactory;
 
         private void Awake()
         {
             Instance = this;
+            roomFactory = CreateRoomFactory();
+        }
+
+        protected virtual RoomFactory CreateRoomFactory()
+        {
+            return new PrefabRoomFactory();
         }
 
         private void Start()
@@ -181,15 +188,21 @@ namespace Arcanist
                 roomRoot = transform;
 
             currentRoomIndex = roomIndex;
-            currentRoom = Instantiate(roomPrefabs[currentRoomIndex], roomRoot, false);
-            currentRoom.transform.localPosition = roomSpawnPosition;
+            currentRoom = roomFactory.CreateRoom(
+                roomPrefabs[currentRoomIndex],
+                roomRoot,
+                roomSpawnPosition,
+                this,
+                skipEnemySpawn,
+                rewardObtained);
+
+            if (currentRoom == null)
+            {
+                Debug.LogError($"[RoomManager] Failed to create room at index {roomIndex}.", this);
+                return;
+            }
 
             AlignRoomToPlayerSpawnPoint();
-
-            if (skipEnemySpawn)
-                DisableEnemyRoomController();
-
-            InitializeRoomController(skipEnemySpawn, rewardObtained);
             MovePlayerToSpawnPoint();
         }
 
@@ -209,27 +222,6 @@ namespace Arcanist
             Vector3 offset = player.position - spawnPoint.position;
             offset.z = 0.0f;
             currentRoom.transform.position += offset;
-        }
-
-        private void DisableEnemyRoomController()
-        {
-            if (currentRoom == null)
-                return;
-
-            EnemyRoomController enemyRoomController = currentRoom.GetComponentInChildren<EnemyRoomController>(true);
-
-            if (enemyRoomController == null)
-                return;
-
-            enemyRoomController.gameObject.SetActive(false);
-            Debug.Log("[RoomManager] Enemy room controller disabled for cleared checkpoint room.", currentRoom);
-        }
-
-        private void InitializeRoomController(bool startCleared, bool rewardObtained)
-        {
-            RoomController roomController = currentRoom.GetComponentInChildren<RoomController>();
-
-            roomController?.Initialize(this, startCleared, rewardObtained);
         }
 
         private void MovePlayerToSpawnPoint()

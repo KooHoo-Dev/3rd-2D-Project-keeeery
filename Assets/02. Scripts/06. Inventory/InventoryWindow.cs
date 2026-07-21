@@ -1,14 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Arcanist
 {
     public class InventoryWindow : MonoBehaviour
     {
+        private const string DECK_CONDITION_WARNING_MESSAGE = "카드 수와 마력 용량 조건을 만족해야 합니다.";
+
         [Header("Debug References")]
         [SerializeField] private CardDatabase cardDatabase;
         [SerializeField] private PlayerInventory playerInventory;
@@ -19,22 +18,21 @@ namespace Arcanist
         [SerializeField] private int deckCardCount;
         [SerializeField] private int maxDeckCardCount;
 
-        [Header("Slot")]
-        [SerializeField] private InventoryCardSlot cardSlotPrefab;
+        [Header("Slot Views")]
+        [SerializeField] private InventorySlotList allCardSlotList;
+        [SerializeField] private InventorySlotList deckSlotList;
 
-        [Header("Parents")]
+        [Header("Legacy Slot References")]
+        [Tooltip("Slot Views가 비어 있을 때 자동 구성에 사용합니다.")]
+        [SerializeField] private InventoryCardSlot cardSlotPrefab;
         [SerializeField] private Transform allCardContent;
         [SerializeField] private Transform deckContent;
-
-        [Header("Drag Drop Areas")]
-        [SerializeField] private RectTransform collectionDropArea;
-        [SerializeField] private RectTransform deckDropArea;
 
         [Header("Deck Edit Action")]
         [SerializeField] private TMP_Text deckEditActionText;
         [SerializeField] private Color actionActiveColor = Color.white;
-        [SerializeField] private Color actionInactiveColor = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-        [SerializeField] private Color actionPressedColor = new Color(0.55f, 0.55f, 0.55f, 1.0f);
+        [SerializeField] private Color actionInactiveColor = new(1.0f, 1.0f, 1.0f, 0.35f);
+        [SerializeField] private Color actionPressedColor = new(0.55f, 0.55f, 0.55f, 1.0f);
         [SerializeField] private float actionHoverScale = 1.08f;
 
         [Header("Count Text")]
@@ -42,40 +40,26 @@ namespace Arcanist
         [SerializeField] private TMP_Text deckCardCountText;
         [SerializeField] private TMP_Text deckManaCostText;
 
-        [Header("Guide Message")]
+        [Header("Guide View")]
+        [SerializeField] private InventoryGuideMessage guideMessage;
+
+        [Header("Legacy Guide References")]
+        [Tooltip("Guide View가 비어 있을 때 자동 구성에 사용합니다.")]
         [SerializeField] private TMP_Text guideMessageText;
         [SerializeField] private float guideMessageDuration = 1.2f;
         [SerializeField] private float guideMessageFadeOutDuration = 0.3f;
-
-        [Header("Blocked Close Feedback")]
         [SerializeField] private float blockedCloseShakeDistance = 8.0f;
         [SerializeField] private float blockedCloseShakeDuration = 0.18f;
 
         [Header("Rules")]
         [SerializeField] private bool canEditDeck = true;
 
-        [ContextMenu("Debug Refresh References")]
-        private void DebugRefreshReferences()
-        {
-            cardDatabase = CardDatabase.Instance != null ? CardDatabase.Instance : FindFirstObjectByType<CardDatabase>();
-            playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
-            Refresh();
-        }
-
-        private readonly List<InventoryCardSlot> allCardSlots = new List<InventoryCardSlot>();
-        private readonly List<InventoryCardSlot> deckSlots = new List<InventoryCardSlot>();
         private InventoryCardSlot selectedCollectionSlot;
         private InventoryCardSlot selectedDeckSlot;
-        private const string DECK_CONDITION_WARNING_MESSAGE = "카드 수와 마력 용량 조건을 만족해야 합니다.";
-
         private Vector3 actionDefaultScale = Vector3.one;
         private bool canUseDeckEdit;
-        private RectTransform guideMessageRect;
-        private Vector2 guideMessageDefaultPosition;
-        private CanvasGroup guideMessageGroup;
-        private Coroutine guideMessageRoutine;
-        private Coroutine guideMessageShakeRoutine;
-        private bool isMinimumDeckWarningVisible;
+        private bool isDeckConditionWarningVisible;
+        private bool suppressInventoryRefresh;
 
         public CardDatabase CardDatabase => cardDatabase;
         public PlayerInventory PlayerInventory => playerInventory;
@@ -84,7 +68,7 @@ namespace Arcanist
         private void Awake()
         {
             ResolveReferences();
-            CacheGuideMessageComponents();
+            ConfigureViews();
 
             if (deckEditActionText != null)
                 actionDefaultScale = deckEditActionText.rectTransform.localScale;
@@ -93,18 +77,266 @@ namespace Arcanist
         private void OnEnable()
         {
             ResolveReferences();
-            CacheGuideMessageComponents();
+            ConfigureViews();
 
             if (playerInventory != null)
-                playerInventory.OnInventoryChanged += Refresh;
+                playerInventory.OnInventoryChanged += HandleInventoryChanged;
 
             Refresh();
         }
 
-        public void PlayMinimumDeckWarningFeedback()
+        private void OnDisable()
         {
-            ShowDeckConditionWarning(true);
-            ShakeGuideMessage();
+            if (playerInventory != null)
+                playerInventory.OnInventoryChanged -= HandleInventoryChanged;
+        }
+
+        [ContextMenu("Debug Refresh References")]
+        private void DebugRefreshReferences()
+        {
+            cardDatabase = CardDatabase.Instance != null
+                ? CardDatabase.Instance
+                : FindFirstObjectByType<CardDatabase>();
+            playerInventory = PlayerInventory.Instance != null
+                ? PlayerInventory.Instance
+                : FindFirstObjectByType<PlayerInventory>();
+            Refresh();
+        }
+
+        private void ResolveReferences()
+        {
+            if (cardDatabase == null)
+                cardDatabase = CardDatabase.Instance != null
+                    ? CardDatabase.Instance
+                    : FindFirstObjectByType<CardDatabase>();
+
+            if (playerInventory == null)
+                playerInventory = PlayerInventory.Instance != null
+                    ? PlayerInventory.Instance
+                    : FindFirstObjectByType<PlayerInventory>();
+        }
+
+        private void ConfigureViews()
+        {
+            allCardSlotList = ResolveSlotList(allCardSlotList, allCardContent);
+            deckSlotList = ResolveSlotList(deckSlotList, deckContent);
+
+            allCardSlotList?.Configure(cardSlotPrefab, allCardContent);
+            deckSlotList?.Configure(cardSlotPrefab, deckContent);
+
+            if (guideMessage == null && guideMessageText != null)
+                guideMessage = guideMessageText.GetComponent<InventoryGuideMessage>()
+                    ?? guideMessageText.gameObject.AddComponent<InventoryGuideMessage>();
+
+            guideMessage?.Configure(
+                guideMessageText,
+                guideMessageDuration,
+                guideMessageFadeOutDuration,
+                blockedCloseShakeDistance,
+                blockedCloseShakeDuration);
+        }
+
+        private static InventorySlotList ResolveSlotList(InventorySlotList slotList, Transform content)
+        {
+            if (slotList != null || content == null)
+                return slotList;
+
+            return content.GetComponent<InventorySlotList>()
+                ?? content.gameObject.AddComponent<InventorySlotList>();
+        }
+
+        private void Refresh()
+        {
+            ResolveReferences();
+            ConfigureViews();
+            ClearSelection();
+
+            List<CardData> cards = GetSortedAllCards();
+            allCardCount = cards.Count;
+            allCardSlotList?.RenderCollection(this, cards, playerInventory);
+
+            if (playerInventory != null)
+            {
+                deckSlotList?.RenderDeck(
+                    this,
+                    playerInventory.DeckCards,
+                    playerInventory.MaxDeckCardCount);
+            }
+            else
+            {
+                deckSlotList?.ReleaseAll();
+            }
+
+            RefreshCountText();
+            RefreshButtonState();
+        }
+
+        private void HandleInventoryChanged()
+        {
+            if (!suppressInventoryRefresh)
+                Refresh();
+        }
+
+        private List<CardData> GetSortedAllCards()
+        {
+            List<CardData> result = new();
+
+            if (cardDatabase == null || playerInventory == null)
+                return result;
+
+            List<CardData> ownedInDeckCards = new();
+            List<CardData> unownedCards = new();
+
+            foreach (CardData card in cardDatabase.AllCards)
+            {
+                if (card == null)
+                    continue;
+
+                if (!playerInventory.HasCard(card))
+                    unownedCards.Add(card);
+                else if (playerInventory.IsInDeck(card))
+                    ownedInDeckCards.Add(card);
+                else
+                    result.Add(card);
+            }
+
+            result.AddRange(ownedInDeckCards);
+            result.AddRange(unownedCards);
+            return result;
+        }
+
+        public void SelectSlot(InventoryCardSlot slot)
+        {
+            if (slot == null)
+                return;
+
+            if (slot.SlotArea == InventoryCardSlotArea.Collection)
+                SelectCollectionSlot(slot);
+            else
+                SelectDeckSlot(slot);
+
+            RefreshButtonState();
+        }
+
+        private void SelectCollectionSlot(InventoryCardSlot slot)
+        {
+            if (!slot.IsOwned)
+            {
+                ClearSelection();
+                return;
+            }
+
+            selectedCollectionSlot?.SetSelected(false);
+            selectedDeckSlot?.SetSelected(false);
+            selectedCollectionSlot = slot;
+            selectedDeckSlot = null;
+            selectedCollectionSlot.SetSelected(true);
+        }
+
+        private void SelectDeckSlot(InventoryCardSlot slot)
+        {
+            selectedCollectionSlot?.SetSelected(false);
+            selectedDeckSlot?.SetSelected(false);
+            selectedCollectionSlot = null;
+            selectedDeckSlot = slot;
+            selectedDeckSlot.SetSelected(true);
+        }
+
+        private void ClearSelection()
+        {
+            selectedCollectionSlot?.SetSelected(false);
+            selectedDeckSlot?.SetSelected(false);
+            selectedCollectionSlot = null;
+            selectedDeckSlot = null;
+        }
+
+        public void ToggleSelectedCardDeck()
+        {
+            if (!canEditDeck)
+                return;
+
+            if (selectedCollectionSlot != null)
+                TryAddCardToDeck(selectedCollectionSlot.CardData);
+            else if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
+                playerInventory?.RemoveFromDeckAt(selectedDeckSlot.DeckIndex);
+        }
+
+        public void AddCardToDeck(CardData cardData)
+        {
+            if (canEditDeck)
+                TryAddCardToDeck(cardData);
+        }
+
+        private void TryAddCardToDeck(CardData cardData)
+        {
+            if (playerInventory == null || cardData == null)
+                return;
+
+            if (playerInventory.IsInDeck(cardData))
+            {
+                guideMessage?.ShowTemporary("해당 카드가 카드 덱에 이미 존재합니다.");
+                return;
+            }
+
+            if (playerInventory.IsDeckFull())
+            {
+                guideMessage?.ShowTemporary("카드 덱이 가득 찼습니다.");
+                return;
+            }
+
+            if (playerInventory.WouldExceedDeckManaCost(cardData))
+            {
+                guideMessage?.ShowTemporary("마력 용량을 초과합니다.");
+                return;
+            }
+
+            playerInventory.AddToDeck(cardData);
+        }
+
+        public void RemoveCardFromDeck(CardData cardData)
+        {
+            if (canEditDeck && playerInventory != null && cardData != null)
+                playerInventory.RemoveFromDeck(cardData);
+        }
+
+        public void MarkCardAsSeen(CardData cardData)
+        {
+            if (playerInventory == null || cardData == null || !playerInventory.IsNewCard(cardData))
+                return;
+
+            suppressInventoryRefresh = true;
+
+            try
+            {
+                playerInventory.MarkCardAsSeen(cardData);
+            }
+            finally
+            {
+                suppressInventoryRefresh = false;
+            }
+
+            bool wasSelected = selectedCollectionSlot?.CardData == cardData;
+            allCardSlotList?.MarkCardAsSeen(this, cardData);
+            selectedCollectionSlot?.SetSelected(wasSelected);
+        }
+
+        public void ShowUnownedCardMessage()
+        {
+            guideMessage?.ShowTemporary("아직 획득하지 못한 카드는 카드 덱에 추가할 수 없습니다.");
+        }
+
+        public void SetDeckEditMode(bool canEdit)
+        {
+            canEditDeck = canEdit;
+
+            if (canEditDeck)
+            {
+                isDeckConditionWarningVisible = false;
+                guideMessage?.Hide(false);
+                RefreshCountText();
+            }
+
+            RefreshButtonState();
         }
 
         public bool HasMinimumDeckCards()
@@ -117,146 +349,124 @@ namespace Arcanist
             return playerInventory != null && playerInventory.CanCompleteDeckEdit();
         }
 
-        private void CacheGuideMessageComponents()
+        public void PlayMinimumDeckWarningFeedback()
         {
-            if (guideMessageText == null)
+            ShowDeckConditionWarning();
+            guideMessage?.Shake();
+        }
+
+        private void RefreshCountText()
+        {
+            ownedCardCount = playerInventory != null ? playerInventory.OwnedCards.Count : 0;
+            deckCardCount = playerInventory != null ? playerInventory.DeckCards.Count : 0;
+            maxDeckCardCount = playerInventory != null ? playerInventory.MaxDeckCardCount : 0;
+
+            if (allCardCountText != null)
+                allCardCountText.text = $"{ownedCardCount} / {allCardCount}";
+
+            RefreshDeckCountText();
+            RefreshManaCostText();
+            RefreshDeckConditionWarning();
+        }
+
+        private void RefreshDeckCountText()
+        {
+            if (deckCardCountText == null)
                 return;
 
-            guideMessageRect = guideMessageText.rectTransform;
-            guideMessageDefaultPosition = guideMessageRect.anchoredPosition;
-            guideMessageGroup = guideMessageText.GetComponent<CanvasGroup>();
-
-            if (guideMessageGroup == null)
-                guideMessageGroup = guideMessageText.gameObject.AddComponent<CanvasGroup>();
-
-            guideMessageGroup.alpha = 0.0f;
-            guideMessageText.gameObject.SetActive(false);
+            deckCardCountText.text = playerInventory == null
+                ? "0 / 0"
+                : $"카드  현재 {deckCardCount} / 최소 {playerInventory.MinDeckCardCount}";
+            deckCardCountText.color = playerInventory != null && playerInventory.HasEnoughDeckCards()
+                ? Color.white
+                : Color.red;
         }
 
-        private void OnDisable()
+        private void RefreshManaCostText()
         {
-            if (playerInventory != null)
-                playerInventory.OnInventoryChanged -= Refresh;
+            if (deckManaCostText == null)
+                return;
+
+            int manaCost = playerInventory != null ? playerInventory.DeckManaCost : 0;
+            deckManaCostText.text = playerInventory == null
+                ? "0 / 0"
+                : $"마력  {manaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost}";
+            deckManaCostText.color = playerInventory != null && playerInventory.IsDeckManaCostValid()
+                ? Color.white
+                : Color.red;
         }
 
-        private void ResolveReferences()
+        private void RefreshDeckConditionWarning()
         {
-            if (cardDatabase == null)
-                cardDatabase = CardDatabase.Instance != null ? CardDatabase.Instance : FindFirstObjectByType<CardDatabase>();
+            if (playerInventory == null || !playerInventory.CanCompleteDeckEdit())
+            {
+                ShowDeckConditionWarning();
+                return;
+            }
 
+            if (isDeckConditionWarningVisible)
+            {
+                isDeckConditionWarningVisible = false;
+                guideMessage?.Hide(true);
+            }
+        }
+
+        private void ShowDeckConditionWarning()
+        {
+            guideMessage?.ShowPersistent(GetDeckConditionWarningMessage());
+            isDeckConditionWarningVisible = true;
+        }
+
+        private string GetDeckConditionWarningMessage()
+        {
             if (playerInventory == null)
-                playerInventory = PlayerInventory.Instance != null ? PlayerInventory.Instance : FindFirstObjectByType<PlayerInventory>();
+                return DECK_CONDITION_WARNING_MESSAGE;
 
-            RefreshDebugCounts();
+            int manaCost = playerInventory.DeckManaCost;
+
+            if (!playerInventory.HasEnoughDeckCards())
+                return $"카드 덱에는 최소 {playerInventory.MinDeckCardCount}장의 카드가 필요합니다.";
+            if (manaCost < playerInventory.MinDeckManaCost)
+                return $"마력 용량이 부족합니다. ({manaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
+            if (manaCost > playerInventory.MaxDeckManaCost)
+                return $"마력 용량을 초과했습니다. ({manaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
+
+            return DECK_CONDITION_WARNING_MESSAGE;
         }
 
-        public void SetDeckEditMode(bool canEdit)
+        private void RefreshButtonState()
         {
-            canEditDeck = canEdit;
-            RefreshButtonState();
-        }
-
-        private void Refresh()
-        {
-            ResolveReferences();
-
-            ClearSelection();
-            RefreshAllCards();
-            RefreshDeckCards();
-            RefreshCountText();
-            RefreshButtonState();
-        }
-
-        public void SelectSlot(InventoryCardSlot slot)
-        {
-            if (slot == null)
+            if (deckEditActionText == null)
                 return;
 
-            if (slot.SlotArea == InventoryCardSlotArea.Collection)
-            {
-                if (!slot.IsOwned)
-                {
-                    ClearSelection();
-                    RefreshButtonState();
-                    return;
-                }
+            canUseDeckEdit = false;
+            string actionText = string.Empty;
 
-                if (selectedCollectionSlot != null)
-                    selectedCollectionSlot.SetSelected(false);
-
-                selectedCollectionSlot = slot;
-                selectedCollectionSlot.SetSelected(true);
-
-                if (selectedDeckSlot != null)
-                {
-                    selectedDeckSlot.SetSelected(false);
-                    selectedDeckSlot = null;
-                }
-            }
-            else
-            {
-                if (selectedDeckSlot != null)
-                    selectedDeckSlot.SetSelected(false);
-
-                selectedDeckSlot = slot;
-                selectedDeckSlot.SetSelected(true);
-
-                if (selectedCollectionSlot != null)
-                {
-                    selectedCollectionSlot.SetSelected(false);
-                    selectedCollectionSlot = null;
-                }
-            }
-
-            RefreshButtonState();
-        }
-
-        public void ToggleSelectedCardDeck()
-        {
             if (!canEditDeck)
-                return;
-
-            if (selectedCollectionSlot != null)
             {
-                TryAddCardToDeck(selectedCollectionSlot.CardData);
-                return;
+                guideMessage?.ShowPersistent("현재 지역에서는 카드 덱 편집이 불가능합니다.");
+            }
+            else if (selectedCollectionSlot != null)
+            {
+                actionText = "추가 >>";
+                canUseDeckEdit = playerInventory != null
+                    && !playerInventory.IsDeckFull()
+                    && !playerInventory.WouldExceedDeckManaCost(selectedCollectionSlot.CardData);
+            }
+            else if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
+            {
+                actionText = "<< 제거";
+                canUseDeckEdit = true;
             }
 
-            if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
-                playerInventory.RemoveFromDeckAt(selectedDeckSlot.DeckIndex);
-        }
-
-        public void ShowUnownedCardMessage()
-        {
-            ShowGuideMessage("아직 획득하지 못한 카드는 카드 덱에 추가할 수 없습니다.");
-        }
-
-        public void HandleCardDropped(InventoryCardSlot sourceSlot, PointerEventData eventData)
-        {
-            if (!canEditDeck || sourceSlot == null || sourceSlot.CardData == null)
-                return;
-
-            RectTransform targetDeckArea = deckDropArea != null ? deckDropArea : deckContent as RectTransform;
-            RectTransform targetCollectionArea = collectionDropArea != null ? collectionDropArea : allCardContent as RectTransform;
-
-            if (sourceSlot.SlotArea == InventoryCardSlotArea.Collection)
-            {
-                if (IsPointerInside(targetDeckArea, eventData))
-                    TryAddCardToDeck(sourceSlot.CardData);
-
-                return;
-            }
-
-            if (sourceSlot.SlotArea == InventoryCardSlotArea.Deck && IsPointerInside(targetCollectionArea, eventData))
-                playerInventory.RemoveFromDeckAt(sourceSlot.DeckIndex);
+            deckEditActionText.text = actionText;
+            deckEditActionText.color = canUseDeckEdit ? actionActiveColor : actionInactiveColor;
         }
 
         public void OnDeckEditActionPointerEnter()
         {
-            if (deckEditActionText == null || !canUseDeckEdit)
-                return;
-
-            deckEditActionText.rectTransform.localScale = actionDefaultScale * actionHoverScale;
+            if (deckEditActionText != null && canUseDeckEdit)
+                deckEditActionText.rectTransform.localScale = actionDefaultScale * actionHoverScale;
         }
 
         public void OnDeckEditActionPointerExit()
@@ -270,440 +480,13 @@ namespace Arcanist
 
         public void OnDeckEditActionPointerDown()
         {
-            if (deckEditActionText == null || !canUseDeckEdit)
-                return;
-
-            deckEditActionText.color = actionPressedColor;
+            if (deckEditActionText != null && canUseDeckEdit)
+                deckEditActionText.color = actionPressedColor;
         }
 
         public void OnDeckEditActionPointerUp()
         {
-            if (deckEditActionText == null)
-                return;
-
             RefreshButtonState();
-        }
-
-        public void AddCardToDeck(CardData cardData)
-        {
-            if (!canEditDeck || cardData == null)
-                return;
-
-            TryAddCardToDeck(cardData);
-        }
-        private void TryAddCardToDeck(CardData cardData)
-        {
-            if (cardData == null)
-                return;
-
-            if (playerInventory.IsInDeck(cardData))
-            {
-                ShowGuideMessage("해당 카드가 카드 덱에 이미 존재합니다.");
-                return;
-            }
-
-            if (playerInventory.IsDeckFull())
-            {
-                ShowGuideMessage("카드 덱이 가득 찼습니다.");
-                return;
-            }
-
-            if (playerInventory.WouldExceedDeckManaCost(cardData))
-            {
-                ShowGuideMessage("마력 용량을 초과합니다.");
-                return;
-            }
-
-            playerInventory.AddToDeck(cardData);
-        }
-
-        private bool IsPointerInside(RectTransform targetRect, PointerEventData eventData)
-        {
-            if (targetRect == null)
-                return false;
-
-            return RectTransformUtility.RectangleContainsScreenPoint(
-                targetRect,
-                eventData.position,
-                eventData.pressEventCamera);
-        }
-
-        public void RemoveCardFromDeck(CardData cardData)
-        {
-            if (!canEditDeck || cardData == null)
-                return;
-
-            playerInventory.RemoveFromDeck(cardData);
-        }
-
-        public void MarkCardAsSeen(CardData cardData)
-        {
-            playerInventory.MarkCardAsSeen(cardData);
-        }
-
-        private void RefreshAllCards()
-        {
-            ClearChildren(allCardContent);
-            allCardSlots.Clear();
-
-            if (playerInventory == null || cardSlotPrefab == null || allCardContent == null)
-                return;
-
-            List<CardData> sortedCards = GetSortedAllCards();
-
-            foreach (CardData cardData in sortedCards)
-            {
-                InventoryCardSlot slot = Instantiate(cardSlotPrefab, allCardContent);
-                bool owned = playerInventory.HasCard(cardData);
-                bool isNew = playerInventory.IsNewCard(cardData);
-                slot.Setup(this, cardData, InventoryCardSlotArea.Collection, owned, isNew);
-                allCardSlots.Add(slot);
-            }
-        }
-
-        private void RefreshDeckCards()
-        {
-            ClearChildren(deckContent);
-            deckSlots.Clear();
-
-            if (playerInventory == null || cardSlotPrefab == null || deckContent == null)
-                return;
-
-            IReadOnlyList<CardData> deckCards = playerInventory.DeckCards;
-            int slotCount = Mathf.Max(playerInventory.MaxDeckCardCount, deckCards.Count);
-
-            for (int i = 0; i < slotCount; i++)
-            {
-                CardData cardData = i < deckCards.Count ? deckCards[i] : null;
-                InventoryCardSlot slot = Instantiate(cardSlotPrefab, deckContent);
-                slot.Setup(this, cardData, InventoryCardSlotArea.Deck, cardData != null, false, i);
-                deckSlots.Add(slot);
-            }
-        }
-
-        private List<CardData> GetSortedAllCards()
-        {
-            List<CardData> ownedNotInDeckCards = new List<CardData>();
-            List<CardData> ownedInDeckCards = new List<CardData>();
-            List<CardData> unownedCards = new List<CardData>();
-
-            foreach (CardData cardData in GetAllCards())
-            {
-                if (cardData == null)
-                    continue;
-
-                bool owned = playerInventory.HasCard(cardData);
-
-                if (!owned)
-                {
-                    unownedCards.Add(cardData);
-                    continue;
-                }
-
-                if (playerInventory.IsInDeck(cardData))
-                    ownedInDeckCards.Add(cardData);
-                else
-                    ownedNotInDeckCards.Add(cardData);
-            }
-
-            ownedNotInDeckCards.AddRange(ownedInDeckCards);
-            ownedNotInDeckCards.AddRange(unownedCards);
-            return ownedNotInDeckCards;
-        }
-
-        private IEnumerable<CardData> GetAllCards()
-        {
-            if (cardDatabase == null)
-                yield break;
-
-            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-
-            MethodInfo getAllCardsMethod = cardDatabase.GetType().GetMethod("GetAllCards", flags);
-            if (getAllCardsMethod != null && getAllCardsMethod.Invoke(cardDatabase, null) is IEnumerable<CardData> methodCards)
-            {
-                foreach (CardData cardData in methodCards)
-                    yield return cardData;
-
-                yield break;
-            }
-
-            PropertyInfo allCardsProperty = cardDatabase.GetType().GetProperty("AllCards", flags);
-            if (allCardsProperty != null && allCardsProperty.GetValue(cardDatabase) is IEnumerable<CardData> propertyCards)
-            {
-                foreach (CardData cardData in propertyCards)
-                    yield return cardData;
-
-                yield break;
-            }
-
-            FieldInfo allCardsField = cardDatabase.GetType().GetField("allCards", flags);
-            if (allCardsField != null && allCardsField.GetValue(cardDatabase) is IEnumerable<CardData> fieldCards)
-            {
-                foreach (CardData cardData in fieldCards)
-                    yield return cardData;
-            }
-        }
-
-        private void RefreshDebugCounts()
-        {
-            allCardCount = GetAllCardsCount();
-            ownedCardCount = playerInventory != null ? playerInventory.OwnedCards.Count : 0;
-            deckCardCount = playerInventory != null ? playerInventory.DeckCards.Count : 0;
-            maxDeckCardCount = playerInventory != null ? playerInventory.MaxDeckCardCount : 0;
-        }
-
-        private void RefreshCountText()
-        {
-            RefreshDebugCounts();
-
-            if (allCardCountText != null)
-                allCardCountText.text = $"{ownedCardCount} / {allCardCount}";
-
-            if (deckCardCountText != null)
-            {
-                if (playerInventory == null)
-                {
-                    deckCardCountText.text = "0 / 0";
-                    deckCardCountText.color = Color.red;
-                }
-                else
-                {
-                    deckCardCountText.text = $"카드  현재 {deckCardCount} / 최소 {playerInventory.MinDeckCardCount}";
-                    deckCardCountText.color = playerInventory.HasEnoughDeckCards() ? Color.white : Color.red;
-                }
-            }
-
-            if (deckManaCostText != null)
-            {
-                if (playerInventory == null)
-                {
-                    deckManaCostText.text = "0 / 0";
-                    deckManaCostText.color = Color.red;
-                }
-                else
-                {
-                    int deckManaCost = playerInventory.DeckManaCost;
-                    deckManaCostText.text = $"마력  {deckManaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost}";
-                    deckManaCostText.color = playerInventory.IsDeckManaCostValid() ? Color.white : Color.red;
-                }
-            }
-
-            RefreshDeckConditionWarning();
-        }
-
-        private void RefreshDeckConditionWarning()
-        {
-            if (playerInventory == null || !playerInventory.CanCompleteDeckEdit())
-            {
-                ShowDeckConditionWarning(false);
-                return;
-            }
-
-            FadeOutDeckConditionWarningIfNeeded();
-        }
-
-        private void ShowDeckConditionWarning(bool forceRestart)
-        {
-            if (guideMessageText == null)
-                return;
-
-            StopGuideMessageRoutine();
-
-            guideMessageText.text = GetDeckConditionWarningMessage();
-            guideMessageText.gameObject.SetActive(true);
-
-
-            if (guideMessageGroup != null)
-                guideMessageGroup.alpha = 1.0f;
-
-            isMinimumDeckWarningVisible = true;
-        }
-
-        private void FadeOutDeckConditionWarningIfNeeded()
-        {
-            if (!isMinimumDeckWarningVisible)
-                return;
-
-            isMinimumDeckWarningVisible = false;
-            StopGuideMessageRoutine();
-            guideMessageRoutine = StartCoroutine(FadeOutGuideMessageRoutine());
-        }
-
-        private string GetDeckConditionWarningMessage()
-        {
-            if (playerInventory == null)
-                return DECK_CONDITION_WARNING_MESSAGE;
-
-            int deckManaCost = playerInventory.DeckManaCost;
-
-            if (!playerInventory.HasEnoughDeckCards())
-                return $"카드 덱에는 최소 {playerInventory.MinDeckCardCount}장의 카드가 필요합니다.";
-
-            if (deckManaCost < playerInventory.MinDeckManaCost)
-                return $"마력 용량이 부족합니다. ({deckManaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
-
-            if (deckManaCost > playerInventory.MaxDeckManaCost)
-                return $"마력 용량을 초과했습니다. ({deckManaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
-
-            return DECK_CONDITION_WARNING_MESSAGE;
-        }
-
-        private void ShakeGuideMessage()
-        {
-            if (guideMessageRect == null)
-                return;
-
-            if (guideMessageShakeRoutine != null)
-                StopCoroutine(guideMessageShakeRoutine);
-
-            guideMessageShakeRoutine = StartCoroutine(GuideMessageShakeRoutine());
-        }
-
-        private IEnumerator GuideMessageShakeRoutine()
-        {
-            float elapsedTime = 0.0f;
-            float duration = Mathf.Max(0.01f, blockedCloseShakeDuration);
-            float distance = Mathf.Max(0.0f, blockedCloseShakeDistance);
-
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.unscaledDeltaTime;
-
-                float progress = Mathf.Clamp01(elapsedTime / duration);
-                float strength = 1.0f - progress;
-                float offsetX = Mathf.Sin(progress * Mathf.PI * 8.0f) * distance * strength;
-
-                guideMessageRect.anchoredPosition = guideMessageDefaultPosition + new Vector2(offsetX, 0.0f);
-                yield return null;
-            }
-
-            guideMessageRect.anchoredPosition = guideMessageDefaultPosition;
-            guideMessageShakeRoutine = null;
-        }
-        private void StopGuideMessageRoutine()
-        {
-            if (guideMessageRoutine == null)
-                return;
-
-            StopCoroutine(guideMessageRoutine);
-            guideMessageRoutine = null;
-        }
-
-        private int GetAllCardsCount()
-        {
-            int count = 0;
-
-            foreach (CardData cardData in GetAllCards())
-                count++;
-
-            return count;
-        }
-        
-        private void RefreshButtonState()
-        {
-            if (deckEditActionText == null) return;
-
-            canUseDeckEdit = false;
-            string actionText = string.Empty;
-
-           if (canEditDeck == false)
-            {
-                StopGuideMessageRoutine();
-                isMinimumDeckWarningVisible = true;
-                guideMessageText.text = "현재 지역에서는 카드 덱 편집이 불가능합니다.";
-                guideMessageText.gameObject.SetActive(true);
-
-                if (guideMessageGroup != null)
-                    guideMessageGroup.alpha = 1.0f;
-            }
-            else if (isMinimumDeckWarningVisible)
-            {
-                isMinimumDeckWarningVisible = false;
-                
-                if (guideMessageGroup != null)
-                    guideMessageGroup.alpha = 0.0f;
-
-                guideMessageText.gameObject.SetActive(false);
-
-            }
-            else if (selectedCollectionSlot != null)
-            {
-                actionText = "추가 >>";
-                canUseDeckEdit = playerInventory != null && !playerInventory.IsDeckFull() && !playerInventory.WouldExceedDeckManaCost(selectedCollectionSlot.CardData);
-            }
-            else if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
-            {
-                actionText = "<< 제거";
-                canUseDeckEdit = true;
-            }
-
-            deckEditActionText.text = actionText;
-            deckEditActionText.color = canUseDeckEdit ? actionActiveColor : actionInactiveColor;
-        }
-
-        private void ClearSelection()
-        {
-            selectedCollectionSlot = null;
-            selectedDeckSlot = null;
-        }
-
-        private void ClearChildren(Transform parent)
-        {
-            if (parent == null)
-                return;
-
-            for (int i = parent.childCount - 1; i >= 0; i--)
-                Destroy(parent.GetChild(i).gameObject);
-        }
-
-        private void ShowGuideMessage(string message)
-        {
-            if (guideMessageText == null)
-                return;
-
-            isMinimumDeckWarningVisible = false;
-
-            StopGuideMessageRoutine();
-
-            guideMessageRoutine = StartCoroutine(ShowGuideMessageRoutine(message));
-        }
-
-        private IEnumerator ShowGuideMessageRoutine(string message)
-        {
-            guideMessageText.text = message;
-            guideMessageText.gameObject.SetActive(true);
-
-            if (guideMessageGroup != null)
-                guideMessageGroup.alpha = 1.0f;
-
-            yield return new WaitForSecondsRealtime(guideMessageDuration);
-
-            yield return FadeOutGuideMessageRoutine();
-        }
-
-        private IEnumerator FadeOutGuideMessageRoutine()
-        {
-            float startAlpha = guideMessageGroup != null ? guideMessageGroup.alpha : 1.0f;
-            float elapsedTime = 0.0f;
-            float duration = Mathf.Max(0.01f, guideMessageFadeOutDuration);
-
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.unscaledDeltaTime;
-
-                if (guideMessageGroup != null)
-                    guideMessageGroup.alpha = Mathf.Lerp(startAlpha, 0.0f, elapsedTime / duration);
-
-                yield return null;
-            }
-
-            if (guideMessageGroup != null)
-                guideMessageGroup.alpha = 0.0f;
-
-            if (!isMinimumDeckWarningVisible)
-                guideMessageText.gameObject.SetActive(false);
-
-            guideMessageRoutine = null;
         }
     }
 }

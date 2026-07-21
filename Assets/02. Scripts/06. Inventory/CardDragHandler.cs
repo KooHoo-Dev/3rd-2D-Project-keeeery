@@ -29,6 +29,11 @@ namespace Arcanist
                 canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
 
+        private void OnDisable()
+        {
+            ResetDragState();
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (cardSlot.CardData == null || !cardSlot.IsOwned || rootCanvas == null || rootCanvasRect == null)
@@ -37,11 +42,16 @@ namespace Arcanist
             canvasGroup.blocksRaycasts = false;
             canvasGroup.alpha = 0.6f;
 
-            dragIcon = dragIconPrefab != null
-                ? Instantiate(dragIconPrefab, rootCanvas.transform)
-                : CreateDefaultDragIcon(rootCanvas.transform);
+            if (dragIcon == null)
+            {
+                dragIcon = dragIconPrefab != null
+                    ? Instantiate(dragIconPrefab, rootCanvas.transform)
+                    : CreateDefaultDragIcon(rootCanvas.transform);
+                dragIconRect = dragIcon.rectTransform;
+                dragIcon.raycastTarget = false;
+            }
 
-            dragIconRect = dragIcon.rectTransform;
+            dragIcon.gameObject.SetActive(true);
 
             Image sourceIcon = cardSlot.CardIconImage;
 
@@ -53,7 +63,6 @@ namespace Arcanist
                 dragIconRect.sizeDelta = sourceIcon.rectTransform.rect.size;
             }
 
-            dragIcon.raycastTarget = false;
             dragIcon.transform.SetAsLastSibling();
             MoveDragIcon(eventData);
         }
@@ -68,16 +77,19 @@ namespace Arcanist
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            cardSlot.HandleDropped(eventData);
+            ResetDragState();
+        }
 
-            canvasGroup.blocksRaycasts = true;
-            canvasGroup.alpha = 1.0f;
+        private void ResetDragState()
+        {
+            if (canvasGroup != null)
+            {
+                canvasGroup.blocksRaycasts = true;
+                canvasGroup.alpha = 1.0f;
+            }
 
             if (dragIcon != null)
-                Destroy(dragIcon.gameObject);
-
-            dragIcon = null;
-            dragIconRect = null;
+                dragIcon.gameObject.SetActive(false);
         }
 
         private void MoveDragIcon(PointerEventData eventData)

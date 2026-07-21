@@ -19,9 +19,9 @@ namespace Arcanist
 
         [Header("Deck Rules")]
         [SerializeField] private int minDeckCardCount = 6;
-        [SerializeField] private int minDeckManaCost = 10;
-        [SerializeField] private int maxDeckManaCost = 11;
-        [SerializeField] private int maxDeckCardCount = 99;
+        [SerializeField] private int minDeckManaCost = 8;
+        [SerializeField] private int maxDeckManaCost = 14;
+        [SerializeField] private int maxDeckCardCount = 20;
         [SerializeField] private bool allowDuplicateCards;
 
         private readonly HashSet<string> newCardIds = new HashSet<string>();

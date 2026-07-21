@@ -6,7 +6,6 @@ namespace Arcanist
 {
     public class OptionWindowController : MonoBehaviour
     {
-        private const string MASTER_VOLUME_KEY = "Option.MasterVolume";
         private const string FULLSCREEN_KEY = "Option.Fullscreen";
         private const string RESOLUTION_INDEX_KEY = "Option.ResolutionIndex";
 
@@ -36,13 +35,9 @@ namespace Arcanist
         private int resolutionIndex;
         private bool isFullscreen;
 
-        private void Awake()
-        {
-            LoadSettings();
-        }
-
         private void OnEnable()
         {
+            LoadSettings();
             ShowScreenPanel();
             RefreshUI();
         }
@@ -130,14 +125,11 @@ namespace Arcanist
 
         public void SetMasterVolume(float value)
         {
-            AudioListener.volume = value;
-            PlayerPrefs.SetFloat(MASTER_VOLUME_KEY, value);
-            PlayerPrefs.Save();
+            AudioManager.Instance.SetMasterVolume(value);
         }
 
         private void LoadSettings()
         {
-            AudioListener.volume = PlayerPrefs.GetFloat(MASTER_VOLUME_KEY, AudioListener.volume);
             isFullscreen = PlayerPrefs.HasKey(FULLSCREEN_KEY)
                 ? PlayerPrefs.GetInt(FULLSCREEN_KEY) == 1
                 : Screen.fullScreen;
@@ -182,7 +174,7 @@ namespace Arcanist
             UpdateResolutionText();
 
             if (masterVolumeSlider != null)
-                masterVolumeSlider.SetValueWithoutNotify(AudioListener.volume);
+                masterVolumeSlider.SetValueWithoutNotify(AudioManager.Instance.MasterVolume);
         }
 
         private void UpdateFullscreenText()

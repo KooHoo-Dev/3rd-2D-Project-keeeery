@@ -375,7 +375,7 @@ namespace Arcanist
             if (cardDatabase == null)
                 return candidates;
 
-            List<CardData> allCards = cardDatabase.GetAllCards();
+            IReadOnlyList<CardData> allCards = cardDatabase.AllCards;
 
             for (int i = 0; i < allCards.Count; i++)
             {

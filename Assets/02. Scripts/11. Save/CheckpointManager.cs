@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -44,14 +45,14 @@ namespace Arcanist
             instance = managerObject.AddComponent<CheckPointManager>();
         }
 
-        public void ReturnToCheckpoint()
+        public bool ReturnToCheckpoint(Action onFadeToBlackCompleted = null)
         {
             Debug.Log("[Checkpoint] ReturnToCheckpoint Called");
 
             if (isRespawning)
             {
                 Debug.LogWarning("[Checkpoint] Return blocked: already respawning.");
-                return;
+                return false;
             }
 
             SaveManager saveManager = SaveManager.Instance;
@@ -59,7 +60,7 @@ namespace Arcanist
             if (saveManager == null)
             {
                 Debug.LogWarning("[Checkpoint] Return failed: SaveManager is null.");
-                return;
+                return false;
             }
 
             if (saveManager.CurrentData == null || saveManager.CurrentData.checkpoint == null)
@@ -70,7 +71,7 @@ namespace Arcanist
             if (!saveManager.TryGetCheckpoint(out CheckpointSaveData data))
             {
                 Debug.LogWarning("[Checkpoint] No checkpoint data.");
-                return;
+                return false;
             }
 
             CheckpointSaveData snapshot = new CheckpointSaveData
@@ -85,18 +86,22 @@ namespace Arcanist
             };
 
             Debug.Log($"[Checkpoint] TryGetCheckpoint Result: {snapshot.sceneName} / {snapshot.roomId} / {snapshot.checkpointId} / HP {snapshot.currentHp} / PlayerOnly {snapshot.respawnPlayerOnly} / RoomCleared {snapshot.roomCleared} / RewardObtained {snapshot.rewardObtained}");
-            StartCoroutine(ReturnToCheckpointRoutine(snapshot));
+            StartCoroutine(ReturnToCheckpointRoutine(snapshot, onFadeToBlackCompleted));
+            return true;
         }
 
-        private IEnumerator ReturnToCheckpointRoutine(CheckpointSaveData data)
+        private IEnumerator ReturnToCheckpointRoutine(
+            CheckpointSaveData data,
+            Action onFadeToBlackCompleted)
         {
             Debug.Log("[Checkpoint] Routine Start");
             isRespawning = true;
             SimpleInput.IsKeyBoardInputBlocked = true;
-            Time.timeScale = 1.0f;
 
             ScreenFadeManager screenFadeManager = ScreenFadeManager.Instance;
             yield return screenFadeManager.FadeToBlackRoutine(RESPAWN_FADE_DURATION);
+            onFadeToBlackCompleted?.Invoke();
+            Time.timeScale = 1.0f;
 
             string targetSceneName = data.sceneName;
             bool shouldLoadScene = !string.IsNullOrEmpty(targetSceneName)
