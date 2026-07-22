@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Arcanist
@@ -8,12 +9,7 @@ namespace Arcanist
         [SerializeField] private BuffViewController buffViewController;
         [SerializeField] private ScreenEffectController screenEffectController;
 
-        private float outgoingDamageMultiplier = 1.0f;
-        private float outgoingDamageBuffEndTime;
-        private float incomingDamageMultiplier = 1.0f;
-        private float incomingDamageBuffEndTime;
-        private float cardGaugeChargeMultiplier = 1.0f;
-        private float cardGaugeSpeedBuffEndTime;
+        private readonly List<ActiveBuff> activeBuffs = new List<ActiveBuff>();
         private bool hasReviveOnceBuff;
         private string reviveBuffId;
         private Sprite reviveBuffIcon;
@@ -22,35 +18,34 @@ namespace Arcanist
 
         public void ApplyDamageBuff(string buffId, Sprite icon, float multiplier, float duration)
         {
-            outgoingDamageMultiplier = Mathf.Max(outgoingDamageMultiplier, multiplier);
-            outgoingDamageBuffEndTime = Mathf.Max(outgoingDamageBuffEndTime, Time.time + duration);
+            float endTime = Time.time + Mathf.Max(0.0f, duration);
+            AddOrRefreshBuff(buffId, ActiveBuffType.OutgoingDamageIncrease, multiplier, endTime);
 
-            ShowBuffUI(buffId, icon, outgoingDamageBuffEndTime);
+            ShowBuffUI(buffId, icon, endTime);
         }
 
         public void ApplyTakenDamageDecreaseBuff(string buffId, Sprite icon, float reductionRatio, float duration)
         {
-            float multiplier = Mathf.Clamp01(1.0f - reductionRatio);
-            incomingDamageMultiplier = Mathf.Min(incomingDamageMultiplier, multiplier);
-            incomingDamageBuffEndTime = Mathf.Max(incomingDamageBuffEndTime, Time.time + duration);
+            float endTime = Time.time + Mathf.Max(0.0f, duration);
+            AddOrRefreshBuff(buffId, ActiveBuffType.IncomingDamageReduction, reductionRatio, endTime);
 
-            ShowBuffUI(buffId, icon, incomingDamageBuffEndTime);
+            ShowBuffUI(buffId, icon, endTime);
         }
 
         public void ApplyTakenDamageIncreaseBuff(string buffId, Sprite icon, float multiplier, float duration)
         {
-            incomingDamageMultiplier = Mathf.Max(incomingDamageMultiplier, multiplier);
-            incomingDamageBuffEndTime = Mathf.Max(incomingDamageBuffEndTime, Time.time + duration);
+            float endTime = Time.time + Mathf.Max(0.0f, duration);
+            AddOrRefreshBuff(buffId, ActiveBuffType.IncomingDamageIncrease, multiplier, endTime);
 
-            ShowBuffUI(buffId, icon, incomingDamageBuffEndTime);
+            ShowBuffUI(buffId, icon, endTime);
         }
 
         public void ApplyCardGaugeChargeSpeedBuff(string buffId, Sprite icon, float multiplier, float duration)
         {
-            cardGaugeChargeMultiplier = Mathf.Max(cardGaugeChargeMultiplier, multiplier);
-            cardGaugeSpeedBuffEndTime = Mathf.Max(cardGaugeSpeedBuffEndTime, Time.time + duration);
+            float endTime = Time.time + Mathf.Max(0.0f, duration);
+            AddOrRefreshBuff(buffId, ActiveBuffType.CardGaugeSpeedIncrease, multiplier, endTime);
 
-            ShowBuffUI(buffId, icon, cardGaugeSpeedBuffEndTime);
+            ShowBuffUI(buffId, icon, endTime);
         }
 
         public void ApplyReviveOnceBuff(string buffId, Sprite icon, float healRatio, float duration)
@@ -79,9 +74,9 @@ namespace Arcanist
 
             if (consumedInvincibleDuration > 0.0f)
             {
-                incomingDamageMultiplier = 0.0f;
-                incomingDamageBuffEndTime = Time.time + consumedInvincibleDuration;
-                ShowBuffUI(consumedBuffId, consumedBuffIcon, incomingDamageBuffEndTime);
+                float endTime = Time.time + consumedInvincibleDuration;
+                AddOrRefreshBuff(consumedBuffId, ActiveBuffType.Invincibility, 1.0f, endTime);
+                ShowBuffUI(consumedBuffId, consumedBuffIcon, endTime);
                 screenEffectController?.PlayReviveGlow(consumedInvincibleDuration);
             }
             else if (string.IsNullOrEmpty(consumedBuffId) == false)
@@ -107,26 +102,88 @@ namespace Arcanist
 
         public int ModifyDamage(int damage)
         {
-            if (Time.time > outgoingDamageBuffEndTime)
-                outgoingDamageMultiplier = 1.0f;
+            RemoveExpiredBuffs();
 
-            return Mathf.RoundToInt(damage * outgoingDamageMultiplier);
+            float increaseRatio = 0.0f;
+            for (int i = 0; i < activeBuffs.Count; i++)
+            {
+                ActiveBuff buff = activeBuffs[i];
+                if (buff.Type == ActiveBuffType.OutgoingDamageIncrease)
+                    increaseRatio += Mathf.Max(0.0f, buff.Value - 1.0f);
+            }
+
+            return Mathf.RoundToInt(damage * (1.0f + increaseRatio));
         }
 
         public int ModifyTakenDamage(int damage)
         {
-            if (Time.time > incomingDamageBuffEndTime)
-                incomingDamageMultiplier = 1.0f;
+            RemoveExpiredBuffs();
 
-            return Mathf.RoundToInt(damage * incomingDamageMultiplier);
+            float increaseRatio = 0.0f;
+            float reductionMultiplier = 1.0f;
+
+            for (int i = 0; i < activeBuffs.Count; i++)
+            {
+                ActiveBuff buff = activeBuffs[i];
+                switch (buff.Type)
+                {
+                    case ActiveBuffType.Invincibility:
+                        return 0;
+
+                    case ActiveBuffType.IncomingDamageIncrease:
+                        increaseRatio += Mathf.Max(0.0f, buff.Value - 1.0f);
+                        break;
+
+                    case ActiveBuffType.IncomingDamageReduction:
+                        reductionMultiplier *= 1.0f - Mathf.Clamp01(buff.Value);
+                        break;
+                }
+            }
+
+            float increasedDamage = damage * (1.0f + increaseRatio);
+            return Mathf.RoundToInt(increasedDamage * reductionMultiplier);
         }
 
         public float ModifyCardGaugeChargeTime(float seconds)
         {
-            if (Time.time > cardGaugeSpeedBuffEndTime)
-                cardGaugeChargeMultiplier = 1.0f;
+            RemoveExpiredBuffs();
 
-            return seconds / cardGaugeChargeMultiplier;
+            float increaseRatio = 0.0f;
+            for (int i = 0; i < activeBuffs.Count; i++)
+            {
+                ActiveBuff buff = activeBuffs[i];
+                if (buff.Type == ActiveBuffType.CardGaugeSpeedIncrease)
+                    increaseRatio += Mathf.Max(0.0f, buff.Value - 1.0f);
+            }
+
+            return seconds / (1.0f + increaseRatio);
+        }
+
+        private void AddOrRefreshBuff(string buffId, ActiveBuffType type, float value, float endTime)
+        {
+            RemoveExpiredBuffs();
+
+            for (int i = 0; i < activeBuffs.Count; i++)
+            {
+                ActiveBuff buff = activeBuffs[i];
+                if (buff.Matches(buffId, type))
+                {
+                    buff.Refresh(value, endTime);
+                    return;
+                }
+            }
+
+            activeBuffs.Add(new ActiveBuff(buffId, type, value, endTime));
+        }
+
+        private void RemoveExpiredBuffs()
+        {
+            float currentTime = Time.time;
+            for (int i = activeBuffs.Count - 1; i >= 0; i--)
+            {
+                if (activeBuffs[i].IsExpired(currentTime))
+                    activeBuffs.RemoveAt(i);
+            }
         }
 
         private void ShowBuffUI(string buffId, Sprite icon, float endTime)

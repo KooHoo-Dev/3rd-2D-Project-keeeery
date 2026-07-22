@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace Arcanist
 {
@@ -316,95 +315,20 @@ namespace Arcanist
 
         private List<CardData> CreateRewards()
         {
-            List<CardData> rewards = new List<CardData>();
-            HashSet<CardData> excludedCards = new HashSet<CardData>();
-
-            if (playerInventory != null)
-            {
-                foreach (var t in playerInventory.OwnedCards)
-                    excludedCards.Add(t);
-            }
-
-            for (int i = 0; i < rewardCount; i++)
-            {
-                CardData reward = DrawRewardCard(excludedCards);
-
-                if (reward == null)
-                    break;
-
-                rewards.Add(reward);
-                excludedCards.Add(reward);
-            }
-
-            return rewards;
-        }
-
-        private CardData DrawRewardCard(HashSet<CardData> excludedCards)
-        {
-            List<CardData> candidates = GetAvailableCards(excludedCards);
-
-            if (candidates.Count <= 0)
-                return null;
-
-            int totalWeight = 0;
-
-            foreach (var t in candidates)
-                totalWeight += GetGradeWeight(t.Grade);
-
-            if (totalWeight <= 0)
-                return candidates[Random.Range(0, candidates.Count)];
-
-            int randomWeight = Random.Range(0, totalWeight);
-            int currentWeight = 0;
-
-            for (int i = 0; i < candidates.Count; i++)
-            {
-                currentWeight += GetGradeWeight(candidates[i].Grade);
-
-                if (randomWeight < currentWeight)
-                    return candidates[i];
-            }
-
-            return candidates[^1];
-        }
-
-        private List<CardData> GetAvailableCards(HashSet<CardData> excludedCards)
-        {
-            List<CardData> candidates = new List<CardData>();
-
             if (cardDatabase == null)
-                return candidates;
+                return new List<CardData>();
 
-            IReadOnlyList<CardData> allCards = cardDatabase.AllCards;
+            RewardGradeWeights weights = new(
+                commonWeight,
+                rareWeight,
+                epicWeight,
+                legendaryWeight);
+            RewardCardSelector selector = new(cardDatabase.AllCards, weights, minimumGrade);
+            IEnumerable<CardData> ownedCards = playerInventory != null
+                ? playerInventory.OwnedCards
+                : null;
 
-            for (int i = 0; i < allCards.Count; i++)
-            {
-                CardData card = allCards[i];
-
-                if (card == null || excludedCards.Contains(card) || card.Grade < minimumGrade)
-                    continue;
-
-                candidates.Add(card);
-            }
-
-            return candidates;
-        }
-
-        private int GetGradeWeight(CardGrade grade)
-        {
-            switch (grade)
-            {
-                case CardGrade.Common:
-                    return commonWeight;
-                case CardGrade.Rare:
-                    return rareWeight;
-                case CardGrade.Epic:
-                    return epicWeight;
-                case CardGrade.Legendary:
-                    return legendaryWeight;
-                default:
-                    return 0;
-            }
+            return selector.CreateRewards(rewardCount, ownedCards);
         }
 
         private void GrantRewardAndClose(CardData selectedCard)

@@ -9,11 +9,7 @@ namespace Arcanist
     [RequireComponent(typeof(CardHandUI))]
     public class CardSystem : MonoBehaviour
     {
-        private readonly List<CardData> ownedCards = new();
-        private readonly List<CardData> playerDeck = new();
-        private readonly List<CardData> drawPile = new();
-        private readonly List<CardData> hand = new();
-        private readonly List<CardData> discardPile = new();
+        private readonly CardRuntimeDeck runtimeDeck = new();
 
         [Header("Runtime Inventory")]
         [SerializeField] private PlayerInventory playerInventory;
@@ -42,13 +38,12 @@ namespace Arcanist
         private CardHandUI cardHandUI;
         private CardData pendingSkillCard;
         private bool isGaugeFull;
-        private bool isDeckInitialized;
 
-        public IReadOnlyList<CardData> OwnedCards => ownedCards;
-        public IReadOnlyList<CardData> PlayerDeck => playerDeck;
-        public IReadOnlyList<CardData> DrawPile => drawPile;
-        public IReadOnlyList<CardData> Hand => hand;
-        public IReadOnlyList<CardData> DiscardPile => discardPile;
+        public IReadOnlyList<CardData> OwnedCards => runtimeDeck.OwnedCards;
+        public IReadOnlyList<CardData> PlayerDeck => runtimeDeck.PlayerDeck;
+        public IReadOnlyList<CardData> DrawPile => runtimeDeck.DrawPile;
+        public IReadOnlyList<CardData> Hand => runtimeDeck.Hand;
+        public IReadOnlyList<CardData> DiscardPile => runtimeDeck.DiscardPile;
 
         private void Awake()
         {
@@ -113,66 +108,18 @@ namespace Arcanist
 
         public void SetOwnedCards(IEnumerable<CardData> cards)
         {
-            ownedCards.Clear();
-
-            if (cards == null) return;
-
-            foreach (CardData card in cards)
-                if (card != null) ownedCards.Add(card);
+            runtimeDeck.SetOwnedCards(cards);
         }
 
         public void SetPlayerDeck(IEnumerable<CardData> cards)
         {
-            playerDeck.Clear();
-
-            if (cards != null)
-            {
-                foreach (CardData card in cards)
-                    if (card != null) playerDeck.Add(card);
-            }
-
-            InitializeDrawPileFromPlayerDeck();
+            runtimeDeck.SetPlayerDeck(cards);
+            isGaugeFull = false;
         }
 
         private void SyncPlayerDeckRuntime(IEnumerable<CardData> cards)
         {
-            playerDeck.Clear();
-
-            if (cards != null)
-            {
-                foreach (CardData card in cards)
-                {
-                    if (card != null)
-                        playerDeck.Add(card);
-                }
-            }
-
-            isDeckInitialized = playerDeck.Count > 0;
-
-            for (int i = drawPile.Count - 1; i >= 0; i--)
-            {
-                if (!IsCardInPlayerDeck(drawPile[i]))
-                    drawPile.RemoveAt(i);
-            }
-
-            for (int i = discardPile.Count - 1; i >= 0; i--)
-            {
-                if (!IsCardInPlayerDeck(discardPile[i]))
-                    discardPile.RemoveAt(i);
-            }
-
-            foreach (CardData card in playerDeck)
-            {
-                if (card == null)
-                    continue;
-
-                if (drawPile.Contains(card) || discardPile.Contains(card) || hand.Contains(card))
-                    continue;
-
-                drawPile.Add(card);
-            }
-
-            Shuffle(drawPile);
+            runtimeDeck.SyncPlayerDeck(cards);
         }
 
         public void ResetRuntimeCardsForRespawn()
@@ -180,15 +127,7 @@ namespace Arcanist
             pendingSkillCard = null;
             isGaugeFull = false;
 
-            hand.Clear();
-            drawPile.Clear();
-            discardPile.Clear();
-
-            foreach (CardData card in playerDeck)
-                drawPile?.Add(card);
-
-            Shuffle(drawPile);
-            isDeckInitialized = playerDeck.Count > 0;
+            runtimeDeck.ResetForRespawn();
 
             cardHandUI?.ClearAllSlots();
             cardGaugeController?.ResetGaugeAndRecharge();
@@ -205,7 +144,7 @@ namespace Arcanist
                 return;
             }
 
-            ownedCards.Add(card);
+            runtimeDeck.AddOwnedCard(card);
         }
 
         public bool AddCardToPlayerDeck(CardData card)
@@ -215,14 +154,13 @@ namespace Arcanist
             if (syncFromPlayerInventory && playerInventory != null)
                 return playerInventory.AddToDeck(card);
 
-            if (ownedCards.Contains(card) == false)
+            if (runtimeDeck.AddCardToPlayerDeck(card) == false)
             {
                 Debug.LogWarning($"CardSystem ::: Cannot add {card.CardName}. This card is not owned.");
                 return false;
             }
 
-            playerDeck.Add(card);
-            InitializeDrawPileFromPlayerDeck();
+            isGaugeFull = false;
             return true;
         }
 
@@ -233,30 +171,15 @@ namespace Arcanist
             if (syncFromPlayerInventory && playerInventory != null)
                 return playerInventory.RemoveFromDeck(card);
 
-            bool removed = playerDeck.Remove(card);
-
-            if (removed) InitializeDrawPileFromPlayerDeck();
-
+            bool removed = runtimeDeck.RemoveCardFromPlayerDeck(card);
+            if (removed)
+                isGaugeFull = false;
             return removed;
-        }
-
-        private void InitializeDrawPileFromPlayerDeck()
-        {
-            drawPile.Clear();
-            hand.Clear();
-            discardPile.Clear();
-            isGaugeFull = false;
-            isDeckInitialized = playerDeck.Count > 0;
-
-            foreach (CardData card in playerDeck)
-                if (card != null) drawPile.Add(card);
-
-            Shuffle(drawPile);
         }
 
         private void TryDrawIfReady()
         {
-            if (isDeckInitialized == false) return;
+            if (runtimeDeck.IsInitialized == false) return;
 
             if (isGaugeFull == false) return;
 
@@ -264,7 +187,7 @@ namespace Arcanist
 
             if (cardHandUI.HasEmptySlot == false) return;
 
-            CardData drawnCard = DrawCardFromDeck();
+            CardData drawnCard = runtimeDeck.Draw();
 
             if (drawnCard == null)
                 return;
@@ -273,44 +196,9 @@ namespace Arcanist
 
             if (drawStarted)
             {
-                hand.Add(drawnCard);
+                runtimeDeck.AddToHand(drawnCard);
                 isGaugeFull = false;
             }
-        }
-
-        private CardData DrawCardFromDeck()
-        {
-            while (true)
-            {
-                if (drawPile.Count <= 0)
-                    RefillDrawPileFromDiscardPile();
-
-                if (drawPile.Count <= 0)
-                    return null;
-
-                CardData drawnCard = drawPile[0];
-                drawPile.RemoveAt(0);
-
-                if (IsCardInPlayerDeck(drawnCard))
-                    return drawnCard;
-            }
-        }
-
-        private void RefillDrawPileFromDiscardPile()
-        {
-            if (discardPile.Count <= 0) return;
-
-            for (int i = discardPile.Count - 1; i >= 0; i--)
-            {
-                if (IsCardInPlayerDeck(discardPile[i]) == false)
-                    discardPile.RemoveAt(i);
-            }
-
-            if (discardPile.Count <= 0) return;
-
-            drawPile.AddRange(discardPile);
-            discardPile.Clear();
-            Shuffle(drawPile);
         }
 
         private void OnCardDrawCompleted()
@@ -333,10 +221,7 @@ namespace Arcanist
             pendingSkillCard = usedCard;
             PlayCardSkillMotion(usedCard);
             cardHandUI.UseCard(slotIndex);
-            hand.Remove(usedCard);
-
-            if (IsCardInPlayerDeck(usedCard))
-                discardPile.Add(usedCard);
+            runtimeDeck.RecordUse(usedCard);
 
             TryDrawIfReady();
         }
@@ -534,16 +419,7 @@ namespace Arcanist
 
         private bool IsCardInPlayerDeck(CardData card)
         {
-            return card != null && playerDeck.Contains(card);
-        }
-
-        private void Shuffle(List<CardData> cards)
-        {
-            for (int i = cards.Count - 1; i > 0; i--)
-            {
-                int randomIndex = UnityEngine.Random.Range(0, i + 1);
-                (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
-            }
+            return runtimeDeck.Contains(card);
         }
     }
 }
