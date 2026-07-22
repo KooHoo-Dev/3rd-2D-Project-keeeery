@@ -36,7 +36,9 @@ namespace Arcanist
 
         private CardGaugeController cardGaugeController;
         private CardHandUI cardHandUI;
-        private CardData pendingSkillCard;
+        private CardTargetResolver targetResolver;
+        private CardUseValidator useValidator;
+        private CardSkillExecutor skillExecutor;
         private bool isGaugeFull;
 
         public IReadOnlyList<CardData> OwnedCards => runtimeDeck.OwnedCards;
@@ -57,6 +59,22 @@ namespace Arcanist
 
             if (playerController == null && playerAnimator != null)
                 playerController = playerAnimator.GetComponentInParent<PlayerController>();
+
+            if (enemyManager == null)
+                enemyManager = FindFirstObjectByType<EnemyManager>();
+
+            Player player = playerController != null
+                ? playerController.GetComponent<Player>()
+                : GetComponent<Player>();
+            targetResolver = new CardTargetResolver(enemyManager);
+            useValidator = new CardUseValidator(player, targetResolver);
+            skillExecutor = new CardSkillExecutor(
+                playerAnimator,
+                playerController,
+                cardCastPoint,
+                playerController != null ? playerController.transform : transform,
+                fallbackCardSkillTrigger,
+                targetResolver);
         }
 
         private void OnEnable()
@@ -124,7 +142,7 @@ namespace Arcanist
 
         public void ResetRuntimeCardsForRespawn()
         {
-            pendingSkillCard = null;
+            skillExecutor.Reset();
             isGaugeFull = false;
 
             runtimeDeck.ResetForRespawn();
@@ -192,19 +210,14 @@ namespace Arcanist
             if (drawnCard == null)
                 return;
 
-            bool drawStarted = cardHandUI.TryDrawToFirstEmptySlot(drawnCard, OnCardDrawCompleted);
+            cardGaugeController?.BeginNextGaugeCycle();
+            bool drawStarted = cardHandUI.TryDrawToFirstEmptySlot(drawnCard);
 
             if (drawStarted)
             {
                 runtimeDeck.AddToHand(drawnCard);
                 isGaugeFull = false;
             }
-        }
-
-        private void OnCardDrawCompleted()
-        {
-            if (cardGaugeController != null)
-                cardGaugeController.ResetGaugeAndRecharge();
         }
 
         private void UseCard(int slotIndex)
@@ -218,8 +231,10 @@ namespace Arcanist
             if (TryPrepareCardUse(usedCard) == false)
                 return;
 
-            pendingSkillCard = usedCard;
-            PlayCardSkillMotion(usedCard);
+            bool waitsForAnimationEvent = skillExecutor.Begin(usedCard);
+            if (waitsForAnimationEvent == false)
+                ExecutePendingCardSkill();
+
             cardHandUI.UseCard(slotIndex);
             runtimeDeck.RecordUse(usedCard);
 
@@ -228,109 +243,24 @@ namespace Arcanist
 
         private bool TryPrepareCardUse(CardData card)
         {
-            if (card == null)
-                return false;
+            Vector3 castOrigin = skillExecutor.CastPoint != null
+                ? skillExecutor.CastPoint.position
+                : transform.position;
+            CardUseFailure failure = useValidator.Validate(card, castOrigin);
 
-            if (IsHealCard(card) && IsPlayerHpFull())
+            switch (failure)
             {
-                ShowAnnounceMessage(fullHpAnnounceMessage);
-                return false;
+                case CardUseFailure.None:
+                    return true;
+                case CardUseFailure.FullHealth:
+                    ShowAnnounceMessage(fullHpAnnounceMessage);
+                    return false;
+                case CardUseFailure.MissingTarget:
+                    ShowAnnounceMessage(noTargetAnnounceMessage);
+                    return false;
+                default:
+                    return false;
             }
-
-            if (RequiresTarget(card) == false)
-                return true;
-
-            if (TryFindValidTarget(GetCastPointTransform().position, out _))
-                return true;
-
-            ShowAnnounceMessage(noTargetAnnounceMessage);
-            return false;
-        }
-
-        private bool IsHealCard(CardData card)
-        {
-            if (card == null || card.Effect == null)
-                return false;
-
-            if (card.Effect is BuffCardEffect buffCardEffect)
-                return buffCardEffect.HasModifier(BuffEffectType.HealRatio);
-
-            return false;
-        }
-
-        private bool IsPlayerHpFull()
-        {
-            Player player = null;
-
-            if (playerController != null)
-                player = playerController.GetComponent<Player>();
-
-            if (player == null)
-                player = GetComponent<Player>();
-
-            if (player == null || player.Stat == null)
-                return false;
-
-            return player.Stat.Hp >= player.Stat.MaxHp;
-        }
-
-        private bool RequiresTarget(CardData card)
-        {
-            if (card == null)
-                return false;
-
-            if (card.RequiresTarget)
-                return true;
-
-            if (card.Effect == null)
-                return false;
-
-            return card.Effect.RequiresTarget;
-        }
-
-        private Transform GetCastPointTransform()
-        {
-            if (cardCastPoint != null)
-                return cardCastPoint;
-
-            if (playerController != null)
-                return playerController.transform;
-
-            return transform;
-        }
-
-        private bool TryFindValidTarget(Vector3 origin, out Transform target)
-        {
-            target = null;
-
-            if (enemyManager == null)
-                return false;
-
-            Transform foundTarget = enemyManager.FindBestTarget(origin);
-
-            if (IsValidTarget(foundTarget) == false)
-                return false;
-
-            target = foundTarget;
-            return true;
-        }
-
-        private bool IsValidTarget(Transform target)
-        {
-            if (target == null)
-                return false;
-
-            EnemyController enemyController = target.GetComponentInParent<EnemyController>();
-
-            if (enemyController != null)
-                return enemyController.IsDead == false;
-
-            BossController bossController = target.GetComponentInParent<BossController>();
-
-            if (bossController != null)
-                return bossController.IsDead == false;
-
-            return false;
         }
 
         private void ShowAnnounceMessage(string message)
@@ -346,80 +276,19 @@ namespace Arcanist
             Debug.Log(message);
         }
 
-        private void PlayCardSkillMotion(CardData card)
-        {
-            if (card == null) return;
-
-            string triggerName = string.IsNullOrEmpty(card.AnimationTrigger)
-                ? fallbackCardSkillTrigger
-                : card.AnimationTrigger;
-
-            if (playerAnimator == null || HasAnimatorTrigger(triggerName) == false)
-            {
-                ExecutePendingCardSkill();
-                return;
-            }
-
-            playerController?.BeginCardSkill();
-            playerAnimator.ResetTrigger(triggerName);
-            playerAnimator.SetTrigger(triggerName);
-        }
-
-        private bool HasAnimatorTrigger(string triggerName)
-        {
-            if (string.IsNullOrEmpty(triggerName) || playerAnimator == null)
-                return false;
-
-            AnimatorControllerParameter[] parameters = playerAnimator.parameters;
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                if (parameters[i].type == AnimatorControllerParameterType.Trigger && 
-                    parameters[i].name == triggerName)
-                    return true;
-            }
-
-            return false;
-        }
-
         public void ExecutePendingCardSkill()
         {
-            if (pendingSkillCard == null) return;
+            CardSkillExecutionResult result = skillExecutor.ExecutePending();
 
-            CardData card = pendingSkillCard;
-            pendingSkillCard = null;
-
-            if (card.Effect == null) return;
-
-            Transform castPoint = GetCastPointTransform();
-            int facingDirection = playerController != null ? playerController.FacingDirection : 1;
-
-            if (TryResolveTargetForCard(card, castPoint.position, out Transform target) == false)
+            if (result.Status == CardSkillExecutionStatus.MissingTarget)
             {
                 ShowAnnounceMessage(noTargetAnnounceMessage);
-                playerController?.EndCardSkill();
                 return;
             }
 
-            CardEffectContext context = new(card, playerController, castPoint, facingDirection, target);
-            card.Effect.Execute(context);
-            recentCardUIController?.ShowUsedCard(card);
+            if (result.Status == CardSkillExecutionStatus.Executed)
+                recentCardUIController?.ShowUsedCard(result.Card);
         }
 
-        private bool TryResolveTargetForCard(CardData card, Vector3 origin, out Transform target)
-        {
-            target = null;
-
-            if (RequiresTarget(card))
-                return TryFindValidTarget(origin, out target);
-
-            TryFindValidTarget(origin, out target);
-            return true;
-        }
-
-        private bool IsCardInPlayerDeck(CardData card)
-        {
-            return runtimeDeck.Contains(card);
-        }
     }
 }

@@ -7,6 +7,9 @@ namespace Arcanist
         [field: SerializeField] public Transform HeadUpPivot { get; private set; }
         [field: SerializeField] public virtual BaseStat BaseStat { get; }
 
+        public virtual bool CanReceiveKnockback => true;
+        public virtual bool CanReceiveStun => true;
+
         public abstract void TakeDamage(int damage);
 
         public abstract void TakeHeal(int heal);

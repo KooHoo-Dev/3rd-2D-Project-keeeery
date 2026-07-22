@@ -30,9 +30,7 @@ namespace Arcanist
 
 
         public Animator Animator { get; private set; }
-        private CharacterController2D Controller2D { get; set; }
-
-        public int FacingDirection { get; private set; } = 1;
+        public int FacingDirection => locomotion?.FacingDirection ?? 1;
 
         [Header("Dash")]
         [SerializeField] private float dashPower = 10.0f;
@@ -71,13 +69,8 @@ namespace Arcanist
         [SerializeField] private CardGaugeController cardGaugeController;
         [SerializeField] private int parryGaugeCellReward = 3;
 
-        private float nextDashTime;
         private float nextParryTime;
         private float hurtEndTime;
-        private float staminaRecoveryStartTime;
-        private float sprintInputGraceEndTime;
-        private bool isSprint;
-        private GameObject sprintLoopFx;
         private bool isHurt;
         private bool isCastingSkill;
         private bool isDead;
@@ -88,12 +81,34 @@ namespace Arcanist
 
         private PlayerAnimStateBase defaultState;
         private PlayerAnimStateBase currentState;
+        private PlayerLocomotionRuntime locomotion;
 
 
         private void Awake()
         {
             Animator = GetComponentInChildren<Animator>();
-            Controller2D = GetComponent<CharacterController2D>();
+            CharacterController2D controller2D = GetComponent<CharacterController2D>();
+
+            PlayerLocomotionSettings locomotionSettings = new(
+                dashPower,
+                dashDuration,
+                dashCooldown,
+                sprintMultiplier,
+                staminaCostPerSec,
+                staminaRecoveryPerSec,
+                staminaRecoveryDelay,
+                sprintInputGraceTime);
+            locomotion = new PlayerLocomotionRuntime(
+                transform,
+                Animator,
+                controller2D,
+                locomotionSettings,
+                doubleJumpFxPrefab,
+                dashFxPrefab,
+                sprintLoopFxPrefab,
+                sprintEndFxPrefab,
+                fxSpawnPoint,
+                sprintFxSpawnPoint);
 
             defaultState = new MovementState(this);
             StateDic.Add(Animator.StringToHash(ANIM_TAG_MOVEMENT), defaultState);
@@ -119,7 +134,7 @@ namespace Arcanist
             UpdateJumpInput();
             UpdateDashInput();
             UpdateGroundedAnimation();
-            UpdateStaminaRecovery();
+            locomotion.UpdateStaminaRecovery();
         }
 
         private void UpdateAnimState()
@@ -153,14 +168,7 @@ namespace Arcanist
                 return;
             }
 
-            Vector2 inputVector = SimpleInput.GetMoveAxisRaw();
-            float absMovement = Mathf.Abs(inputVector.x);
-            bool hasMoveInput = absMovement > 0.0f;
-            bool canSprint = UpdateSprintState(hasMoveInput, Keyboard.current.leftShiftKey.isPressed);
-
-            Animator.SetFloat(MOVEMENT, canSprint ? 2.0f : absMovement);
-            ApplyFacing(inputVector.x);
-            ApplyMoveInput(inputVector.x, canSprint);
+            locomotion.HandleMovement(SimpleInput.GetMoveAxisRaw().x, true);
 
             if (SimpleInput.GetKeyDown(Key.D))
                 Animator.SetBool(IS_ATTACK, true);
@@ -183,51 +191,8 @@ namespace Arcanist
                 return;
             }
 
-            float horizontal = GetHorizontalInput(moveScale);
-            bool hasMoveInput = Mathf.Abs(horizontal) > 0.0f;
-            bool canSprint = UpdateSprintState(hasMoveInput, Keyboard.current.leftShiftKey.isPressed);
-
-            ApplyFacing(horizontal);
-            ApplyMoveInput(horizontal, canSprint);
-        }
-
-        private float GetHorizontalInput(float moveScale)
-        {
-            if (Keyboard.current.leftArrowKey.isPressed) return -moveScale;
-
-            if (Keyboard.current.rightArrowKey.isPressed) return moveScale;
-
-            return 0.0f;
-        }
-
-        private bool UpdateSprintState(bool hasMoveInput, bool shiftPressed)
-        {
-            if (shiftPressed && hasMoveInput)
-                sprintInputGraceEndTime = Time.time + sprintInputGraceTime;
-
-            bool wantsSprint = Controller2D.IsGrounded && shiftPressed && (hasMoveInput || Time.time < sprintInputGraceEndTime);
-            bool canSprint = TrySprint(wantsSprint);
-
-            SetSprintState(canSprint, Controller2D.IsGrounded);
-            return canSprint;
-        }
-
-        private void ApplyFacing(float horizontal)
-        {
-            if (Mathf.Abs(horizontal) <= 0.0f) return;
-
-            FacingDirection = horizontal < 0.0f ? -1 : 1;
-
-            Vector3 scale = Animator.transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * FacingDirection;
-            Animator.transform.localScale = scale;
-        }
-
-        private void ApplyMoveInput(float horizontal, bool canSprint)
-        {
-            if (canSprint) horizontal *= sprintMultiplier;
-
-            Controller2D.SetMoveInput(horizontal);
+            float horizontal = locomotion.GetArrowHorizontalInput(moveScale);
+            locomotion.HandleMovement(horizontal, false);
         }
 
         private void StartParry()
@@ -242,8 +207,7 @@ namespace Arcanist
 
         public void StopMovement()
         {
-            Controller2D.SetMoveInput(0.0f);
-            SetSprintState(false);
+            locomotion.StopMovement();
         }
 
         public void OpenParryWindow()
@@ -341,7 +305,7 @@ namespace Arcanist
             IsParrying = false;
             CloseParryWindow();
             StopMovement();
-            StopSprintLoopFx();
+            locomotion.ResetForRespawn();
 
             Animator.Rebind();
             Animator.Update(0.0f);
@@ -357,7 +321,7 @@ namespace Arcanist
             Animator.SetBool(IS_CASTING_SKILL, false);
             Animator.SetBool(IS_ATTACK, false);
             Animator.SetBool(IS_SPRINT, false);
-            Animator.SetBool(IS_GROUNDED, Controller2D.IsGrounded);
+            Animator.SetBool(IS_GROUNDED, locomotion.IsGrounded);
             Animator.SetFloat(MOVEMENT, 0.0f);
             Animator.Play(ANIM_TAG_MOVEMENT, 0, 0.0f);
             Animator.Update(0.0f);
@@ -365,12 +329,8 @@ namespace Arcanist
             currentState?.Exit();
             currentState = null;
 
-            nextDashTime = 0.0f;
             nextParryTime = 0.0f;
             hurtEndTime = 0.0f;
-            staminaRecoveryStartTime = 0.0f;
-            sprintInputGraceEndTime = 0.0f;
-            isSprint = false;
 
             Player.LocalPlayer?.RestoreHealthTo(hp);
             cardSystem?.ResetRuntimeCardsForRespawn();
@@ -405,35 +365,17 @@ namespace Arcanist
 
         private void UpdateJumpInput()
         {
-            if (IsParrying || isHurt || isDead || isCastingSkill) return;
-
-            if (SimpleInput.GetKeyDown(Key.Space) == false) return;
-
-            bool wasGrounded = Controller2D.IsGrounded;
-            bool jumpAccepted = Controller2D.RequestJump();
-
-            if (jumpAccepted && wasGrounded == false)
-            {
-                Animator.SetTrigger(DOUBLE_JUMP);
-                SpawnFx(doubleJumpFxPrefab);
-            }
+            locomotion.UpdateJumpInput(IsPlayerActionBlocked());
         }
 
         private void UpdateDashInput()
         {
-            if (IsParrying || isHurt || isDead || isCastingSkill) return;
+            locomotion.UpdateDashInput(IsPlayerActionBlocked());
+        }
 
-            if (SimpleInput.GetKeyDown(Key.A) == false) return;
-
-            if (Time.time < nextDashTime) return;
-
-            bool dashAccepted = Controller2D.RequestDash(FacingDirection, dashPower, dashDuration);
-
-            if (dashAccepted == false) return;
-
-            nextDashTime = Time.time + dashCooldown;
-            Animator.SetTrigger(DASH);
-            SpawnFx(dashFxPrefab);
+        private bool IsPlayerActionBlocked()
+        {
+            return IsParrying || isHurt || isDead || isCastingSkill;
         }
 
         private void UpdateCooldownUI()
@@ -443,116 +385,9 @@ namespace Arcanist
             Player.LocalPlayer.UpdateParryCooldownUI(Mathf.Max(0.0f, nextParryTime - Time.time), parryCooldown);
         }
 
-        private bool TrySprint(bool wantsSprint)
-        {
-            if (wantsSprint == false || Player.LocalPlayer == null)
-                return false;
-
-            float staminaCost = staminaCostPerSec * Time.deltaTime;
-            staminaRecoveryStartTime = Time.time + staminaRecoveryDelay;
-
-            if (Player.LocalPlayer.HasStamina(staminaCost) == false)
-            {
-                sprintInputGraceEndTime = 0.0f;
-                SetSprintState(false);
-                return false;
-            }
-
-            if (Player.LocalPlayer.TryUseStamina(staminaCost) == false)
-            {
-                sprintInputGraceEndTime = 0.0f;
-                SetSprintState(false);
-                return false;
-            }
-
-            return true;
-        }
-
-        private void UpdateStaminaRecovery()
-        {
-            if (isSprint || Player.LocalPlayer == null) return;
-
-            if (Time.time < staminaRecoveryStartTime) return;
-
-            Player.LocalPlayer.RecoverStamina(staminaRecoveryPerSec * Time.deltaTime);
-        }
-
-        private void SetSprintState(bool value, bool playEndFx = true)
-        {
-            if (isSprint == value)
-            {
-                Animator.SetBool(IS_SPRINT, value);
-                return;
-            }
-
-            isSprint = value;
-            Animator.SetBool(IS_SPRINT, value);
-
-            if (value)
-            {
-                StartSprintLoopFx();
-                return;
-            }
-
-            StopSprintLoopFx();
-
-            if (playEndFx && Controller2D.IsGrounded)
-                SpawnFx(sprintEndFxPrefab, sprintFxSpawnPoint);
-        }
-
-        private void StartSprintLoopFx()
-        {
-            if (sprintLoopFx != null || sprintLoopFxPrefab == null)
-                return;
-
-            Transform spawnPoint = sprintFxSpawnPoint != null ? sprintFxSpawnPoint : transform;
-            sprintLoopFx = Instantiate(sprintLoopFxPrefab, spawnPoint.position, Quaternion.identity, spawnPoint);
-        }
-
-        private void StopSprintLoopFx()
-        {
-            if (sprintLoopFx == null) return;
-
-            Destroy(sprintLoopFx);
-            sprintLoopFx = null;
-        }
-
-        private void SpawnFx(GameObject prefab)
-        {
-            SpawnFx(prefab, fxSpawnPoint);
-        }
-
-        private void SpawnFx(GameObject prefab, Transform customSpawnPoint)
-        {
-            if (prefab == null) return;
-
-            Transform spawnPoint = customSpawnPoint != null ? customSpawnPoint : transform;
-            GameObject fx = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-
-            Vector3 scale = fx.transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * FacingDirection;
-            fx.transform.localScale = scale;
-        }
-
-        private bool prevIsGrounded;
-
         private void UpdateGroundedAnimation()
         {
-            bool isGrounded = Controller2D.IsGrounded;
-            Animator.SetBool(IS_GROUNDED, isGrounded);
-
-            if (isGrounded == false) StopSprintLoopFx();
-
-            if (IsParrying || isHurt || isDead)
-            {
-                prevIsGrounded = isGrounded;
-                return;
-            }
-
-            if (prevIsGrounded && isGrounded == false)
-                Animator.SetTrigger(Controller2D.VerticalVelocity > 0.0f ? JUMP : DESCENDING);
-
-            prevIsGrounded = isGrounded;
+            locomotion.UpdateGroundedAnimation(IsParrying || isHurt || isDead);
         }
     }
 }

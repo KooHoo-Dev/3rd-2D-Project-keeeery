@@ -146,7 +146,7 @@ namespace Arcanist
 
         private void ApplyKnockback(CombatEntity receiver, Collider2D collision)
         {
-            if (!useKnockback || receiver == null)
+            if (!useKnockback || receiver == null || !receiver.CanReceiveKnockback)
                 return;
 
             Rigidbody2D receiverRigidbody = receiver.GetComponent<Rigidbody2D>();
@@ -177,7 +177,7 @@ namespace Arcanist
 
         private void ApplyStun(CombatEntity receiver)
         {
-            if (!useStun || receiver == null || stunDuration <= 0.0f)
+            if (!useStun || receiver == null || !receiver.CanReceiveStun || stunDuration <= 0.0f)
                 return;
 
             receiver.SendMessage("Stun", stunDuration, SendMessageOptions.DontRequireReceiver);

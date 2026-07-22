@@ -13,6 +13,7 @@ namespace Arcanist
         [SerializeField] private float secondsPerCell = 1f;
 
         private int currentCell;
+        private int overflowCells;
         private bool isGaugeFull;
         private Coroutine chargeCoroutine;
 
@@ -32,7 +33,18 @@ namespace Arcanist
 
         public void ResetGaugeAndRecharge()
         {
+            overflowCells = 0;
             ResetGaugeOnly();
+            StartCharging();
+        }
+
+        public void BeginNextGaugeCycle()
+        {
+            int carriedCells = overflowCells;
+            overflowCells = 0;
+            ResetGaugeOnly();
+            currentCell = Mathf.Min(carriedCells, gaugeCells.Length);
+            RefreshGaugeCells();
             StartCharging();
         }
 
@@ -88,7 +100,9 @@ namespace Arcanist
         {
             if (amount <= 0 || isGaugeFull) return;
 
-            currentCell = Mathf.Min(currentCell + amount, gaugeCells.Length);
+            int totalCells = currentCell + amount;
+            overflowCells = Mathf.Max(0, totalCells - gaugeCells.Length);
+            currentCell = Mathf.Min(totalCells, gaugeCells.Length);
             RefreshGaugeCells();
 
             if (currentCell >= gaugeCells.Length)

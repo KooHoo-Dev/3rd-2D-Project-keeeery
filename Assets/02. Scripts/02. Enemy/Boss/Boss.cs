@@ -7,6 +7,9 @@ namespace Arcanist
         private BossController bossController;
         [SerializeField] private HealthBarUI healthBarUI;
 
+        public override bool CanReceiveKnockback => false;
+        public override bool CanReceiveStun => false;
+
         protected override void Awake()
         {
             base.Awake();
