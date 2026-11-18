@@ -4,6 +4,16 @@ using UnityEngine;
 
 namespace Arcanist
 {
+    public enum DeckEditFailure
+    {
+        None,
+        InvalidCard,
+        CardNotOwned,
+        DeckFull,
+        DuplicateCard,
+        ManaCostExceeded,
+    }
+
     public class PlayerInventory : MonoBehaviour
     {
         private static PlayerInventory instance;
@@ -116,25 +126,47 @@ namespace Arcanist
             ownedCards.Add(cardData);
             newCardIds.Add(GetCardKey(cardData));
 
-            if (addToDeck)
-                AddToDeck(cardData);
-            else
-                OnInventoryChanged?.Invoke();
+            if (addToDeck && AddToDeck(cardData))
+                return true;
+
+            OnInventoryChanged?.Invoke();
 
             return true;
         }
 
         public bool AddToDeck(CardData cardData)
         {
-            if (cardData == null || !HasCard(cardData) || IsDeckFull() || WouldExceedDeckManaCost(cardData))
+            if (TryAddToDeck(cardData) != DeckEditFailure.None)
                 return false;
 
+            return true;
+        }
+
+        public DeckEditFailure CanAddToDeck(CardData cardData)
+        {
+            if (cardData == null)
+                return DeckEditFailure.InvalidCard;
+            if (!HasCard(cardData))
+                return DeckEditFailure.CardNotOwned;
+            if (IsDeckFull())
+                return DeckEditFailure.DeckFull;
             if (!allowDuplicateCards && deckCards.Contains(cardData))
-                return false;
+                return DeckEditFailure.DuplicateCard;
+            if (WouldExceedDeckManaCost(cardData))
+                return DeckEditFailure.ManaCostExceeded;
+
+            return DeckEditFailure.None;
+        }
+
+        public DeckEditFailure TryAddToDeck(CardData cardData)
+        {
+            DeckEditFailure failure = CanAddToDeck(cardData);
+            if (failure != DeckEditFailure.None)
+                return failure;
 
             deckCards.Add(cardData);
             OnInventoryChanged?.Invoke();
-            return true;
+            return DeckEditFailure.None;
         }
 
         public bool RemoveFromDeck(CardData cardData)

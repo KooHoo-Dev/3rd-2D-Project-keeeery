@@ -32,12 +32,12 @@ namespace Arcanist
         [SerializeField] private float selectedHoldDuration = 0.18f;
         [SerializeField] private float cardSpawnDelay = 0.08f;
 
-        private readonly List<RewardCardView> rewardCardViews = new List<RewardCardView>();
-
         private OverlayController overlayController;
         private RoomController roomController;
         private Coroutine spawnCoroutine;
         private Coroutine nextRewardRoundCoroutine;
+        private RewardCardListView cardListView;
+        private RewardSelectionMotion selectionMotion;
         private RewardCardView selectedRewardCardView;
         private AnnounceMessage announceMessage;
         private int remainingRewardRounds;
@@ -46,6 +46,7 @@ namespace Arcanist
         private void Awake()
         {
             ResolveReferences();
+            BuildRuntimeServices();
         }
 
         public void OpenReward()
@@ -58,6 +59,7 @@ namespace Arcanist
 
         private void OpenReward(List<CardData> rewards)
         {
+            EnsureRuntimeServices();
             ResetRewardState();
             ResetTexts();
 
@@ -85,7 +87,7 @@ namespace Arcanist
 
             selectedRewardCardView = selectedView;
             isSelectingReward = true;
-            SetCardsInteractable(false);
+            cardListView.SetInteractable(false);
 
             StartCoroutine(PlayRewardSelection(selectedView));
         }
@@ -97,88 +99,13 @@ namespace Arcanist
 
         private IEnumerator SpawnRewards(List<CardData> rewards)
         {
-            List<RectTransform> cardRects = new List<RectTransform>();
-            List<LayoutElement> layoutElements = new List<LayoutElement>();
-            List<RewardCardMotion> cardMotions = new List<RewardCardMotion>();
-            List<Vector2> endPositions = new List<Vector2>();
-
-            for (int i = 0; i < rewards.Count; i++)
-            {
-                RectTransform cardRect = SpawnRewardCard(rewards[i], out LayoutElement layoutElement, out RewardCardMotion cardMotion);
-
-                if (cardRect == null || cardMotion == null)
-                    continue;
-
-                cardRects.Add(cardRect);
-                layoutElements.Add(layoutElement);
-                cardMotions.Add(cardMotion);
-            }
-
-            Canvas.ForceUpdateCanvases();
-            LayoutRebuilder.ForceRebuildLayoutImmediate(rewardContainer);
-            Canvas.ForceUpdateCanvases();
-
-            for (int i = 0; i < cardRects.Count; i++)
-            {
-                endPositions.Add(cardRects[i].anchoredPosition);
-                layoutElements[i].ignoreLayout = true;
-                cardMotions[i].PrepareDraw(endPositions[i]);
-            }
-
-            for (int i = 0; i < cardRects.Count; i++)
-            {
-                yield return cardMotions[i].PlayDraw(endPositions[i]);
-                yield return new WaitForSecondsRealtime(cardSpawnDelay);
-            }
-
-            foreach (var t in layoutElements)
-                t.ignoreLayout = false;
-
-            LayoutRebuilder.ForceRebuildLayoutImmediate(rewardContainer);
+            yield return cardListView.Spawn(rewards);
             spawnCoroutine = null;
-
-            foreach (var t in rewardCardViews)
-            {
-                t.RefreshDefaultScale();
-                t.SetInteractable(true);
-            }
-        }
-
-        private RectTransform SpawnRewardCard(CardData cardData, out LayoutElement layoutElement, out RewardCardMotion cardMotion)
-        {
-            layoutElement = null;
-            cardMotion = null;
-
-            if (cardPrefab == null || rewardContainer == null || cardData == null)
-                return null;
-
-            GameObject cardObject = Instantiate(cardPrefab, rewardContainer);
-            RectTransform cardRect = cardObject.transform as RectTransform;
-
-            layoutElement = GetOrAddComponent<LayoutElement>(cardObject);
-            layoutElement.ignoreLayout = false;
-
-            cardMotion = GetOrAddComponent<RewardCardMotion>(cardObject);
-
-            RewardCardView cardView = cardObject.GetComponent<RewardCardView>();
-
-            if (cardView == null)
-                cardView = cardObject.GetComponentInChildren<RewardCardView>(true);
-
-            if (cardView != null)
-            {
-                cardView.Initialize(this);
-                cardView.SetCard(cardData);
-                cardView.SetInteractable(false);
-                rewardCardViews.Add(cardView);
-            }
-
-            return cardRect;
         }
 
         private IEnumerator PlayRewardSelection(RewardCardView selectedView)
         {
-            yield return FadeUnselectedCards(selectedView);
+            yield return selectionMotion.FadeUnselected(cardListView.Views, selectedView);
 
             RewardCardMotion selectedMotion = selectedView.GetComponentInParent<RewardCardMotion>();
             RectTransform selectedRect = selectedMotion != null ? selectedMotion.transform as RectTransform : null;
@@ -194,9 +121,9 @@ namespace Arcanist
             if (selectedLayoutElement != null)
                 selectedLayoutElement.ignoreLayout = true;
 
-            Vector3 centerScale = new Vector3(selectedCenterScale, selectedCenterScale, 1.0f);
+            Vector3 centerScale = selectionMotion.GetCenterScale();
 
-            yield return MoveSelectedCardToCenter(selectedRect, centerScale);
+            yield return selectionMotion.MoveToCenter(selectedRect);
             yield return new WaitForSecondsRealtime(Mathf.Max(0.0f, selectedHoldDuration));
             yield return selectedMotion.PlayExit(centerScale);
 
@@ -233,84 +160,14 @@ namespace Arcanist
             if (rewardWindow != null)
                 rewardWindow.SetActive(true);
 
-            Canvas.ForceUpdateCanvases();
-
-            if (rewardContainer != null)
-                LayoutRebuilder.ForceRebuildLayoutImmediate(rewardContainer);
+            cardListView.RebuildLayout();
 
             yield return null;
 
-            Canvas.ForceUpdateCanvases();
-
-            if (rewardContainer != null)
-                LayoutRebuilder.ForceRebuildLayoutImmediate(rewardContainer);
+            cardListView.RebuildLayout();
 
             spawnCoroutine = StartCoroutine(SpawnRewards(CreateRewards()));
             nextRewardRoundCoroutine = null;
-        }
-
-        private IEnumerator FadeUnselectedCards(RewardCardView selectedView)
-        {
-            const float fadeDuration = 0.2f;
-
-            for (int i = 0; i < rewardCardViews.Count; i++)
-            {
-                if (rewardCardViews[i] != null && rewardCardViews[i] != selectedView)
-                    StartCoroutine(FadeCanvasGroup(rewardCardViews[i].CanvasGroup, 0.0f, fadeDuration));
-            }
-
-            if (rewardSelectTextCanvasGroup != null)
-                StartCoroutine(FadeCanvasGroup(rewardSelectTextCanvasGroup, 0.0f, fadeDuration));
-
-            yield return new WaitForSecondsRealtime(fadeDuration);
-        }
-
-        private IEnumerator MoveSelectedCardToCenter(RectTransform selectedRect, Vector3 targetScale)
-        {
-            Vector3 startPosition = selectedRect.position;
-            Vector3 targetPosition = rewardContainer.position;
-            Vector3 startScale = selectedRect.localScale;
-            float duration = Mathf.Max(0.01f, selectedMoveDuration);
-            float elapsed = 0.0f;
-
-            while (elapsed < duration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-
-                float t = Mathf.Clamp01(elapsed / duration);
-                float eased = EaseOutCubic(t);
-
-                selectedRect.position = Vector3.LerpUnclamped(startPosition, targetPosition, eased);
-                selectedRect.localScale = Vector3.LerpUnclamped(startScale, targetScale, eased);
-
-                yield return null;
-            }
-
-            selectedRect.position = targetPosition;
-            selectedRect.localScale = targetScale;
-        }
-
-        private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float targetAlpha, float duration)
-        {
-            if (canvasGroup == null)
-                yield break;
-
-            float startAlpha = canvasGroup.alpha;
-            float safeDuration = Mathf.Max(0.01f, duration);
-            float elapsed = 0.0f;
-
-            while (elapsed < safeDuration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-
-                float t = Mathf.Clamp01(elapsed / safeDuration);
-                float eased = t * t * (3.0f - 2.0f * t);
-                canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, eased);
-
-                yield return null;
-            }
-
-            canvasGroup.alpha = targetAlpha;
         }
 
         private List<CardData> CreateRewards()
@@ -386,7 +243,6 @@ namespace Arcanist
         {
             selectedRewardCardView = null;
             isSelectingReward = false;
-            rewardCardViews.Clear();
         }
 
         private void ResetTexts()
@@ -394,22 +250,10 @@ namespace Arcanist
             ResetCanvasGroup(rewardSelectTextCanvasGroup, 1.0f, true);
         }
 
-        private void SetCardsInteractable(bool value)
-        {
-            foreach (var t in rewardCardViews)
-            {
-                if (t != null)
-                    t.SetInteractable(value);
-            }
-        }
-
         private void ClearRewardCards()
         {
-            if (rewardContainer == null)
-                return;
-
-            for (int i = rewardContainer.childCount - 1; i >= 0; i--)
-                Destroy(rewardContainer.GetChild(i).gameObject);
+            EnsureRuntimeServices();
+            cardListView.Clear();
         }
 
         private void StopRewardCoroutines()
@@ -439,16 +283,20 @@ namespace Arcanist
             canvasGroup.blocksRaycasts = interactable;
         }
 
-        private T GetOrAddComponent<T>(GameObject target) where T : Component
+        private void EnsureRuntimeServices()
         {
-            T component = target.GetComponent<T>();
-            return component != null ? component : target.AddComponent<T>();
+            if (cardListView == null || selectionMotion == null)
+                BuildRuntimeServices();
         }
 
-        private float EaseOutCubic(float value)
+        private void BuildRuntimeServices()
         {
-            value = Mathf.Clamp01(value);
-            return 1.0f - Mathf.Pow(1.0f - value, 3.0f);
+            cardListView = new RewardCardListView(this, cardPrefab, rewardContainer, cardSpawnDelay);
+            selectionMotion = new RewardSelectionMotion(
+                rewardContainer,
+                rewardSelectTextCanvasGroup,
+                selectedCenterScale,
+                selectedMoveDuration);
         }
     }
 }

@@ -57,6 +57,7 @@ namespace Arcanist
         public OverlayState CurrentState { get; private set; }
 
         private Coroutine fadeRoutine;
+        private OverlayMotion overlayMotion;
 
         private void Awake()
         {
@@ -72,6 +73,7 @@ namespace Arcanist
                 rewardController = FindFirstObjectByType<RewardController>(FindObjectsInactive.Include);
 
             reviveInputPrompt = deathWindow.transform.Find("ReviveInputPrompt").GetComponent<RectTransform>();
+            BuildTransition();
 
             InitializePauseButtons();
             HideAllWindows();
@@ -139,53 +141,8 @@ namespace Arcanist
 
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
 
-            fadeRoutine = StartCoroutine(DeathOverlayRoutine());
-        }
-
-        private IEnumerator DeathOverlayRoutine()
-        {
-            yield return StartCoroutine(FadeLightRoutine(deathLightIntensity, deathFadeDuration));
-            yield return StartCoroutine(FadeOverlayRoutine(1.0f, menuFadeDuration));
-
-            fadeRoutine = null;
-        }
-
-        private IEnumerator FadeLightRoutine(float targetLightIntensity, float duration)
-        {
-            float startLightIntensity = globalLight.intensity;
-            float time = 0.0f;
-
-            while (time < duration)
-            {
-                time += Time.unscaledDeltaTime;
-
-                float t = Mathf.Clamp01(time / duration);
-                t = Mathf.SmoothStep(0.0f, 1.0f, t);
-                globalLight.intensity = Mathf.Lerp(startLightIntensity, targetLightIntensity, t);
-
-                yield return null;
-            }
-
-            globalLight.intensity = targetLightIntensity;
-        }
-
-        private IEnumerator FadeOverlayRoutine(float targetAlpha, float duration)
-        {
-            float startAlpha = overlayGroup.alpha;
-            float time = 0.0f;
-
-            while (time < duration)
-            {
-                time += Time.unscaledDeltaTime;
-
-                float t = Mathf.Clamp01(time / duration);
-                t = Mathf.SmoothStep(0.0f, 1.0f, t);
-                overlayGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-
-                yield return null;
-            }
-
-            overlayGroup.alpha = targetAlpha;
+            fadeRoutine = StartCoroutine(RunTransition(
+                overlayMotion.PlayDeath(deathLightIntensity, deathFadeDuration, menuFadeDuration)));
         }
 
         public void Hide()
@@ -195,7 +152,8 @@ namespace Arcanist
             Time.timeScale = 1.0f;
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
 
-            fadeRoutine = StartCoroutine(FadeRoutine(0.0f, normalLightIntensity, menuFadeDuration, true));
+            fadeRoutine = StartCoroutine(RunTransition(
+                overlayMotion.Fade(0.0f, normalLightIntensity, menuFadeDuration, true, HideAllWindows)));
         }
 
         public IEnumerator RespawnFadeRoutine(Action onBlackScreen)
@@ -211,35 +169,7 @@ namespace Arcanist
                 fadeRoutine = null;
             }
 
-            fadePanel.gameObject.SetActive(true);
-            fadePanel.transform.SetAsLastSibling();
-            fadePanel.alpha = 0.0f;
-
-            yield return StartCoroutine(FadeCanvasGroup(fadePanel, 0.0f, 1.0f, respawnFadeDuration));
-
-            HideAllWindows();
-            overlayGroup.alpha = 0.0f;
-            overlayRoot.SetActive(false);
-            globalLight.intensity = normalLightIntensity;
-
-            onBlackScreen?.Invoke();
-
-            float waitStartTime = Time.unscaledTime;
-            while (playerCameraController != null && !playerCameraController.IsAtTarget)
-            {
-                if (Time.unscaledTime - waitStartTime >= respawnCameraWaitTimeout)
-                    break;
-
-                yield return null;
-            }
-
-            yield return new WaitForSecondsRealtime(respawnBlackHoldDuration);
-
-            CurrentState = OverlayState.None;
-            yield return StartCoroutine(FadeCanvasGroup(fadePanel, 1.0f, 0.0f, respawnFadeDuration));
-
-            fadePanel.alpha = 0.0f;
-            fadePanel.gameObject.SetActive(false);
+            yield return overlayMotion.PlayRespawn(onBlackScreen, HideAllWindows);
 
             CurrentState = OverlayState.None;
             SimpleInput.IsKeyBoardInputBlocked = false;
@@ -261,31 +191,7 @@ namespace Arcanist
                 fadeRoutine = null;
             }
 
-            HideAllWindows();
-            overlayGroup.alpha = 0.0f;
-            overlayRoot.SetActive(false);
-            globalLight.intensity = normalLightIntensity;
-        }
-
-        private IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration)
-        {
-            group.alpha = from;
-
-            float time = 0f;
-
-            while (time < duration)
-            {
-                time += Time.unscaledDeltaTime;
-
-                float t = Mathf.Clamp01(time / duration);
-                t = Mathf.SmoothStep(0.0f, 1.0f, t);
-
-                group.alpha = Mathf.Lerp(from, to, t);
-
-                yield return null;
-            }
-
-            group.alpha = to;
+            overlayMotion.ResetOverlay(HideAllWindows);
         }
 
         private void ShowWindow(GameObject targetWindow, float targetLightIntensity, float duration)
@@ -296,7 +202,8 @@ namespace Arcanist
 
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
 
-            fadeRoutine = StartCoroutine(FadeRoutine(1.0f, targetLightIntensity, duration, false));
+            fadeRoutine = StartCoroutine(RunTransition(
+                overlayMotion.Fade(1.0f, targetLightIntensity, duration, false, HideAllWindows)));
         }
 
         private void InitializePauseButtons()
@@ -316,35 +223,24 @@ namespace Arcanist
             deathWindow.SetActive(false);
         }
 
-        private IEnumerator FadeRoutine(float targetAlpha, float targetLightIntensity, float duration, bool hideAfterFade)
+        private IEnumerator RunTransition(IEnumerator routine)
         {
-            float startAlpha = overlayGroup.alpha;
-            float startLightIntensity = globalLight.intensity;
-            float time = 0.0f;
-
-            while (time < duration)
-            {
-                time += Time.unscaledDeltaTime;
-
-                float t = Mathf.Clamp01(time / duration);
-                t = Mathf.SmoothStep(0.0f, 1.0f, t);
-
-                overlayGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-                globalLight.intensity = Mathf.Lerp(startLightIntensity, targetLightIntensity, t);
-
-                yield return null;
-            }
-
-            overlayGroup.alpha = targetAlpha;
-            globalLight.intensity = targetLightIntensity;
-
-            if (hideAfterFade)
-            {
-                HideAllWindows();
-                overlayRoot.SetActive(false);
-            }
-
+            yield return routine;
             fadeRoutine = null;
+        }
+
+        private void BuildTransition()
+        {
+            overlayMotion = new OverlayMotion(
+                overlayRoot,
+                overlayGroup,
+                globalLight,
+                fadePanel,
+                playerCameraController,
+                normalLightIntensity,
+                respawnFadeDuration,
+                respawnBlackHoldDuration,
+                respawnCameraWaitTimeout);
         }
     }
 }

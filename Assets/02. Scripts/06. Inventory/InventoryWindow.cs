@@ -6,8 +6,6 @@ namespace Arcanist
 {
     public class InventoryWindow : MonoBehaviour
     {
-        private const string DECK_CONDITION_WARNING_MESSAGE = "카드 수와 마력 용량 조건을 만족해야 합니다.";
-
         [Header("Debug References")]
         [SerializeField] private CardDatabase cardDatabase;
         [SerializeField] private PlayerInventory playerInventory;
@@ -54,12 +52,11 @@ namespace Arcanist
         [Header("Rules")]
         [SerializeField] private bool canEditDeck = true;
 
-        private InventoryCardSlot selectedCollectionSlot;
-        private InventoryCardSlot selectedDeckSlot;
+        private readonly InventorySelection selection = new();
         private Vector3 actionDefaultScale = Vector3.one;
         private bool canUseDeckEdit;
-        private bool isDeckConditionWarningVisible;
         private bool suppressInventoryRefresh;
+        private DeckConditionView conditionView;
 
         public CardDatabase CardDatabase => cardDatabase;
         public PlayerInventory PlayerInventory => playerInventory;
@@ -69,6 +66,11 @@ namespace Arcanist
         {
             ResolveReferences();
             ConfigureViews();
+            conditionView = new DeckConditionView(
+                allCardCountText,
+                deckCardCountText,
+                deckManaCostText,
+                guideMessage);
 
             if (deckEditActionText != null)
                 actionDefaultScale = deckEditActionText.rectTransform.localScale;
@@ -149,7 +151,7 @@ namespace Arcanist
         {
             ResolveReferences();
             ConfigureViews();
-            ClearSelection();
+            selection.Clear();
 
             List<CardData> cards = GetSortedAllCards();
             allCardCount = cards.Count;
@@ -167,7 +169,8 @@ namespace Arcanist
                 deckSlotList?.ReleaseAll();
             }
 
-            RefreshCountText();
+            UpdateDebugCounts(cards.Count);
+            conditionView?.Refresh(playerInventory, cards.Count);
             RefreshButtonState();
         }
 
@@ -179,75 +182,15 @@ namespace Arcanist
 
         private List<CardData> GetSortedAllCards()
         {
-            List<CardData> result = new();
-
-            if (cardDatabase == null || playerInventory == null)
-                return result;
-
-            List<CardData> ownedInDeckCards = new();
-            List<CardData> unownedCards = new();
-
-            foreach (CardData card in cardDatabase.AllCards)
-            {
-                if (card == null)
-                    continue;
-
-                if (!playerInventory.HasCard(card))
-                    unownedCards.Add(card);
-                else if (playerInventory.IsInDeck(card))
-                    ownedInDeckCards.Add(card);
-                else
-                    result.Add(card);
-            }
-
-            result.AddRange(ownedInDeckCards);
-            result.AddRange(unownedCards);
-            return result;
+            return InventoryCardSorter.SortForCollection(
+                cardDatabase != null ? cardDatabase.AllCards : null,
+                playerInventory);
         }
 
         public void SelectSlot(InventoryCardSlot slot)
         {
-            if (slot == null)
-                return;
-
-            if (slot.SlotArea == InventoryCardSlotArea.Collection)
-                SelectCollectionSlot(slot);
-            else
-                SelectDeckSlot(slot);
-
+            selection.Select(slot);
             RefreshButtonState();
-        }
-
-        private void SelectCollectionSlot(InventoryCardSlot slot)
-        {
-            if (!slot.IsOwned)
-            {
-                ClearSelection();
-                return;
-            }
-
-            selectedCollectionSlot?.SetSelected(false);
-            selectedDeckSlot?.SetSelected(false);
-            selectedCollectionSlot = slot;
-            selectedDeckSlot = null;
-            selectedCollectionSlot.SetSelected(true);
-        }
-
-        private void SelectDeckSlot(InventoryCardSlot slot)
-        {
-            selectedCollectionSlot?.SetSelected(false);
-            selectedDeckSlot?.SetSelected(false);
-            selectedCollectionSlot = null;
-            selectedDeckSlot = slot;
-            selectedDeckSlot.SetSelected(true);
-        }
-
-        private void ClearSelection()
-        {
-            selectedCollectionSlot?.SetSelected(false);
-            selectedDeckSlot?.SetSelected(false);
-            selectedCollectionSlot = null;
-            selectedDeckSlot = null;
         }
 
         public void ToggleSelectedCardDeck()
@@ -255,10 +198,10 @@ namespace Arcanist
             if (!canEditDeck)
                 return;
 
-            if (selectedCollectionSlot != null)
-                TryAddCardToDeck(selectedCollectionSlot.CardData);
-            else if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
-                playerInventory?.RemoveFromDeckAt(selectedDeckSlot.DeckIndex);
+            if (selection.CollectionSlot != null)
+                TryAddCardToDeck(selection.CollectionSlot.CardData);
+            else if (selection.DeckSlot != null && selection.DeckSlot.CardData != null)
+                playerInventory?.RemoveFromDeckAt(selection.DeckSlot.DeckIndex);
         }
 
         public void AddCardToDeck(CardData cardData)
@@ -272,25 +215,9 @@ namespace Arcanist
             if (playerInventory == null || cardData == null)
                 return;
 
-            if (playerInventory.IsInDeck(cardData))
-            {
-                guideMessage?.ShowTemporary("해당 카드가 카드 덱에 이미 존재합니다.");
-                return;
-            }
-
-            if (playerInventory.IsDeckFull())
-            {
-                guideMessage?.ShowTemporary("카드 덱이 가득 찼습니다.");
-                return;
-            }
-
-            if (playerInventory.WouldExceedDeckManaCost(cardData))
-            {
-                guideMessage?.ShowTemporary("마력 용량을 초과합니다.");
-                return;
-            }
-
-            playerInventory.AddToDeck(cardData);
+            DeckEditFailure failure = playerInventory.TryAddToDeck(cardData);
+            if (failure != DeckEditFailure.None)
+                guideMessage?.ShowTemporary(GetDeckEditFailureMessage(failure));
         }
 
         public void RemoveCardFromDeck(CardData cardData)
@@ -315,9 +242,14 @@ namespace Arcanist
                 suppressInventoryRefresh = false;
             }
 
-            bool wasSelected = selectedCollectionSlot?.CardData == cardData;
+            bool wasSelected = selection.CollectionSlot?.CardData == cardData;
             allCardSlotList?.MarkCardAsSeen(this, cardData);
-            selectedCollectionSlot?.SetSelected(wasSelected);
+
+            if (wasSelected)
+            {
+                InventoryCardSlot restoredSlot = FindCollectionSlot(cardData);
+                selection.RestoreCollectionSelection(restoredSlot);
+            }
         }
 
         public void ShowUnownedCardMessage()
@@ -331,9 +263,8 @@ namespace Arcanist
 
             if (canEditDeck)
             {
-                isDeckConditionWarningVisible = false;
-                guideMessage?.Hide(false);
-                RefreshCountText();
+                conditionView?.HideWarning(false);
+                conditionView?.Refresh(playerInventory, allCardCount);
             }
 
             RefreshButtonState();
@@ -351,87 +282,16 @@ namespace Arcanist
 
         public void PlayMinimumDeckWarningFeedback()
         {
-            ShowDeckConditionWarning();
+            conditionView?.ShowWarning(playerInventory);
             guideMessage?.Shake();
         }
 
-        private void RefreshCountText()
+        private void UpdateDebugCounts(int totalCardCount)
         {
+            allCardCount = totalCardCount;
             ownedCardCount = playerInventory != null ? playerInventory.OwnedCards.Count : 0;
             deckCardCount = playerInventory != null ? playerInventory.DeckCards.Count : 0;
             maxDeckCardCount = playerInventory != null ? playerInventory.MaxDeckCardCount : 0;
-
-            if (allCardCountText != null)
-                allCardCountText.text = $"{ownedCardCount} / {allCardCount}";
-
-            RefreshDeckCountText();
-            RefreshManaCostText();
-            RefreshDeckConditionWarning();
-        }
-
-        private void RefreshDeckCountText()
-        {
-            if (deckCardCountText == null)
-                return;
-
-            deckCardCountText.text = playerInventory == null
-                ? "0 / 0"
-                : $"카드  현재 {deckCardCount} / 최소 {playerInventory.MinDeckCardCount}";
-            deckCardCountText.color = playerInventory != null && playerInventory.HasEnoughDeckCards()
-                ? Color.white
-                : Color.red;
-        }
-
-        private void RefreshManaCostText()
-        {
-            if (deckManaCostText == null)
-                return;
-
-            int manaCost = playerInventory != null ? playerInventory.DeckManaCost : 0;
-            deckManaCostText.text = playerInventory == null
-                ? "0 / 0"
-                : $"마력  {manaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost}";
-            deckManaCostText.color = playerInventory != null && playerInventory.IsDeckManaCostValid()
-                ? Color.white
-                : Color.red;
-        }
-
-        private void RefreshDeckConditionWarning()
-        {
-            if (playerInventory == null || !playerInventory.CanCompleteDeckEdit())
-            {
-                ShowDeckConditionWarning();
-                return;
-            }
-
-            if (isDeckConditionWarningVisible)
-            {
-                isDeckConditionWarningVisible = false;
-                guideMessage?.Hide(true);
-            }
-        }
-
-        private void ShowDeckConditionWarning()
-        {
-            guideMessage?.ShowPersistent(GetDeckConditionWarningMessage());
-            isDeckConditionWarningVisible = true;
-        }
-
-        private string GetDeckConditionWarningMessage()
-        {
-            if (playerInventory == null)
-                return DECK_CONDITION_WARNING_MESSAGE;
-
-            int manaCost = playerInventory.DeckManaCost;
-
-            if (!playerInventory.HasEnoughDeckCards())
-                return $"카드 덱에는 최소 {playerInventory.MinDeckCardCount}장의 카드가 필요합니다.";
-            if (manaCost < playerInventory.MinDeckManaCost)
-                return $"마력 용량이 부족합니다. ({manaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
-            if (manaCost > playerInventory.MaxDeckManaCost)
-                return $"마력 용량을 초과했습니다. ({manaCost} / {playerInventory.MinDeckManaCost}~{playerInventory.MaxDeckManaCost})";
-
-            return DECK_CONDITION_WARNING_MESSAGE;
         }
 
         private void RefreshButtonState()
@@ -446,14 +306,13 @@ namespace Arcanist
             {
                 guideMessage?.ShowPersistent("현재 지역에서는 카드 덱 편집이 불가능합니다.");
             }
-            else if (selectedCollectionSlot != null)
+            else if (selection.CollectionSlot != null)
             {
                 actionText = "추가 >>";
                 canUseDeckEdit = playerInventory != null
-                    && !playerInventory.IsDeckFull()
-                    && !playerInventory.WouldExceedDeckManaCost(selectedCollectionSlot.CardData);
+                    && playerInventory.CanAddToDeck(selection.CollectionSlot.CardData) == DeckEditFailure.None;
             }
-            else if (selectedDeckSlot != null && selectedDeckSlot.CardData != null)
+            else if (selection.DeckSlot != null && selection.DeckSlot.CardData != null)
             {
                 actionText = "<< 제거";
                 canUseDeckEdit = true;
@@ -487,6 +346,32 @@ namespace Arcanist
         public void OnDeckEditActionPointerUp()
         {
             RefreshButtonState();
+        }
+
+        private InventoryCardSlot FindCollectionSlot(CardData cardData)
+        {
+            if (allCardSlotList == null)
+                return null;
+
+            foreach (InventoryCardSlot slot in allCardSlotList.ActiveSlots)
+            {
+                if (slot != null && slot.CardData == cardData)
+                    return slot;
+            }
+
+            return null;
+        }
+
+        private static string GetDeckEditFailureMessage(DeckEditFailure failure)
+        {
+            return failure switch
+            {
+                DeckEditFailure.CardNotOwned => "아직 획득하지 못한 카드는 카드 덱에 추가할 수 없습니다.",
+                DeckEditFailure.DeckFull => "카드 덱이 가득 찼습니다.",
+                DeckEditFailure.DuplicateCard => "해당 카드가 카드 덱에 이미 존재합니다.",
+                DeckEditFailure.ManaCostExceeded => "마력 용량을 초과합니다.",
+                _ => "카드를 덱에 추가할 수 없습니다.",
+            };
         }
     }
 }

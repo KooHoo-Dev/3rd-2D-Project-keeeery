@@ -201,7 +201,7 @@ namespace Arcanist
 
             if (isGaugeFull == false) return;
 
-            if (cardHandUI == null || cardHandUI.IsDrawing) return;
+            if (cardHandUI == null || cardHandUI.IsBusy) return;
 
             if (cardHandUI.HasEmptySlot == false) return;
 
@@ -223,7 +223,7 @@ namespace Arcanist
         private void UseCard(int slotIndex)
         {
             if (cardHandUI == null) return;
-            if (cardHandUI.IsDrawing) return;
+            if (cardHandUI.IsBusy) return;
 
             CardData usedCard = cardHandUI.GetCard(slotIndex);
             if (usedCard == null) return;
