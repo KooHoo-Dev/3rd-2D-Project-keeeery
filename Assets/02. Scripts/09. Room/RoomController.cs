@@ -107,7 +107,7 @@ namespace Arcanist
         private void StartRoom()
         {
             bool hasBossEncounter = HasBossEncounter();
-            bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.gameObject.activeInHierarchy;
+            bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.isActiveAndEnabled;
 
             if (startCleared)
             {
@@ -140,7 +140,7 @@ namespace Arcanist
         public void ResetRoomForRespawn()
         {
             bool hasBossEncounter = HasBossEncounter();
-            bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.gameObject.activeInHierarchy;
+            bool hasActiveEnemyRoom = enemyRoomController != null && enemyRoomController.isActiveAndEnabled;
 
             if (!hasActiveEnemyRoom && !hasBossEncounter)
             {

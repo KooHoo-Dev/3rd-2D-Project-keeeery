@@ -37,7 +37,8 @@ namespace Arcanist
 
                 if (enemyRoomController != null)
                 {
-                    enemyRoomController.gameObject.SetActive(false);
+                    // GameObject를 끄면 같은 오브젝트에 있는 RoomController도 Start 전에 꺼져 StartRoom이 실행되지 않으므로 컴포넌트만 끈다.
+                    enemyRoomController.enabled = false;
                     Debug.Log(
                         "[RoomFactory] Enemy room controller disabled for cleared checkpoint room.",
                         room);
