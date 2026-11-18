@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Arcanist
 {
-    public class BossController : MonoBehaviour
+    public class BossController : MonoBehaviour, ICombatTarget
     {
         private readonly Dictionary<Type, BossBaseState> stateDic = new();
 
@@ -35,6 +35,7 @@ namespace Arcanist
         public EnemyGrade Grade => grade;
         public Transform TargetPoint => targetPoint != null ? targetPoint : ActorTransform;
         public bool IsDead { get; private set; }
+        public bool IsTargetable => this != null && isActiveAndEnabled && IsDead == false;
 
         private Transform ActorTransform => Rigidbody != null ? Rigidbody.transform : transform;
         private Vector3 CurrentPosition => Rigidbody != null ? Rigidbody.position : transform.position;

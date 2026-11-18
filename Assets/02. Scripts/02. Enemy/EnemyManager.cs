@@ -12,123 +12,66 @@ namespace Arcanist
 
     public class EnemyManager : MonoBehaviour
     {
-        private static readonly List<EnemyController> activeEnemies = new();
-        private static readonly List<BossController> activeBosses = new();
+        private static readonly List<ICombatTarget> activeTargets = new();
 
-        public static IReadOnlyList<EnemyController> ActiveEnemies => activeEnemies;
-        public static IReadOnlyList<BossController> ActiveBosses => activeBosses;
+        public static IReadOnlyList<ICombatTarget> ActiveTargets => activeTargets;
 
-        public static void Register(EnemyController enemy)
+        public static void Register(ICombatTarget target)
         {
-            if (enemy == null)
+            if (target == null || activeTargets.Contains(target))
                 return;
 
-            if (activeEnemies.Contains(enemy))
-                return;
-
-            activeEnemies.Add(enemy);
+            activeTargets.Add(target);
         }
 
-        public static void Unregister(EnemyController enemy)
+        public static void Unregister(ICombatTarget target)
         {
-            if (enemy == null)
-                return;
-
-            activeEnemies.Remove(enemy);
+            if (target != null)
+                activeTargets.Remove(target);
         }
 
-        public static void Register(BossController boss)
+        public bool TryFindBestTarget(Vector3 origin, out ICombatTarget target)
         {
-            if (boss == null)
-                return;
+            target = null;
+            int bestGrade = int.MinValue;
+            float bestSqrDistance = float.MaxValue;
 
-            if (activeBosses.Contains(boss))
-                return;
+            for (int i = activeTargets.Count - 1; i >= 0; i--)
+            {
+                ICombatTarget candidate = activeTargets[i];
 
-            activeBosses.Add(boss);
-        }
+                if (candidate == null || candidate is Object unityObject && unityObject == null)
+                {
+                    activeTargets.RemoveAt(i);
+                    continue;
+                }
 
-        public static void Unregister(BossController boss)
-        {
-            if (boss == null)
-                return;
+                if (candidate.IsTargetable == false || candidate.IsDead)
+                    continue;
 
-            activeBosses.Remove(boss);
+                Transform targetPoint = candidate.TargetPoint;
+                if (targetPoint == null)
+                    continue;
+
+                int grade = (int)candidate.Grade;
+                float sqrDistance = (targetPoint.position - origin).sqrMagnitude;
+
+                if (grade < bestGrade || grade == bestGrade && sqrDistance >= bestSqrDistance)
+                    continue;
+
+                target = candidate;
+                bestGrade = grade;
+                bestSqrDistance = sqrDistance;
+            }
+
+            return target != null;
         }
 
         public Transform FindBestTarget(Vector3 origin)
         {
-            EnemyController bestEnemy = null;
-            int bestGrade = int.MinValue;
-            float bestSqrDistance = float.MaxValue;
-
-            for (int i = 0; i < activeEnemies.Count; i++)
-            {
-                EnemyController candidate = activeEnemies[i];
-
-                if (candidate == null || candidate.isActiveAndEnabled == false || candidate.IsDead)
-                    continue;
-
-                Transform targetPoint = candidate.TargetPoint;
-
-                if (targetPoint == null)
-                    continue;
-
-                int grade = (int)candidate.Grade;
-                float sqrDistance = (targetPoint.position - origin).sqrMagnitude;
-
-                if (grade < bestGrade)
-                    continue;
-
-                if (grade == bestGrade && sqrDistance >= bestSqrDistance)
-                    continue;
-
-                bestEnemy = candidate;
-                bestGrade = grade;
-                bestSqrDistance = sqrDistance;
-            }
-
-            Transform bestBossTarget = FindBestBossTarget(origin, bestGrade, bestSqrDistance);
-
-            if (bestBossTarget != null)
-                return bestBossTarget;
-
-            return bestEnemy != null ? bestEnemy.TargetPoint : null;
-        }
-
-        private Transform FindBestBossTarget(Vector3 origin, int currentBestGrade, float currentBestSqrDistance)
-        {
-            BossController bestBoss = null;
-            int bestGrade = currentBestGrade;
-            float bestSqrDistance = currentBestSqrDistance;
-
-            for (int i = 0; i < activeBosses.Count; i++)
-            {
-                BossController candidate = activeBosses[i];
-
-                if (candidate == null || candidate.isActiveAndEnabled == false || candidate.IsDead)
-                    continue;
-
-                Transform targetPoint = candidate.TargetPoint;
-
-                if (targetPoint == null)
-                    continue;
-
-                int grade = (int)candidate.Grade;
-                float sqrDistance = (targetPoint.position - origin).sqrMagnitude;
-
-                if (grade < bestGrade)
-                    continue;
-
-                if (grade == bestGrade && sqrDistance >= bestSqrDistance)
-                    continue;
-
-                bestBoss = candidate;
-                bestGrade = grade;
-                bestSqrDistance = sqrDistance;
-            }
-
-            return bestBoss != null ? bestBoss.TargetPoint : null;
+            return TryFindBestTarget(origin, out ICombatTarget target)
+                ? target.TargetPoint
+                : null;
         }
     }
 }

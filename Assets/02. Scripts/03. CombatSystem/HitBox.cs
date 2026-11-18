@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Arcanist
@@ -31,49 +30,38 @@ namespace Arcanist
         [SerializeField] private bool useStun;
         [SerializeField] private float stunDuration = 2.0f;
 
-        private bool impactFeedbackPlayed;
-
         private CombatEntity Owner { get; set; }
-
-        private readonly HashSet<HurtBox> checkList = new HashSet<HurtBox>();
-        private readonly Dictionary<HurtBox, float> lastHitTimes = new Dictionary<HurtBox, float>();
+        private HitTargetTracker targetTracker;
+        private HitResolver hitResolver;
+        private bool impactFeedbackPlayed;
 
         private void Awake()
         {
-            Owner = GetComponentInParent<CombatEntity>();
-
-            if (projectileController == null)
-                projectileController = GetComponentInParent<ProjectileController>();
+            ResolveReferences();
+            BuildRuntimeServices();
         }
 
         private void OnEnable()
+        {
+            ResolveReferences();
+            EnsureRuntimeServices();
+            ResetRuntimeState();
+        }
+
+        public void Initialize(CombatEntity owner)
+        {
+            Owner = owner;
+            EnsureRuntimeServices();
+            ResetRuntimeState();
+        }
+
+        private void ResolveReferences()
         {
             if (Owner == null)
                 Owner = GetComponentInParent<CombatEntity>();
 
             if (projectileController == null)
                 projectileController = GetComponentInParent<ProjectileController>();
-
-            checkList.Clear();
-            lastHitTimes.Clear();
-            impactFeedbackPlayed = false;
-        }
-
-        public void Initialize(CombatEntity owner)
-        {
-            Owner = owner;
-            checkList.Clear();
-            lastHitTimes.Clear();
-            impactFeedbackPlayed = false;
-        }
-
-        private void ResolveFeedbackControllers()
-        {
-            if (hitStopController == null)
-                hitStopController = FindFirstObjectByType<HitStopController>();
-
-            if (cameraImpulseController == null)
-                cameraImpulseController = FindFirstObjectByType<CameraImpulseController>();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -108,105 +96,68 @@ namespace Arcanist
 
             if (sender == receiver) return;
 
-            EnemyController enemy = receiver.GetComponent<EnemyController>();
-
-            if (enemy != null && enemy.IsDead) return;
-
-            PlayerController playerController = receiver.GetComponent<PlayerController>();
-
-            if (playerController != null && playerController.IsParryWindowOpen)
-            {
-                playerController.SuccessParry();
+            if (IsUnavailableTarget(receiver))
                 return;
-            }
 
-            if (CanHit(hurtBox) == false) return;
+            EnsureRuntimeServices();
+            if (targetTracker.TryRegister(hurtBox) == false)
+                return;
 
-            RegisterHit(hurtBox);
-            PlayImpactFeedbackOnce();
+            HitResolution resolution = hitResolver.Resolve(
+                sender,
+                receiver,
+                collision,
+                transform,
+                AttackInfo);
 
-            int damage = AttackInfo.RollDamage();
+            if (resolution.Status != HitResolutionStatus.Applied)
+                return;
 
-            if (sender.TryGetComponent(out BuffController buffController))
-                damage = buffController.ModifyDamage(damage);
-
-            CombatEvent @event;
-            @event.EventType = CombatEventType.DamageEvent;
-            @event.Amount = damage;
-            @event.Position = collision.ClosestPoint(sender.transform.position);
-
-            hurtBox.PlayHitFx(@event.Position);
-            CombatSystem.Instance.To(sender, receiver, @event);
-            ApplyKnockback(receiver, collision);
-            ApplyStun(receiver);
+            PlayImpactFeedback(hurtBox, resolution.Position);
 
             if (explodeProjectileOnHit && projectileController != null)
                 projectileController.Explode();
         }
 
-        private void ApplyKnockback(CombatEntity receiver, Collider2D collision)
+        private static bool IsUnavailableTarget(CombatEntity receiver)
         {
-            if (!useKnockback || receiver == null || !receiver.CanReceiveKnockback)
-                return;
+            ICombatTarget target = receiver.GetComponent<ICombatTarget>();
+            if (target == null)
+                target = receiver.GetComponentInParent<ICombatTarget>();
+            if (target == null)
+                target = receiver.GetComponentInChildren<ICombatTarget>();
 
-            Rigidbody2D receiverRigidbody = receiver.GetComponent<Rigidbody2D>();
-
-            if (receiverRigidbody == null)
-                receiverRigidbody = receiver.GetComponentInChildren<Rigidbody2D>();
-
-            if (receiverRigidbody == null)
-                return;
-
-            Vector2 origin = knockbackFromHitBoxCenter
-                ? transform.position
-                : collision.ClosestPoint(transform.position);
-
-            Vector2 targetPosition = receiverRigidbody.position;
-            Vector2 direction = targetPosition - origin;
-
-            if (direction.sqrMagnitude <= 0.0001f)
-                direction = receiver.transform.position.x >= transform.position.x ? Vector2.right : Vector2.left;
-            else
-                direction.Normalize();
-
-            if (resetTargetVelocityBeforeKnockback)
-                receiverRigidbody.linearVelocity = Vector2.zero;
-
-            receiverRigidbody.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+            return target != null && (target.IsTargetable == false || target.IsDead);
         }
 
-        private void ApplyStun(CombatEntity receiver)
+        private void EnsureRuntimeServices()
         {
-            if (!useStun || receiver == null || !receiver.CanReceiveStun || stunDuration <= 0.0f)
-                return;
-
-            receiver.SendMessage("Stun", stunDuration, SendMessageOptions.DontRequireReceiver);
+            if (targetTracker == null || hitResolver == null)
+                BuildRuntimeServices();
         }
 
-        private bool CanHit(HurtBox hurtBox)
+        private void BuildRuntimeServices()
         {
-            if (allowMultiHit == false)
-                return checkList.Contains(hurtBox) == false;
-
-            if (lastHitTimes.TryGetValue(hurtBox, out float lastHitTime) == false)
-                return true;
-
-            return Time.time - lastHitTime >= multiHitInterval;
+            targetTracker = new HitTargetTracker(allowMultiHit, multiHitInterval);
+            hitResolver = new HitResolver(new HitEffectSettings(
+                useKnockback,
+                knockbackForce,
+                knockbackFromHitBoxCenter,
+                resetTargetVelocityBeforeKnockback,
+                useStun,
+                stunDuration));
         }
 
-        private void RegisterHit(HurtBox hurtBox)
+        private void ResetRuntimeState()
         {
-            if (allowMultiHit)
-            {
-                lastHitTimes[hurtBox] = Time.time;
-                return;
-            }
-
-            checkList.Add(hurtBox);
+            targetTracker.Reset();
+            impactFeedbackPlayed = false;
         }
 
-        private void PlayImpactFeedbackOnce()
+        private void PlayImpactFeedback(HurtBox hurtBox, Vector3 hitPosition)
         {
+            hurtBox.PlayHitFx(hitPosition);
+
             if (impactFeedbackPlayed)
                 return;
 
@@ -218,6 +169,15 @@ namespace Arcanist
 
             if (useCameraShake && cameraImpulseController != null)
                 cameraImpulseController.Play();
+        }
+
+        private void ResolveFeedbackControllers()
+        {
+            if (hitStopController == null)
+                hitStopController = FindFirstObjectByType<HitStopController>();
+
+            if (cameraImpulseController == null)
+                cameraImpulseController = FindFirstObjectByType<CameraImpulseController>();
         }
     }
 }

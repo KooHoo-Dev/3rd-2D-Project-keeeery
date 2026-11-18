@@ -111,10 +111,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arcanist.EnemyController
   moveSpeed: 1
-  traceRange: 2
+  traceRange: 3
   attackRange: 0.75
   stoppingDistance: 0.1
   idleWaitTime: 3
+  sensingInterval: 0.1
   attackCooldown: 2
   hurtDuration: 0.2
   hurtKnockbackSpeed: 1

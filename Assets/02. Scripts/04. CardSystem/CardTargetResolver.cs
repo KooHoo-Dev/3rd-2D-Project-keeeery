@@ -29,11 +29,10 @@ namespace Arcanist
             if (enemyManager == null)
                 return false;
 
-            Transform candidate = enemyManager.FindBestTarget(origin);
-            if (IsAlive(candidate) == false)
+            if (enemyManager.TryFindBestTarget(origin, out ICombatTarget candidate) == false)
                 return false;
 
-            target = candidate;
+            target = candidate.TargetPoint;
             return true;
         }
 
@@ -43,17 +42,5 @@ namespace Arcanist
                    && (card.RequiresTarget || card.Effect != null && card.Effect.RequiresTarget);
         }
 
-        private static bool IsAlive(Transform target)
-        {
-            if (target == null)
-                return false;
-
-            EnemyController enemy = target.GetComponentInParent<EnemyController>();
-            if (enemy != null)
-                return enemy.IsDead == false;
-
-            BossController boss = target.GetComponentInParent<BossController>();
-            return boss != null && boss.IsDead == false;
-        }
     }
 }
