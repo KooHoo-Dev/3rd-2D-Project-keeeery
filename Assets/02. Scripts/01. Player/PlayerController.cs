@@ -88,27 +88,33 @@ namespace Arcanist
         {
             Animator = GetComponentInChildren<Animator>();
             CharacterController2D controller2D = GetComponent<CharacterController2D>();
+            Player player = GetComponent<Player>();
 
             PlayerLocomotionSettings locomotionSettings = new(
                 dashPower,
                 dashDuration,
                 dashCooldown,
-                sprintMultiplier,
+                sprintMultiplier);
+            PlayerSprintSettings sprintSettings = new(
                 staminaCostPerSec,
                 staminaRecoveryPerSec,
                 staminaRecoveryDelay,
                 sprintInputGraceTime);
-            locomotion = new PlayerLocomotionRuntime(
+            PlayerSprintRuntime sprint = new(player, sprintSettings);
+            PlayerMovementFeedback movementFeedback = new(
                 transform,
                 Animator,
-                controller2D,
-                locomotionSettings,
                 doubleJumpFxPrefab,
                 dashFxPrefab,
                 sprintLoopFxPrefab,
                 sprintEndFxPrefab,
                 fxSpawnPoint,
                 sprintFxSpawnPoint);
+            locomotion = new PlayerLocomotionRuntime(
+                controller2D,
+                locomotionSettings,
+                sprint,
+                movementFeedback);
 
             defaultState = new MovementState(this);
             StateDic.Add(Animator.StringToHash(ANIM_TAG_MOVEMENT), defaultState);
@@ -168,7 +174,8 @@ namespace Arcanist
                 return;
             }
 
-            locomotion.HandleMovement(SimpleInput.GetMoveAxisRaw().x, true);
+            bool sprintPressed = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
+            locomotion.HandleMovement(SimpleInput.GetMoveAxisRaw().x, sprintPressed, true);
 
             if (SimpleInput.GetKeyDown(Key.D))
                 Animator.SetBool(IS_ATTACK, true);
@@ -191,8 +198,9 @@ namespace Arcanist
                 return;
             }
 
-            float horizontal = locomotion.GetArrowHorizontalInput(moveScale);
-            locomotion.HandleMovement(horizontal, false);
+            float horizontal = GetArrowHorizontalInput(moveScale);
+            bool sprintPressed = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
+            locomotion.HandleMovement(horizontal, sprintPressed, false);
         }
 
         private void StartParry()
@@ -365,12 +373,30 @@ namespace Arcanist
 
         private void UpdateJumpInput()
         {
-            locomotion.UpdateJumpInput(IsPlayerActionBlocked());
+            locomotion.UpdateJumpInput(
+                IsPlayerActionBlocked(),
+                SimpleInput.GetKeyDown(Key.Space));
         }
 
         private void UpdateDashInput()
         {
-            locomotion.UpdateDashInput(IsPlayerActionBlocked());
+            locomotion.UpdateDashInput(
+                IsPlayerActionBlocked(),
+                SimpleInput.GetKeyDown(Key.A));
+        }
+
+        private static float GetArrowHorizontalInput(float moveScale)
+        {
+            if (Keyboard.current == null)
+                return 0.0f;
+
+            if (Keyboard.current.leftArrowKey.isPressed)
+                return -moveScale;
+
+            if (Keyboard.current.rightArrowKey.isPressed)
+                return moveScale;
+
+            return 0.0f;
         }
 
         private bool IsPlayerActionBlocked()
